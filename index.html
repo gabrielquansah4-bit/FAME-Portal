@@ -471,6 +471,7 @@ tr:nth-child(even){
                         <tr>
                             <th>Time</th>
                             <th>Worker</th>
+                            <th>Network</th>
                             <th>Type</th>
                             <th>Amount</th>
                             <th>Customer</th>
@@ -644,6 +645,7 @@ tr:nth-child(even){
                             <tr>
                                 <th>Time</th>
                                 <th>Worker</th>
+                                <th>Network</th>
                                 <th>Type</th>
                                 <th>Amount</th>
                                 <th>Customer</th>
@@ -877,6 +879,31 @@ tr:nth-child(even){
                 <div class="form-group">
 
                     <label>
+                        Network
+                    </label>
+
+                    <select id="momoNetwork">
+
+                        <option value="MTN">
+                            MTN
+                        </option>
+
+                        <option value="Telecel">
+                            Telecel
+                        </option>
+
+                        <option value="Tigo">
+                            Tigo
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
                         Transaction Type
                     </label>
 
@@ -1056,6 +1083,7 @@ tr:nth-child(even){
 
                         <tr>
                             <th>Time</th>
+                            <th>Network</th>
                             <th>Type</th>
                             <th>Amount</th>
                             <th>Customer</th>
@@ -1338,8 +1366,6 @@ function login(){
         };
 
 
-        /* SAVE LOGIN */
-
         localStorage.setItem(
             "fameLoggedInUser",
             JSON.stringify(currentUser)
@@ -1386,8 +1412,6 @@ function login(){
         };
 
 
-        /* SAVE LOGIN */
-
         localStorage.setItem(
             "fameLoggedInUser",
             JSON.stringify(currentUser)
@@ -1416,8 +1440,6 @@ function login(){
             username:"bab"
         };
 
-
-        /* SAVE LOGIN */
 
         localStorage.setItem(
             "fameLoggedInUser",
@@ -1448,8 +1470,6 @@ function logout(){
 
     currentUser = null;
 
-
-    /* REMOVE SAVED LOGIN */
 
     localStorage.removeItem(
         "fameLoggedInUser"
@@ -1588,8 +1608,6 @@ function restoreLogin(){
         }
 
 
-        /* INVALID ROLE */
-
         currentUser=null;
 
         localStorage.removeItem(
@@ -1705,8 +1723,6 @@ function getPreviousClosingBalance(){
 
     }
 
-
-    /* Legacy fallback */
 
     const legacy =
         localStorage.getItem(
@@ -1990,10 +2006,6 @@ function showActiveShift(){
 
 function showClosedShift(){
 
-    const shift =
-        getTodayShift();
-
-
     document
     .getElementById("workerShiftStatus")
     .textContent="Closed";
@@ -2090,6 +2102,12 @@ function saveMomoTransaction(){
     }
 
 
+    const network =
+        document
+        .getElementById("momoNetwork")
+        .value;
+
+
     const type =
         document
         .getElementById("momoType")
@@ -2149,6 +2167,9 @@ function saveMomoTransaction(){
 
         shiftId:
             shift.id,
+
+        network:
+            network,
 
         type:
             type,
@@ -2533,7 +2554,7 @@ function renderWorkerMomo(){
 
         tbody.innerHTML =
             `<tr>
-                <td colspan="5">
+                <td colspan="6">
                     No MoMo transactions recorded today.
                 </td>
             </tr>`;
@@ -2554,6 +2575,10 @@ function renderWorkerMomo(){
 
                 <td>
                     ${formatTime(transaction.date)}
+                </td>
+
+                <td>
+                    ${transaction.network || "-"}
                 </td>
 
                 <td>
@@ -2763,8 +2788,6 @@ function closeWorkerShift(){
 
     saveShifts(shifts);
 
-
-    /* Legacy balance */
 
     localStorage.setItem(
         "fameDailyBalance",
@@ -3069,7 +3092,7 @@ function renderAdminMomo(){
 
         tbody.innerHTML =
             `<tr>
-                <td colspan="6">
+                <td colspan="7">
                     No MoMo transactions recorded today.
                 </td>
             </tr>`;
@@ -3097,6 +3120,10 @@ function renderAdminMomo(){
                         transaction.workerName ||
                         "Previous Entry"
                     }
+                </td>
+
+                <td>
+                    ${transaction.network || "-"}
                 </td>
 
                 <td>
@@ -3709,7 +3736,7 @@ function renderHistoryMomo(transactions){
 
         tbody.innerHTML =
             `<tr>
-                <td colspan="6">
+                <td colspan="7">
                     No MoMo transactions recorded for this date.
                 </td>
             </tr>`;
@@ -3737,6 +3764,10 @@ function renderHistoryMomo(transactions){
                         transaction.workerName ||
                         "Previous Entry"
                     }
+                </td>
+
+                <td>
+                    ${transaction.network || "-"}
                 </td>
 
                 <td>
@@ -3982,16 +4013,10 @@ document
             calculateWorkerTotals();
 
 
-        /* Dashboard can show the current
-           difference while entering closing */
-
         const difference =
             value -
             totals.expectedClosing;
 
-
-        /* Nothing is permanently saved
-           until Close Shift is clicked */
 
         const status =
             document
