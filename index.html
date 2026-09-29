@@ -3,526 +3,368 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>FAME Portal</title>
 
 <style>
-*{box-sizing:border-box}
+
+*{
+    box-sizing:border-box;
+}
 
 body{
     margin:0;
-    font-family:Arial,sans-serif;
-    background:#f4f6f9;
-    color:#222
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f4f6f8;
+    color:#222;
 }
 
-button,input,select,textarea{font:inherit}
-button{cursor:pointer}
+button{
+    cursor:pointer;
+}
 
-#loginPage{
+.login-page{
     min-height:100vh;
     display:flex;
     align-items:center;
     justify-content:center;
-    background:linear-gradient(135deg,#075e54,#128c7e);
-    padding:20px
+    background:linear-gradient(135deg,#17365d,#245b8f);
 }
 
 .login-box{
+    width:360px;
+    max-width:92%;
     background:white;
-    width:100%;
-    max-width:400px;
-    padding:30px;
-    border-radius:16px;
-    box-shadow:0 10px 30px rgba(0,0,0,.2);
-    text-align:center
+    padding:35px;
+    border-radius:14px;
+    box-shadow:0 10px 35px rgba(0,0,0,.2);
 }
 
 .login-box h1{
-    margin-bottom:5px;
-    color:#075e54
+    margin-top:0;
+    text-align:center;
+    color:#17365d;
 }
 
-.login-box p{color:#666}
+.login-box p{
+    text-align:center;
+    color:#666;
+}
 
 .login-box input{
     width:100%;
     padding:13px;
     margin:8px 0;
     border:1px solid #ccc;
-    border-radius:8px
+    border-radius:7px;
+    font-size:15px;
 }
 
 .login-box button{
     width:100%;
     padding:13px;
-    margin-top:10px;
+    margin-top:12px;
     border:0;
-    border-radius:8px;
-    background:#075e54;
+    border-radius:7px;
+    background:#17365d;
     color:white;
-    font-weight:bold
+    font-size:16px;
 }
 
-.login-error{
-    color:#d00;
-    margin-top:10px
+.login-box button:hover{
+    background:#245b8f;
 }
 
-#portal,#workerPortal{display:none}
+.error{
+    color:#d00000;
+    text-align:center;
+    margin-top:10px;
+}
 
-header{
-    background:#075e54;
+.portal{
+    display:none;
+}
+
+.header{
+    background:#17365d;
     color:white;
     padding:18px 25px;
     display:flex;
     justify-content:space-between;
     align-items:center;
-    gap:15px
+    gap:15px;
+    flex-wrap:wrap;
 }
 
-header h1{
+.header h1{
     margin:0;
-    font-size:24px
+    font-size:24px;
 }
 
-header small{
-    display:block;
-    margin-top:4px;
-    opacity:.85
+.header small{
+    opacity:.85;
 }
 
 .logout-btn{
-    background:#d32f2f;
+    background:#c62828;
     border:0;
     color:white;
-    padding:10px 15px;
-    border-radius:7px
+    padding:10px 18px;
+    border-radius:6px;
 }
 
 .container{
     max-width:1400px;
     margin:auto;
-    padding:20px
+    padding:20px;
 }
 
-.section-title{
-    margin-top:10px;
-    margin-bottom:15px;
-    color:#075e54
+.section{
+    background:white;
+    padding:20px;
+    margin-bottom:20px;
+    border-radius:10px;
+    box-shadow:0 2px 8px rgba(0,0,0,.07);
+}
+
+.section h2{
+    margin-top:0;
+    color:#17365d;
 }
 
 .cards{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+    grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
     gap:15px;
-    margin-bottom:25px
+    margin-bottom:20px;
 }
 
 .card{
     background:white;
-    border-radius:12px;
-    padding:20px;
-    box-shadow:0 3px 12px rgba(0,0,0,.08)
+    padding:18px;
+    border-radius:10px;
+    box-shadow:0 2px 8px rgba(0,0,0,.07);
 }
 
-.card h3{
-    margin:0 0 10px;
-    font-size:15px;
-    color:#666
-}
-
-.card .value{
-    font-size:25px;
-    font-weight:bold;
-    color:#075e54
-}
-
-.info-box{
-    background:white;
-    padding:20px;
-    border-radius:12px;
-    box-shadow:0 3px 12px rgba(0,0,0,.08);
-    margin-bottom:25px
-}
-
-.info-box h2{
-    margin-top:0;
-    color:#075e54
-}
-
-.info-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
-    gap:15px
-}
-
-.info-item{
-    background:#f4f6f9;
-    padding:15px;
-    border-radius:8px
-}
-
-.info-item span{
-    display:block;
+.card-title{
     color:#666;
     font-size:13px;
-    margin-bottom:6px
 }
 
-.info-item strong{font-size:19px}
-
-.action-box{
-    background:white;
-    padding:20px;
-    border-radius:12px;
-    box-shadow:0 3px 12px rgba(0,0,0,.08);
-    margin-bottom:25px
-}
-
-.action-box h2{
-    margin-top:0;
-    color:#075e54
-}
-
-.action-buttons{
-    display:flex;
-    flex-wrap:wrap;
-    gap:10px
-}
-
-.action-buttons button{
-    border:0;
-    padding:13px 18px;
-    border-radius:8px;
-    color:white;
-    font-weight:bold
-}
-
-.btn-green{background:#075e54}
-.btn-blue{background:#1976d2}
-.btn-orange{background:#ef6c00}
-.btn-red{background:#d32f2f}
-.btn-gray{background:#666}
-
-.form-section{
-    background:white;
-    padding:20px;
-    border-radius:12px;
-    box-shadow:0 3px 12px rgba(0,0,0,.08);
-    margin-bottom:25px
-}
-
-.form-section h2{
-    margin-top:0;
-    color:#075e54
+.card-value{
+    font-size:22px;
+    font-weight:bold;
+    margin-top:8px;
+    color:#17365d;
 }
 
 .form-grid{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:15px
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:12px;
 }
 
 .form-group{
     display:flex;
-    flex-direction:column
+    flex-direction:column;
 }
 
 .form-group label{
-    margin-bottom:6px;
+    margin-bottom:5px;
     font-weight:bold;
-    font-size:14px
+    font-size:13px;
 }
 
 .form-group input,
-.form-group select,
-.form-group textarea{
-    padding:12px;
+.form-group select{
+    padding:10px;
     border:1px solid #ccc;
-    border-radius:7px;
-    width:100%
+    border-radius:6px;
+    font-size:14px;
 }
 
-.form-group textarea{
-    min-height:90px;
-    resize:vertical
+.primary-btn{
+    background:#17365d;
+    color:white;
+    border:0;
+    padding:11px 18px;
+    border-radius:6px;
 }
 
-.form-actions{
-    margin-top:18px;
+.success-btn{
+    background:#218838;
+    color:white;
+    border:0;
+    padding:11px 18px;
+    border-radius:6px;
+}
+
+.danger-btn{
+    background:#c62828;
+    color:white;
+    border:0;
+    padding:11px 18px;
+    border-radius:6px;
+}
+
+.secondary-btn{
+    background:#666;
+    color:white;
+    border:0;
+    padding:11px 18px;
+    border-radius:6px;
+}
+
+.action-row{
     display:flex;
     gap:10px;
-    flex-wrap:wrap
+    flex-wrap:wrap;
+    margin-top:15px;
 }
 
-.save-btn{
-    background:#075e54;
-    color:white;
-    border:0;
-    padding:13px 20px;
-    border-radius:8px;
-    font-weight:bold
-}
-
-.cancel-btn{
-    background:#777;
-    color:white;
-    border:0;
-    padding:13px 20px;
-    border-radius:8px
-}
-
-.network-select{
-    border:2px solid #075e54!important;
-    font-weight:bold;
-    background:#f0fffc
-}
-
-.electricity-heading{
-    color:#1976d2!important
-}
-
-.electricity-amount{
-    border:2px solid #1976d2!important;
-    background:#f2f8ff;
-    font-weight:bold
-}
-
-.balance-box{
-    background:white;
-    padding:20px;
-    border-radius:12px;
-    box-shadow:0 3px 12px rgba(0,0,0,.08);
-    margin-bottom:25px
-}
-
-.balance-box h2{
-    margin-top:0;
-    color:#075e54
-}
-
-.balance-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-    gap:15px
-}
-
-.balance-result{
-    background:#f4f6f9;
-    padding:15px;
-    border-radius:8px
-}
-
-.balance-result h4{
-    margin:0 0 7px;
-    color:#666
-}
-
-.balance-result strong{font-size:20px}
-
-.table-section{
-    background:white;
-    padding:20px;
-    border-radius:12px;
-    box-shadow:0 3px 12px rgba(0,0,0,.08);
+.table-wrapper{
     overflow-x:auto;
-    margin-bottom:25px
 }
 
 table{
     width:100%;
     border-collapse:collapse;
-    min-width:850px
+    margin-top:10px;
+    min-width:700px;
 }
 
-th,td{
-    padding:11px;
-    border-bottom:1px solid #eee;
-    text-align:left
+th,
+td{
+    border:1px solid #ddd;
+    padding:9px;
+    text-align:left;
+    font-size:13px;
 }
 
 th{
-    background:#075e54;
-    color:white
+    background:#17365d;
+    color:white;
 }
 
-.hidden{display:none!important}
+tr:nth-child(even){
+    background:#f8f9fa;
+}
 
 .message{
-    margin-top:10px;
-    font-weight:bold
-}
-
-.worker-welcome{
-    background:white;
-    padding:30px;
-    border-radius:14px;
-    box-shadow:0 3px 12px rgba(0,0,0,.08);
-    text-align:center;
-    margin-bottom:25px
-}
-
-.worker-welcome h2{
-    color:#075e54;
-    margin-top:0
-}
-
-.worker-name{
-    font-size:28px;
-    font-weight:bold;
-    color:#1976d2;
-    margin:15px 0
-}
-
-.shift-box{
-    background:white;
-    padding:25px;
-    border-radius:14px;
-    box-shadow:0 3px 12px rgba(0,0,0,.08);
-    margin-bottom:25px
-}
-
-.shift-box h2{
-    color:#075e54;
-    margin-top:0
-}
-
-.status-open,
-.status-closed,
-.status-not-started{
-    display:inline-block;
-    padding:8px 14px;
-    border-radius:20px;
-    font-weight:bold
-}
-
-.status-open{
-    background:#e8f5e9;
-    color:#2e7d32
-}
-
-.status-closed{
-    background:#eeeeee;
-    color:#555
-}
-
-.status-not-started{
-    background:#fff3e0;
-    color:#ef6c00
-}
-
-.notice{
-    padding:15px;
-    border-radius:8px;
-    background:#fff3e0;
-    color:#e65100;
-    margin-bottom:20px
-}
-
-/* =====================================================
-   PREVIOUS DAYS
-===================================================== */
-
-.history-header{
-    display:flex;
-    align-items:end;
-    gap:15px;
-    flex-wrap:wrap
-}
-
-.history-date{
-    max-width:260px
-}
-
-.history-date label{
-    display:block;
-    font-weight:bold;
-    margin-bottom:6px
-}
-
-.history-date input{
-    width:100%;
     padding:12px;
-    border:1px solid #ccc;
-    border-radius:7px
+    border-radius:6px;
+    background:#eef4fa;
+    margin-top:12px;
 }
 
-.history-btn{
-    background:#1976d2;
-    color:white;
-    border:0;
-    padding:12px 20px;
-    border-radius:8px;
-    font-weight:bold
+.warning{
+    background:#fff3cd;
+    color:#856404;
 }
 
-.history-title{
-    color:#1976d2!important
+.success{
+    background:#d4edda;
+    color:#155724;
 }
 
-.history-message{
-    margin-top:15px;
+.danger{
+    background:#f8d7da;
+    color:#721c24;
+}
+
+.hidden{
+    display:none !important;
+}
+
+.money-input{
     font-weight:bold;
-    color:#666
+}
+
+.history-controls{
+    display:flex;
+    gap:10px;
+    align-items:end;
+    flex-wrap:wrap;
+}
+
+.history-controls .form-group{
+    min-width:200px;
+}
+
+.reconciliation{
+    margin-top:15px;
+    padding:15px;
+    background:#f4f6f8;
+    border-radius:8px;
+}
+
+.reconciliation-row{
+    display:flex;
+    justify-content:space-between;
+    padding:6px 0;
+    border-bottom:1px solid #ddd;
+}
+
+.reconciliation-row:last-child{
+    border-bottom:0;
 }
 
 @media(max-width:600px){
-    header{
-        flex-direction:column;
-        align-items:flex-start
+
+    .header{
+        padding:15px;
     }
 
-    .container{padding:12px}
-
-    .card .value{font-size:22px}
-
-    .history-header{
-        display:block
+    .header h1{
+        font-size:20px;
     }
 
-    .history-date{
-        max-width:none;
-        margin-bottom:10px
+    .container{
+        padding:10px;
     }
 
-    .history-btn{
-        width:100%
+    .section{
+        padding:15px;
     }
+
 }
+
 </style>
 </head>
 
 <body>
 
 <!-- =====================================================
-     LOGIN
+     LOGIN PAGE
 ===================================================== -->
 
-<div id="loginPage">
+<div id="loginPage" class="login-page">
 
-<div class="login-box">
+    <div class="login-box">
 
-<h1>FAME Portal</h1>
+        <h1>FAME Portal</h1>
 
-<p>Faustina Ansa-Mensah Enterprise</p>
+        <p>Faustina Ansa-Mensah Enterprise</p>
 
-<input
-    type="text"
-    id="username"
-    placeholder="Username"
->
+        <input
+            type="text"
+            id="username"
+            placeholder="Username"
+            autocomplete="username"
+        >
 
-<input
-    type="password"
-    id="password"
-    placeholder="Password"
->
+        <input
+            type="password"
+            id="password"
+            placeholder="Password"
+            autocomplete="current-password"
+        >
 
-<button onclick="login()">Login</button>
+        <button onclick="login()">Login</button>
 
-<div id="loginError" class="login-error"></div>
+        <div id="loginError" class="error"></div>
 
-</div>
+    </div>
 
 </div>
 
@@ -531,389 +373,335 @@ th{
      ADMIN PORTAL
 ===================================================== -->
 
-<div id="portal">
+<div id="portal" class="portal">
 
-<header>
+    <div class="header">
 
-<div>
-<h1>FAME Portal</h1>
-<small>Admin Monitoring — Faustina Ansa-Mensah Enterprise</small>
-</div>
+        <div>
+            <h1>FAME Portal</h1>
+            <small>Administrator Dashboard</small>
+        </div>
 
-<button class="logout-btn" onclick="logout()">Logout</button>
+        <button
+            class="logout-btn"
+            onclick="logout()"
+        >
+            Logout
+        </button>
 
-</header>
+    </div>
 
-<div class="container">
 
-<h2 class="section-title">Today's Business Overview</h2>
+    <div class="container">
 
-<div class="info-box">
+        <!-- TODAY -->
 
-<div class="info-grid">
+        <div class="section">
 
-<div class="info-item">
-<span>Worker on Duty</span>
-<strong id="adminWorker">Not Started</strong>
-</div>
+            <h2>Today's Activity</h2>
 
-<div class="info-item">
-<span>Shift Status</span>
-<strong id="adminShiftStatus">Not Started</strong>
-</div>
+            <div class="cards">
 
-<div class="info-item">
-<span>Opening Balance</span>
-<strong id="adminOpening">GHS 0.00</strong>
-</div>
+                <div class="card">
+                    <div class="card-title">Worker on Duty</div>
+                    <div class="card-value" id="adminWorkerOnDuty">-</div>
+                </div>
 
-<div class="info-item">
-<span>Actual Closing</span>
-<strong id="adminActual">GHS 0.00</strong>
-</div>
+                <div class="card">
+                    <div class="card-title">Shift Status</div>
+                    <div class="card-value" id="adminShiftStatus">-</div>
+                </div>
 
-</div>
+                <div class="card">
+                    <div class="card-title">Opening Balance</div>
+                    <div class="card-value" id="adminOpeningBalance">GH₵0.00</div>
+                </div>
 
-</div>
+                <div class="card">
+                    <div class="card-title">Actual Closing</div>
+                    <div class="card-value" id="adminActualClosing">GH₵0.00</div>
+                </div>
 
+                <div class="card">
+                    <div class="card-title">Cash In</div>
+                    <div class="card-value" id="adminCashIn">GH₵0.00</div>
+                </div>
 
-<div class="cards">
+                <div class="card">
+                    <div class="card-title">Cash Out</div>
+                    <div class="card-value" id="adminCashOut">GH₵0.00</div>
+                </div>
 
-<div class="card">
-<h3>Cash In</h3>
-<div class="value" id="adminCashIn">GHS 0.00</div>
-</div>
+                <div class="card">
+                    <div class="card-title">Electricity Sales</div>
+                    <div class="card-value" id="adminElectricitySales">GH₵0.00</div>
+                </div>
 
-<div class="card">
-<h3>Cash Out</h3>
-<div class="value" id="adminCashOut">GHS 0.00</div>
-</div>
+                <div class="card">
+                    <div class="card-title">Commission</div>
+                    <div class="card-value" id="adminCommission">GH₵0.00</div>
+                </div>
 
-<div class="card">
-<h3>Electricity Sales</h3>
-<div class="value" id="adminElectricity">GHS 0.00</div>
-</div>
+                <div class="card">
+                    <div class="card-title">Expected Closing</div>
+                    <div class="card-value" id="adminExpectedClosing">GH₵0.00</div>
+                </div>
 
-<div class="card">
-<h3>Commission</h3>
-<div class="value" id="adminCommission">GHS 0.00</div>
-</div>
+                <div class="card">
+                    <div class="card-title">Difference</div>
+                    <div class="card-value" id="adminDifference">GH₵0.00</div>
+                </div>
 
-<div class="card">
-<h3>Expected Closing</h3>
-<div class="value" id="adminExpected">GHS 0.00</div>
-</div>
+            </div>
 
-<div class="card">
-<h3>Difference</h3>
-<div class="value" id="adminDifference">GHS 0.00</div>
-</div>
+        </div>
 
-</div>
 
+        <!-- TODAY MOMO -->
 
-<!-- =====================================================
-     PREVIOUS DAYS WORK
-===================================================== -->
+        <div class="section">
 
-<div class="info-box">
+            <h2>Today's MoMo Transactions</h2>
 
-<h2 class="history-title">
-Previous Days' Work
-</h2>
+            <div class="table-wrapper">
 
-<p>
-Select a date below to view the complete business activity
-for that day.
-</p>
+                <table>
 
-<div class="history-header">
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Worker</th>
+                            <th>Type</th>
+                            <th>Amount</th>
+                            <th>Customer</th>
+                            <th>Reference</th>
+                        </tr>
+                    </thead>
 
-<div class="history-date">
+                    <tbody id="adminMomoTableBody"></tbody>
 
-<label for="historyDate">
-Select Date
-</label>
+                </table>
 
-<input
-type="date"
-id="historyDate"
->
+            </div>
 
-</div>
+        </div>
 
-<button
-class="history-btn"
-onclick="viewPreviousDay()"
->
-View Day
-</button>
 
-</div>
+        <!-- TODAY ELECTRICITY -->
 
-<div
-id="historyMessage"
-class="history-message"
->
-Select a date to view previous work.
-</div>
+        <div class="section">
 
-</div>
+            <h2>Today's Electricity Transactions</h2>
 
+            <div class="table-wrapper">
 
-<div
-id="previousDayResults"
-class="hidden"
->
+                <table>
 
-<div class="info-box">
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Worker</th>
+                            <th>Amount</th>
+                            <th>Meter Number</th>
+                            <th>Reference</th>
+                            <th>Commission</th>
+                        </tr>
+                    </thead>
 
-<h2 id="historyDateTitle">
-Daily History
-</h2>
+                    <tbody id="adminElectricityTableBody"></tbody>
 
-<div class="info-grid">
+                </table>
 
-<div class="info-item">
-<span>Worker</span>
-<strong id="historyWorker">-</strong>
-</div>
+            </div>
 
-<div class="info-item">
-<span>Shift Status</span>
-<strong id="historyStatus">-</strong>
-</div>
+        </div>
 
-<div class="info-item">
-<span>Opening Balance</span>
-<strong id="historyOpening">GHS 0.00</strong>
-</div>
 
-<div class="info-item">
-<span>Actual Closing</span>
-<strong id="historyActual">GHS 0.00</strong>
-</div>
+        <!-- TODAY RECONCILIATION -->
 
-</div>
+        <div class="section">
 
-</div>
+            <h2>Daily Reconciliation</h2>
 
+            <div id="adminReconciliation" class="reconciliation"></div>
 
-<div class="cards">
+        </div>
 
-<div class="card">
-<h3>Cash In</h3>
-<div class="value" id="historyCashIn">GHS 0.00</div>
-</div>
 
-<div class="card">
-<h3>Cash Out</h3>
-<div class="value" id="historyCashOut">GHS 0.00</div>
-</div>
+        <!-- PREVIOUS DAYS -->
 
-<div class="card">
-<h3>Electricity Sales</h3>
-<div class="value" id="historyElectricity">GHS 0.00</div>
-</div>
+        <div class="section">
 
-<div class="card">
-<h3>Commission</h3>
-<div class="value" id="historyCommission">GHS 0.00</div>
-</div>
+            <h2>Previous Days' Work</h2>
 
-<div class="card">
-<h3>Expected Closing</h3>
-<div class="value" id="historyExpected">GHS 0.00</div>
-</div>
+            <div class="history-controls">
 
-<div class="card">
-<h3>Difference</h3>
-<div class="value" id="historyDifference">GHS 0.00</div>
-</div>
+                <div class="form-group">
 
-</div>
+                    <label for="historyDate">
+                        Select Date
+                    </label>
 
+                    <input
+                        type="date"
+                        id="historyDate"
+                    >
 
-<div class="table-section">
+                </div>
 
-<h2>
-MoMo Transactions
-</h2>
+                <button
+                    class="primary-btn"
+                    onclick="viewPreviousDay()"
+                >
+                    View Day
+                </button>
 
-<table>
+            </div>
 
-<thead>
+            <div
+                id="historyMessage"
+                class="message"
+            ></div>
 
-<tr>
-<th>Time</th>
-<th>Worker</th>
-<th>Network</th>
-<th>Type</th>
-<th>Amount</th>
-<th>Commission</th>
-<th>Reference</th>
-</tr>
+        </div>
 
-</thead>
 
-<tbody id="historyMomoTable"></tbody>
+        <div
+            id="previousDayResults"
+            class="hidden"
+        >
 
-</table>
+            <div class="section">
 
-</div>
+                <h2>Selected Day Summary</h2>
 
+                <div class="cards">
 
-<div class="table-section">
+                    <div class="card">
+                        <div class="card-title">Worker</div>
+                        <div class="card-value" id="historyWorker">-</div>
+                    </div>
 
-<h2 class="electricity-heading">
-Electricity Transactions
-</h2>
+                    <div class="card">
+                        <div class="card-title">Shift Status</div>
+                        <div class="card-value" id="historyShiftStatus">-</div>
+                    </div>
 
-<table>
+                    <div class="card">
+                        <div class="card-title">Opening Balance</div>
+                        <div class="card-value" id="historyOpeningBalance">GH₵0.00</div>
+                    </div>
 
-<thead>
+                    <div class="card">
+                        <div class="card-title">Actual Closing</div>
+                        <div class="card-value" id="historyActualClosing">GH₵0.00</div>
+                    </div>
 
-<tr>
-<th>Time</th>
-<th>Worker</th>
-<th>Meter</th>
-<th>Customer</th>
-<th>Amount</th>
-<th>Token</th>
-</tr>
+                    <div class="card">
+                        <div class="card-title">Cash In</div>
+                        <div class="card-value" id="historyCashIn">GH₵0.00</div>
+                    </div>
 
-</thead>
+                    <div class="card">
+                        <div class="card-title">Cash Out</div>
+                        <div class="card-value" id="historyCashOut">GH₵0.00</div>
+                    </div>
 
-<tbody id="historyElectricityTable"></tbody>
+                    <div class="card">
+                        <div class="card-title">Electricity Sales</div>
+                        <div class="card-value" id="historyElectricitySales">GH₵0.00</div>
+                    </div>
 
-</table>
+                    <div class="card">
+                        <div class="card-title">Commission</div>
+                        <div class="card-value" id="historyCommission">GH₵0.00</div>
+                    </div>
 
-</div>
+                    <div class="card">
+                        <div class="card-title">Expected Closing</div>
+                        <div class="card-value" id="historyExpectedClosing">GH₵0.00</div>
+                    </div>
 
+                    <div class="card">
+                        <div class="card-title">Difference</div>
+                        <div class="card-value" id="historyDifference">GH₵0.00</div>
+                    </div>
 
-<div class="balance-box">
+                </div>
 
-<h2>Daily Reconciliation</h2>
+            </div>
 
-<div class="balance-grid">
 
-<div class="balance-result">
-<h4>Opening Balance</h4>
-<strong id="historyDisplayOpening">GHS 0.00</strong>
-</div>
+            <div class="section">
 
-<div class="balance-result">
-<h4>Expected Closing</h4>
-<strong id="historyDisplayExpected">GHS 0.00</strong>
-</div>
+                <h2>MoMo History</h2>
 
-<div class="balance-result">
-<h4>Actual Closing</h4>
-<strong id="historyDisplayActual">GHS 0.00</strong>
-</div>
+                <div class="table-wrapper">
 
-<div class="balance-result">
-<h4>Difference</h4>
-<strong id="historyDisplayDifference">GHS 0.00</strong>
-</div>
+                    <table>
 
-</div>
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>Worker</th>
+                                <th>Type</th>
+                                <th>Amount</th>
+                                <th>Customer</th>
+                                <th>Reference</th>
+                            </tr>
+                        </thead>
 
-</div>
+                        <tbody id="historyMomoTableBody"></tbody>
 
-</div>
+                    </table>
 
+                </div>
 
-<!-- =====================================================
-     TODAY'S TRANSACTIONS
-===================================================== -->
+            </div>
 
-<div class="table-section">
 
-<h2>Today's MoMo Transactions</h2>
+            <div class="section">
 
-<table>
+                <h2>Electricity History</h2>
 
-<thead>
+                <div class="table-wrapper">
 
-<tr>
-<th>Time</th>
-<th>Worker</th>
-<th>Network</th>
-<th>Type</th>
-<th>Amount</th>
-<th>Commission</th>
-<th>Reference</th>
-</tr>
+                    <table>
 
-</thead>
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>Worker</th>
+                                <th>Amount</th>
+                                <th>Meter Number</th>
+                                <th>Reference</th>
+                                <th>Commission</th>
+                            </tr>
+                        </thead>
 
-<tbody id="adminMomoTable"></tbody>
+                        <tbody id="historyElectricityTableBody"></tbody>
 
-</table>
+                    </table>
 
-</div>
+                </div>
 
+            </div>
 
-<div class="table-section">
 
-<h2 class="electricity-heading">
-Today's Electricity Transactions
-</h2>
+            <div class="section">
 
-<table>
+                <h2>Daily Reconciliation</h2>
 
-<thead>
+                <div
+                    id="historyReconciliation"
+                    class="reconciliation"
+                ></div>
 
-<tr>
-<th>Time</th>
-<th>Worker</th>
-<th>Meter</th>
-<th>Customer</th>
-<th>Amount</th>
-<th>Token</th>
-</tr>
+            </div>
 
-</thead>
+        </div>
 
-<tbody id="adminElectricityTable"></tbody>
-
-</table>
-
-</div>
-
-
-<div class="balance-box">
-
-<h2>Daily Reconciliation</h2>
-
-<div class="balance-grid">
-
-<div class="balance-result">
-<h4>Opening Balance</h4>
-<strong id="adminDisplayOpening">GHS 0.00</strong>
-</div>
-
-<div class="balance-result">
-<h4>Expected Closing</h4>
-<strong id="adminDisplayExpected">GHS 0.00</strong>
-</div>
-
-<div class="balance-result">
-<h4>Actual Closing</h4>
-<strong id="adminDisplayActual">GHS 0.00</strong>
-</div>
-
-<div class="balance-result">
-<h4>Difference</h4>
-<strong id="adminDisplayDifference">GHS 0.00</strong>
-</div>
-
-</div>
-
-</div>
-
-</div>
+    </div>
 
 </div>
 
@@ -922,584 +710,400 @@ Today's Electricity Transactions
      WORKER PORTAL
 ===================================================== -->
 
-<div id="workerPortal">
+<div id="workerPortal" class="portal">
 
-<header>
+    <div class="header">
 
-<div>
-<h1>FAME Portal</h1>
-<small>Worker Portal — Faustina Ansa-Mensah Enterprise</small>
-</div>
+        <div>
+            <h1>FAME Portal</h1>
 
-<button class="logout-btn" onclick="logout()">Logout</button>
+            <small>
+                Worker Portal -
+                <span id="loggedWorkerName"></span>
+            </small>
+        </div>
 
-</header>
+        <button
+            class="logout-btn"
+            onclick="logout()"
+        >
+            Logout
+        </button>
 
-<div class="container">
+    </div>
 
-<div class="worker-welcome">
 
-<h2>Welcome</h2>
+    <div class="container">
 
-<div class="worker-name" id="loggedWorkerName">
-Worker
-</div>
+        <!-- SHIFT -->
 
-<p>
-You are logged in as a worker. You can only see
-transactions recorded under your own account.
-</p>
+        <div class="section">
 
-</div>
+            <h2>Daily Shift</h2>
 
+            <div
+                id="workerShiftMessage"
+                class="message"
+            ></div>
 
-<!-- SHIFT -->
+            <div class="cards">
 
-<div class="shift-box">
+                <div class="card">
+                    <div class="card-title">Shift Status</div>
+                    <div class="card-value" id="workerShiftStatus">-</div>
+                </div>
 
-<h2>Today's Shift</h2>
+                <div class="card">
+                    <div class="card-title">Opening Balance</div>
+                    <div class="card-value" id="workerOpeningBalance">GH₵0.00</div>
+                </div>
 
-<div style="margin-bottom:20px">
+                <div class="card">
+                    <div class="card-title">Cash In</div>
+                    <div class="card-value" id="workerCashIn">GH₵0.00</div>
+                </div>
 
-<span
-id="workerShiftStatus"
-class="status-not-started"
->
-Shift Not Started
-</span>
+                <div class="card">
+                    <div class="card-title">Cash Out</div>
+                    <div class="card-value" id="workerCashOut">GH₵0.00</div>
+                </div>
 
-</div>
+                <div class="card">
+                    <div class="card-title">Electricity Sales</div>
+                    <div class="card-value" id="workerElectricitySales">GH₵0.00</div>
+                </div>
 
+                <div class="card">
+                    <div class="card-title">Commission</div>
+                    <div class="card-value" id="workerCommission">GH₵0.00</div>
+                </div>
 
-<div id="startShiftArea">
+                <div class="card">
+                    <div class="card-title">Expected Closing</div>
+                    <div class="card-value" id="workerExpectedClosing">GH₵0.00</div>
+                </div>
 
-<div class="notice">
-The opening balance will automatically use the previous
-closed shift's closing balance when available.
-</div>
+            </div>
 
-<div class="form-grid">
 
-<div class="form-group">
+            <div id="startShiftArea">
 
-<label>Opening Balance</label>
+                <div class="form-grid">
 
-<input
-type="number"
-id="workerOpeningBalance"
-min="0"
-step="0.01"
-placeholder="0.00"
->
+                    <div class="form-group">
 
-</div>
+                        <label>
+                            Opening Balance
+                        </label>
 
-</div>
+                        <input
+                            type="number"
+                            id="openingBalance"
+                            min="0"
+                            step="0.01"
+                            class="money-input"
+                        >
 
-<div class="form-actions">
+                    </div>
 
-<button
-class="save-btn"
-onclick="startShift()"
->
-Start Daily Shift
-</button>
+                </div>
 
-</div>
+                <div class="action-row">
 
-<div id="shiftMessage" class="message"></div>
+                    <button
+                        class="success-btn"
+                        onclick="startShift()"
+                    >
+                        Start Daily Shift
+                    </button>
 
-</div>
+                </div>
 
+            </div>
 
-<div id="activeShiftArea" class="hidden">
 
-<div class="info-grid">
+            <div
+                id="activeShiftArea"
+                class="hidden"
+            >
 
-<div class="info-item">
-<span>Worker</span>
-<strong id="workerShiftWorker">-</strong>
-</div>
+                <div class="form-grid">
 
-<div class="info-item">
-<span>Opening Balance</span>
-<strong id="workerShiftOpening">GHS 0.00</strong>
-</div>
+                    <div class="form-group">
 
-<div class="info-item">
-<span>Started</span>
-<strong id="workerShiftStart">-</strong>
-</div>
+                        <label>
+                            Closing Balance
+                        </label>
 
-</div>
+                        <input
+                            type="number"
+                            id="closingBalance"
+                            min="0"
+                            step="0.01"
+                            class="money-input"
+                        >
 
-</div>
+                    </div>
 
-</div>
+                </div>
 
+                <div class="action-row">
 
-<!-- BUSINESS AREA -->
+                    <button
+                        class="danger-btn"
+                        onclick="closeWorkerShift()"
+                    >
+                        Close Shift
+                    </button>
 
-<div id="workerBusinessArea" class="hidden">
+                </div>
 
-<h2 class="section-title">Today's Summary</h2>
+            </div>
 
-<div class="cards">
+        </div>
 
-<div class="card">
-<h3>Cash In</h3>
-<div class="value" id="workerCashIn">GHS 0.00</div>
-</div>
 
-<div class="card">
-<h3>Cash Out</h3>
-<div class="value" id="workerCashOut">GHS 0.00</div>
-</div>
+        <!-- MOMO -->
 
-<div class="card">
-<h3>Electricity</h3>
-<div class="value" id="workerElectricity">GHS 0.00</div>
-</div>
+        <div
+            id="workerMomoSection"
+            class="section"
+        >
 
-<div class="card">
-<h3>Commission</h3>
-<div class="value" id="workerCommission">GHS 0.00</div>
-</div>
+            <h2>Record MoMo Transaction</h2>
 
-<div class="card">
-<h3>Expected Closing</h3>
-<div class="value" id="workerExpected">GHS 0.00</div>
-</div>
+            <div class="form-grid">
 
-</div>
+                <div class="form-group">
 
+                    <label>
+                        Transaction Type
+                    </label>
 
-<!-- MOMO ENTRY -->
+                    <select id="momoType">
 
-<div class="action-box">
+                        <option value="Cash In">
+                            Cash In
+                        </option>
 
-<h2>MoMo Transactions</h2>
+                        <option value="Cash Out">
+                            Cash Out
+                        </option>
 
-<div class="action-buttons">
+                    </select>
 
-<button
-class="btn-green"
-onclick="openWorkerMoMoForm()"
->
-+ New MoMo Transaction
-</button>
+                </div>
 
-</div>
 
-</div>
+                <div class="form-group">
 
+                    <label>
+                        Amount
+                    </label>
 
-<div
-id="workerMomoForm"
-class="form-section hidden"
->
+                    <input
+                        type="number"
+                        id="momoAmount"
+                        min="0"
+                        step="0.01"
+                    >
 
-<h2>New MoMo Transaction</h2>
+                </div>
 
-<div class="form-grid">
 
-<div class="form-group">
+                <div class="form-group">
 
-<label>Network *</label>
+                    <label>
+                        Customer
+                    </label>
 
-<select
-id="workerMomoNetwork"
-class="network-select"
->
+                    <input
+                        type="text"
+                        id="momoCustomer"
+                    >
 
-<option value="">-- Select Network --</option>
-<option value="MTN">MTN</option>
-<option value="Telecel">Telecel</option>
-<option value="Tigo">Tigo</option>
+                </div>
 
-</select>
 
-</div>
+                <div class="form-group">
 
+                    <label>
+                        Reference
+                    </label>
 
-<div class="form-group">
+                    <input
+                        type="text"
+                        id="momoReference"
+                    >
 
-<label>Transaction Type *</label>
+                </div>
 
-<select id="workerMomoType">
+            </div>
 
-<option value="">-- Select Type --</option>
-<option value="Cash In">Cash In</option>
-<option value="Cash Out">Cash Out</option>
 
-</select>
+            <div class="action-row">
 
-</div>
+                <button
+                    class="primary-btn"
+                    onclick="saveMomoTransaction()"
+                >
+                    Save MoMo Transaction
+                </button>
 
+            </div>
 
-<div class="form-group">
+        </div>
 
-<label>Amount *</label>
 
-<input
-type="number"
-id="workerMomoAmount"
-min="0"
-step="0.01"
-placeholder="0.00"
->
+        <!-- ELECTRICITY -->
 
-</div>
+        <div
+            id="workerElectricitySection"
+            class="section"
+        >
 
+            <h2>Record Electricity Transaction</h2>
 
-<div class="form-group">
+            <div class="form-grid">
 
-<label>Commission</label>
+                <div class="form-group">
 
-<input
-type="number"
-id="workerMomoCommission"
-min="0"
-step="0.01"
-value="0"
->
+                    <label>
+                        Amount
+                    </label>
 
-</div>
+                    <input
+                        type="number"
+                        id="electricityAmount"
+                        min="0"
+                        step="0.01"
+                    >
 
+                </div>
 
-<div class="form-group">
 
-<label>Customer / Reference</label>
+                <div class="form-group">
 
-<input
-type="text"
-id="workerMomoReference"
-placeholder="Customer name or reference"
->
+                    <label>
+                        Meter Number
+                    </label>
 
-</div>
+                    <input
+                        type="text"
+                        id="electricityMeter"
+                    >
 
+                </div>
 
-<div class="form-group">
 
-<label>Date & Time</label>
+                <div class="form-group">
 
-<input
-type="datetime-local"
-id="workerMomoDate"
->
+                    <label>
+                        Reference
+                    </label>
 
-</div>
+                    <input
+                        type="text"
+                        id="electricityReference"
+                    >
 
+                </div>
 
-<div class="form-group">
 
-<label>Note</label>
+                <div class="form-group">
 
-<textarea
-id="workerMomoNote"
-placeholder="Optional note"
-></textarea>
+                    <label>
+                        Commission
+                    </label>
 
-</div>
+                    <input
+                        type="number"
+                        id="electricityCommission"
+                        min="0"
+                        step="0.01"
+                    >
 
-</div>
+                </div>
 
+            </div>
 
-<div class="form-actions">
 
-<button
-class="save-btn"
-onclick="saveWorkerMoMo()"
->
-Save Transaction
-</button>
+            <div class="action-row">
 
-<button
-class="cancel-btn"
-onclick="closeWorkerMoMoForm()"
->
-Cancel
-</button>
+                <button
+                    class="primary-btn"
+                    onclick="saveElectricityTransaction()"
+                >
+                    Save Electricity Transaction
+                </button>
 
-</div>
+            </div>
 
-<div
-id="workerMomoMessage"
-class="message"
-></div>
+        </div>
 
-</div>
 
+        <!-- MY MOMO -->
 
-<!-- ELECTRICITY ENTRY -->
+        <div class="section">
 
-<div class="action-box">
+            <h2>My MoMo Transactions Today</h2>
 
-<h2 class="electricity-heading">
-Electricity Prepaid
-</h2>
+            <div class="table-wrapper">
 
-<div class="action-buttons">
+                <table>
 
-<button
-class="btn-blue"
-onclick="openWorkerElectricityForm()"
->
-+ New Electricity Transaction
-</button>
+                    <thead>
 
-</div>
+                        <tr>
+                            <th>Time</th>
+                            <th>Type</th>
+                            <th>Amount</th>
+                            <th>Customer</th>
+                            <th>Reference</th>
+                        </tr>
 
-</div>
+                    </thead>
 
+                    <tbody id="workerMomoTableBody"></tbody>
 
-<div
-id="workerElectricityForm"
-class="form-section hidden"
->
+                </table>
 
-<h2 class="electricity-heading">
-New Electricity Transaction
-</h2>
+            </div>
 
-<div class="form-grid">
+        </div>
 
-<div class="form-group">
 
-<label>Meter Number *</label>
+        <!-- MY ELECTRICITY -->
 
-<input
-type="text"
-id="workerElectricityMeter"
-placeholder="Enter meter number"
->
+        <div class="section">
 
-</div>
+            <h2>My Electricity Transactions Today</h2>
 
+            <div class="table-wrapper">
 
-<div class="form-group">
+                <table>
 
-<label>Customer Name / Phone</label>
+                    <thead>
 
-<input
-type="text"
-id="workerElectricityCustomer"
-placeholder="Customer name or phone"
->
+                        <tr>
+                            <th>Time</th>
+                            <th>Amount</th>
+                            <th>Meter Number</th>
+                            <th>Reference</th>
+                            <th>Commission</th>
+                        </tr>
 
-</div>
+                    </thead>
 
+                    <tbody id="workerElectricityTableBody"></tbody>
 
-<div class="form-group">
+                </table>
 
-<label>Amount Paid *</label>
+            </div>
 
-<input
-type="number"
-id="workerElectricityAmount"
-class="electricity-amount"
-min="0"
-step="0.01"
-placeholder="0.00"
->
+        </div>
 
-</div>
-
-
-<div class="form-group">
-
-<label>Electricity Token</label>
-
-<input
-type="text"
-id="workerElectricityToken"
-placeholder="Enter token"
->
-
-</div>
-
-
-<div class="form-group">
-
-<label>Date & Time</label>
-
-<input
-type="datetime-local"
-id="workerElectricityDate"
->
-
-</div>
-
-
-<div class="form-group">
-
-<label>Note</label>
-
-<textarea
-id="workerElectricityNote"
-placeholder="Optional note"
-></textarea>
-
-</div>
-
-</div>
-
-
-<div class="form-actions">
-
-<button
-class="save-btn"
-onclick="saveWorkerElectricity()"
->
-Save Electricity Transaction
-</button>
-
-<button
-class="cancel-btn"
-onclick="closeWorkerElectricityForm()"
->
-Cancel
-</button>
-
-</div>
-
-<div
-id="workerElectricityMessage"
-class="message"
-></div>
-
-</div>
-
-
-<!-- WORKER MOMO HISTORY -->
-
-<div class="table-section">
-
-<h2>My MoMo Transactions Today</h2>
-
-<table>
-
-<thead>
-
-<tr>
-<th>Time</th>
-<th>Network</th>
-<th>Type</th>
-<th>Amount</th>
-<th>Commission</th>
-<th>Reference</th>
-</tr>
-
-</thead>
-
-<tbody id="workerMomoTable"></tbody>
-
-</table>
-
-</div>
-
-
-<!-- WORKER ELECTRICITY HISTORY -->
-
-<div class="table-section">
-
-<h2 class="electricity-heading">
-My Electricity Transactions Today
-</h2>
-
-<table>
-
-<thead>
-
-<tr>
-<th>Time</th>
-<th>Meter</th>
-<th>Customer</th>
-<th>Amount</th>
-<th>Token</th>
-</tr>
-
-</thead>
-
-<tbody id="workerElectricityTable"></tbody>
-
-</table>
-
-</div>
-
-
-<!-- CLOSE SHIFT -->
-
-<div class="balance-box">
-
-<h2>Close Today's Shift</h2>
-
-<div class="form-grid">
-
-<div class="form-group">
-
-<label>Actual Closing Balance *</label>
-
-<input
-type="number"
-id="workerClosingBalance"
-min="0"
-step="0.01"
-placeholder="Enter actual cash balance"
->
-
-</div>
-
-</div>
-
-
-<div class="balance-grid" style="margin-top:20px">
-
-<div class="balance-result">
-<h4>Opening</h4>
-<strong id="workerDisplayOpening">GHS 0.00</strong>
-</div>
-
-<div class="balance-result">
-<h4>Expected Closing</h4>
-<strong id="workerDisplayExpected">GHS 0.00</strong>
-</div>
-
-<div class="balance-result">
-<h4>Actual Closing</h4>
-<strong id="workerDisplayActual">GHS 0.00</strong>
-</div>
-
-<div class="balance-result">
-<h4>Difference</h4>
-<strong id="workerDisplayDifference">GHS 0.00</strong>
-</div>
-
-</div>
-
-
-<div class="form-actions">
-
-<button
-class="save-btn"
-onclick="closeWorkerShift()"
->
-Close Daily Shift
-</button>
-
-</div>
-
-<div
-id="closingMessage"
-class="message"
-></div>
-
-</div>
-
-</div>
-
-</div>
+    </div>
 
 </div>
 
@@ -1507,15 +1111,11 @@ class="message"
 <script>
 
 /* =====================================================
-   CURRENT USER
+   DATA STORAGE
 ===================================================== */
 
 let currentUser = null;
 
-
-/* =====================================================
-   STORAGE
-===================================================== */
 
 function getTransactions(){
 
@@ -1524,6 +1124,7 @@ function getTransactions(){
     ) || [];
 
 }
+
 
 function saveTransactions(data){
 
@@ -1534,13 +1135,17 @@ function saveTransactions(data){
 
 }
 
+
 function getElectricityTransactions(){
 
     return JSON.parse(
-        localStorage.getItem("fameElectricityTransactions")
+        localStorage.getItem(
+            "fameElectricityTransactions"
+        )
     ) || [];
 
 }
+
 
 function saveElectricityTransactions(data){
 
@@ -1551,6 +1156,7 @@ function saveElectricityTransactions(data){
 
 }
 
+
 function getShifts(){
 
     return JSON.parse(
@@ -1558,6 +1164,7 @@ function getShifts(){
     ) || [];
 
 }
+
 
 function saveShifts(data){
 
@@ -1570,7 +1177,7 @@ function saveShifts(data){
 
 
 /* =====================================================
-   DATE
+   DATE / TIME
 ===================================================== */
 
 function todayKey(){
@@ -1588,13 +1195,36 @@ function todayKey(){
 }
 
 
-function dateKeyFromValue(dateValue){
+function getLocalDateTime(){
 
-    if(!dateValue){
+    const d = new Date();
+
+    return d.toISOString();
+
+}
+
+
+function isToday(value){
+
+    return dateKeyFromValue(value) === todayKey();
+
+}
+
+
+function isSameDate(value,date){
+
+    return dateKeyFromValue(value) === date;
+
+}
+
+
+function dateKeyFromValue(value){
+
+    if(!value){
         return "";
     }
 
-    const d = new Date(dateValue);
+    const d = new Date(value);
 
     if(isNaN(d.getTime())){
         return "";
@@ -1611,57 +1241,19 @@ function dateKeyFromValue(dateValue){
 }
 
 
-function getLocalDateTime(){
+function formatTime(value){
 
-    const now = new Date();
-
-    const local =
-        new Date(
-            now.getTime() -
-            now.getTimezoneOffset()*60000
-        );
-
-    return local.toISOString().slice(0,16);
-
-}
-
-
-function isToday(dateString){
-
-    if(!dateString){
-        return false;
-    }
-
-    const d = new Date(dateString);
-    const today = new Date();
-
-    return (
-        d.getFullYear() === today.getFullYear() &&
-        d.getMonth() === today.getMonth() &&
-        d.getDate() === today.getDate()
-    );
-
-}
-
-
-function isSameDate(dateString, selectedDate){
-
-    if(!dateString || !selectedDate){
-        return false;
-    }
-
-    return dateKeyFromValue(dateString) === selectedDate;
-
-}
-
-
-function formatTime(dateString){
-
-    if(!dateString){
+    if(!value){
         return "-";
     }
 
-    return new Date(dateString).toLocaleTimeString(
+    const d = new Date(value);
+
+    if(isNaN(d.getTime())){
+        return "-";
+    }
+
+    return d.toLocaleTimeString(
         [],
         {
             hour:"2-digit",
@@ -1672,25 +1264,40 @@ function formatTime(dateString){
 }
 
 
-function formatDateDisplay(dateValue){
+function formatDateDisplay(date){
 
-    if(!dateValue){
+    if(!date){
         return "-";
     }
 
-    const parts = dateValue.split("-");
+    const d = new Date(date + "T00:00:00");
 
-    if(parts.length !== 3){
-        return dateValue;
+    if(isNaN(d.getTime())){
+        return date;
     }
 
-    return (
-        parts[2] +
-        "/" +
-        parts[1] +
-        "/" +
-        parts[0]
+    return d.toLocaleDateString(
+        [],
+        {
+            day:"numeric",
+            month:"long",
+            year:"numeric"
+        }
     );
+
+}
+
+
+function formatMoney(value){
+
+    return "GH₵" +
+        Number(value || 0).toLocaleString(
+            "en-GH",
+            {
+                minimumFractionDigits:2,
+                maximumFractionDigits:2
+            }
+        );
 
 }
 
@@ -1702,17 +1309,23 @@ function formatDateDisplay(dateValue){
 function login(){
 
     const username =
-        document.getElementById("username")
+        document
+        .getElementById("username")
         .value
         .trim()
         .toLowerCase();
 
     const password =
-        document.getElementById("password").value;
+        document
+        .getElementById("password")
+        .value;
 
     const error =
-        document.getElementById("loginError");
+        document
+        .getElementById("loginError");
 
+
+    /* ADMIN */
 
     if(
         username === "admin" &&
@@ -1724,9 +1337,29 @@ function login(){
             name:"Administrator"
         };
 
-        document.getElementById("loginPage").style.display="none";
-        document.getElementById("workerPortal").style.display="none";
-        document.getElementById("portal").style.display="block";
+
+        /* SAVE LOGIN */
+
+        localStorage.setItem(
+            "fameLoggedInUser",
+            JSON.stringify(currentUser)
+        );
+
+
+        document
+        .getElementById("loginPage")
+        .style.display="none";
+
+
+        document
+        .getElementById("workerPortal")
+        .style.display="none";
+
+
+        document
+        .getElementById("portal")
+        .style.display="block";
+
 
         setDefaultHistoryDate();
 
@@ -1739,6 +1372,8 @@ function login(){
     }
 
 
+    /* ABI */
+
     if(
         username === "abi" &&
         password === "abi123"
@@ -1750,6 +1385,15 @@ function login(){
             username:"abi"
         };
 
+
+        /* SAVE LOGIN */
+
+        localStorage.setItem(
+            "fameLoggedInUser",
+            JSON.stringify(currentUser)
+        );
+
+
         openWorkerPortal();
 
         error.textContent="";
@@ -1758,6 +1402,8 @@ function login(){
 
     }
 
+
+    /* BAB */
 
     if(
         username === "bab" &&
@@ -1769,6 +1415,15 @@ function login(){
             name:"Bab Fame",
             username:"bab"
         };
+
+
+        /* SAVE LOGIN */
+
+        localStorage.setItem(
+            "fameLoggedInUser",
+            JSON.stringify(currentUser)
+        );
+
 
         openWorkerPortal();
 
@@ -1791,74 +1446,183 @@ function login(){
 
 function logout(){
 
-    currentUser=null;
+    currentUser = null;
 
-    document.getElementById("portal").style.display="none";
-    document.getElementById("workerPortal").style.display="none";
-    document.getElementById("loginPage").style.display="flex";
 
-    document.getElementById("username").value="";
-    document.getElementById("password").value="";
-    document.getElementById("loginError").textContent="";
+    /* REMOVE SAVED LOGIN */
+
+    localStorage.removeItem(
+        "fameLoggedInUser"
+    );
+
+
+    document
+    .getElementById("portal")
+    .style.display="none";
+
+
+    document
+    .getElementById("workerPortal")
+    .style.display="none";
+
+
+    document
+    .getElementById("loginPage")
+    .style.display="flex";
+
+
+    document
+    .getElementById("username")
+    .value="";
+
+
+    document
+    .getElementById("password")
+    .value="";
+
+
+    document
+    .getElementById("loginError")
+    .textContent="";
 
 }
 
 
 /* =====================================================
-   SHIFT HELPERS
+   RESTORE LOGIN AFTER REFRESH
 ===================================================== */
 
-function getTodayShift(){
+function restoreLogin(){
 
-    const shifts = getShifts();
-
-    return shifts.find(
-        shift => shift.date === todayKey()
-    ) || null;
-
-}
-
-
-function getPreviousClosingBalance(){
-
-    const shifts = getShifts();
-
-    const closed =
-        shifts
-        .filter(
-            shift =>
-                shift.status === "Closed" &&
-                shift.closingBalance !== null &&
-                shift.closingBalance !== undefined
-        )
-        .sort(
-            (a,b) =>
-                new Date(b.endTime || b.startTime) -
-                new Date(a.endTime || a.startTime)
+    const savedUser =
+        localStorage.getItem(
+            "fameLoggedInUser"
         );
 
-    if(closed.length){
 
-        return Number(
-            closed[0].closingBalance
-        ) || 0;
+    if(!savedUser){
+
+        return;
 
     }
 
 
-    const old =
-        JSON.parse(
-            localStorage.getItem("fameDailyBalance")
+    try{
+
+        currentUser =
+            JSON.parse(savedUser);
+
+
+        if(
+            !currentUser ||
+            !currentUser.role
+        ){
+
+            currentUser=null;
+
+            localStorage.removeItem(
+                "fameLoggedInUser"
+            );
+
+            return;
+
+        }
+
+
+        document
+        .getElementById("loginPage")
+        .style.display="none";
+
+
+        /* ADMIN */
+
+        if(
+            currentUser.role === "admin"
+        ){
+
+            document
+            .getElementById("workerPortal")
+            .style.display="none";
+
+
+            document
+            .getElementById("portal")
+            .style.display="block";
+
+
+            setDefaultHistoryDate();
+
+            updateAdminPortal();
+
+            return;
+
+        }
+
+
+        /* WORKER */
+
+        if(
+            currentUser.role === "worker"
+        ){
+
+            document
+            .getElementById("portal")
+            .style.display="none";
+
+
+            document
+            .getElementById("workerPortal")
+            .style.display="block";
+
+
+            document
+            .getElementById("loggedWorkerName")
+            .textContent =
+                currentUser.name;
+
+
+            loadWorkerShift();
+
+            return;
+
+        }
+
+
+        /* INVALID ROLE */
+
+        currentUser=null;
+
+        localStorage.removeItem(
+            "fameLoggedInUser"
         );
 
-    if(old){
 
-        return Number(old.actual) || 0;
+        document
+        .getElementById("loginPage")
+        .style.display="flex";
 
     }
 
+    catch(error){
 
-    return 0;
+        console.error(
+            "Could not restore login:",
+            error
+        );
+
+
+        currentUser=null;
+
+        localStorage.removeItem(
+            "fameLoggedInUser"
+        );
+
+
+        document
+        .getElementById("loginPage")
+        .style.display="flex";
+
+    }
 
 }
 
@@ -1869,16 +1633,95 @@ function getPreviousClosingBalance(){
 
 function openWorkerPortal(){
 
-    document.getElementById("loginPage").style.display="none";
-    document.getElementById("portal").style.display="none";
-    document.getElementById("workerPortal").style.display="block";
+    document
+    .getElementById("loginPage")
+    .style.display="none";
 
-    document.getElementById(
-        "loggedWorkerName"
-    ).textContent =
+
+    document
+    .getElementById("portal")
+    .style.display="none";
+
+
+    document
+    .getElementById("workerPortal")
+    .style.display="block";
+
+
+    document
+    .getElementById("loggedWorkerName")
+    .textContent =
         currentUser.name;
 
+
     loadWorkerShift();
+
+}
+
+
+/* =====================================================
+   SHIFT HELPERS
+===================================================== */
+
+function getTodayShift(){
+
+    if(!currentUser){
+        return null;
+    }
+
+    const shifts = getShifts();
+
+    return shifts.find(
+        shift =>
+            shift.date === todayKey()
+    ) || null;
+
+}
+
+
+function getPreviousClosingBalance(){
+
+    const shifts = getShifts();
+
+    const previous = shifts
+        .filter(
+            shift =>
+                shift.date < todayKey() &&
+                shift.closingBalance !== null &&
+                shift.closingBalance !== undefined
+        )
+        .sort(
+            (a,b) =>
+                a.date.localeCompare(b.date)
+        );
+
+
+    if(previous.length){
+
+        return Number(
+            previous[previous.length-1]
+            .closingBalance
+        ) || 0;
+
+    }
+
+
+    /* Legacy fallback */
+
+    const legacy =
+        localStorage.getItem(
+            "fameDailyBalance"
+        );
+
+
+    if(legacy !== null){
+
+        return Number(legacy) || 0;
+
+    }
+
+
+    return 0;
 
 }
 
@@ -1889,37 +1732,58 @@ function openWorkerPortal(){
 
 function loadWorkerShift(){
 
-    const shift = getTodayShift();
+    if(!currentUser){
+        return;
+    }
+
+
+    const shift =
+        getTodayShift();
 
 
     if(!shift){
 
-        document.getElementById(
-            "workerShiftStatus"
-        ).textContent =
-            "Shift Not Started";
+        document
+        .getElementById("workerShiftStatus")
+        .textContent="Not Started";
 
-        document.getElementById(
-            "workerShiftStatus"
-        ).className =
-            "status-not-started";
 
-        document.getElementById(
-            "startShiftArea"
-        ).classList.remove("hidden");
+        document
+        .getElementById("workerOpeningBalance")
+        .textContent =
+            formatMoney(
+                getPreviousClosingBalance()
+            );
 
-        document.getElementById(
-            "activeShiftArea"
-        ).classList.add("hidden");
 
-        document.getElementById(
-            "workerBusinessArea"
-        ).classList.add("hidden");
-
-        document.getElementById(
-            "workerOpeningBalance"
-        ).value =
+        document
+        .getElementById("openingBalance")
+        .value =
             getPreviousClosingBalance();
+
+
+        document
+        .getElementById("startShiftArea")
+        .classList.remove("hidden");
+
+
+        document
+        .getElementById("activeShiftArea")
+        .classList.add("hidden");
+
+
+        document
+        .getElementById("workerShiftMessage")
+        .className="message warning";
+
+
+        document
+        .getElementById("workerShiftMessage")
+        .textContent =
+            "No shift has been started today.";
+
+
+        updateWorkerDashboard();
 
         return;
 
@@ -1931,57 +1795,53 @@ function loadWorkerShift(){
         currentUser.username
     ){
 
-        document.getElementById(
-            "workerShiftStatus"
-        ).textContent =
-            "Another Worker Is On Duty";
+        document
+        .getElementById("workerShiftStatus")
+        .textContent="Another Worker";
 
-        document.getElementById(
-            "workerShiftStatus"
-        ).className =
-            "status-closed";
 
-        document.getElementById(
-            "startShiftArea"
-        ).classList.add("hidden");
+        document
+        .getElementById("startShiftArea")
+        .classList.add("hidden");
 
-        document.getElementById(
-            "activeShiftArea"
-        ).classList.remove("hidden");
 
-        document.getElementById(
-            "workerBusinessArea"
-        ).classList.add("hidden");
+        document
+        .getElementById("activeShiftArea")
+        .classList.add("hidden");
 
-        document.getElementById(
-            "workerShiftWorker"
-        ).textContent =
-            shift.workerName;
 
-        document.getElementById(
-            "workerShiftOpening"
-        ).textContent =
-            formatMoney(shift.openingBalance);
+        document
+        .getElementById("workerShiftMessage")
+        .className="message warning";
 
-        document.getElementById(
-            "workerShiftStart"
-        ).textContent =
-            formatTime(shift.startTime);
+
+        document
+        .getElementById("workerShiftMessage")
+        .textContent =
+            shift.workerName +
+            " is the worker on duty today. You cannot operate this shift.";
+
+
+        updateWorkerDashboard();
 
         return;
 
     }
 
 
-    if(shift.status === "Open"){
+    if(shift.status === "open"){
 
-        showActiveShift(shift);
-
-    }else{
-
-        showClosedShift(shift);
+        showActiveShift();
 
     }
+    else{
+
+        showClosedShift();
+
+    }
+
+
+    updateWorkerDashboard();
 
 }
 
@@ -1992,16 +1852,21 @@ function loadWorkerShift(){
 
 function startShift(){
 
-    const existing = getTodayShift();
+    if(!currentUser){
+        return;
+    }
+
+
+    const existing =
+        getTodayShift();
+
 
     if(existing){
 
         alert(
-            "Today's shift has already been started by " +
+            "A shift has already been started today by " +
             existing.workerName + "."
         );
-
-        loadWorkerShift();
 
         return;
 
@@ -2010,9 +1875,9 @@ function startShift(){
 
     const opening =
         Number(
-            document.getElementById(
-                "workerOpeningBalance"
-            ).value
+            document
+            .getElementById("openingBalance")
+            .value
         );
 
 
@@ -2021,172 +1886,144 @@ function startShift(){
         opening < 0
     ){
 
-        document.getElementById(
-            "shiftMessage"
-        ).textContent =
-            "Please enter a valid opening balance.";
-
-        document.getElementById(
-            "shiftMessage"
-        ).style.color="red";
+        alert(
+            "Please enter a valid opening balance."
+        );
 
         return;
 
     }
 
 
-    const shifts = getShifts();
+    const shift = {
 
-    const now = new Date().toISOString();
+        id:
+            "shift_" +
+            Date.now(),
+
+        date:
+            todayKey(),
+
+        workerName:
+            currentUser.name,
+
+        workerUsername:
+            currentUser.username,
+
+        openingBalance:
+            opening,
+
+        closingBalance:
+            null,
+
+        expectedClosing:
+            opening,
+
+        difference:
+            0,
+
+        status:
+            "open",
+
+        startTime:
+            getLocalDateTime(),
+
+        endTime:
+            null
+
+    };
 
 
-    shifts.push({
+    const shifts =
+        getShifts();
 
-        id:Date.now(),
 
-        date:todayKey(),
-
-        workerName:currentUser.name,
-
-        workerUsername:currentUser.username,
-
-        startTime:now,
-
-        endTime:"",
-
-        openingBalance:opening,
-
-        closingBalance:null,
-
-        status:"Open"
-
-    });
-
+    shifts.push(shift);
 
     saveShifts(shifts);
 
+
     loadWorkerShift();
 
+    updateAdminPortal();
+
 }
 
 
 /* =====================================================
-   ACTIVE SHIFT
+   SHOW ACTIVE SHIFT
 ===================================================== */
 
-function showActiveShift(shift){
+function showActiveShift(){
 
-    document.getElementById(
-        "workerShiftStatus"
-    ).textContent="Shift Open";
+    document
+    .getElementById("workerShiftStatus")
+    .textContent="Open";
 
-    document.getElementById(
-        "workerShiftStatus"
-    ).className="status-open";
 
-    document.getElementById(
-        "startShiftArea"
-    ).classList.add("hidden");
+    document
+    .getElementById("startShiftArea")
+    .classList.add("hidden");
 
-    document.getElementById(
-        "activeShiftArea"
-    ).classList.remove("hidden");
 
-    document.getElementById(
-        "workerBusinessArea"
-    ).classList.remove("hidden");
+    document
+    .getElementById("activeShiftArea")
+    .classList.remove("hidden");
 
-    document.getElementById(
-        "workerShiftWorker"
-    ).textContent =
-        shift.workerName;
 
-    document.getElementById(
-        "workerShiftOpening"
-    ).textContent =
-        formatMoney(shift.openingBalance);
+    document
+    .getElementById("workerShiftMessage")
+    .className="message success";
 
-    document.getElementById(
-        "workerShiftStart"
-    ).textContent =
-        formatTime(shift.startTime);
 
-    document.getElementById(
-        "workerMomoDate"
-    ).value =
-        getLocalDateTime();
-
-    document.getElementById(
-        "workerElectricityDate"
-    ).value =
-        getLocalDateTime();
-
-    document.getElementById(
-        "workerClosingBalance"
-    ).disabled=false;
-
-    updateWorkerDashboard();
+    document
+    .getElementById("workerShiftMessage")
+    .textContent =
+        "Your shift is active. Record all transactions before closing the shift.";
 
 }
 
 
 /* =====================================================
-   CLOSED SHIFT
+   SHOW CLOSED SHIFT
 ===================================================== */
 
-function showClosedShift(shift){
+function showClosedShift(){
 
-    document.getElementById(
-        "workerShiftStatus"
-    ).textContent="Shift Closed";
+    const shift =
+        getTodayShift();
 
-    document.getElementById(
-        "workerShiftStatus"
-    ).className="status-closed";
 
-    document.getElementById(
-        "startShiftArea"
-    ).classList.add("hidden");
+    document
+    .getElementById("workerShiftStatus")
+    .textContent="Closed";
 
-    document.getElementById(
-        "activeShiftArea"
-    ).classList.remove("hidden");
 
-    document.getElementById(
-        "workerBusinessArea"
-    ).classList.remove("hidden");
+    document
+    .getElementById("startShiftArea")
+    .classList.add("hidden");
 
-    document.getElementById(
-        "workerShiftWorker"
-    ).textContent =
-        shift.workerName;
 
-    document.getElementById(
-        "workerShiftOpening"
-    ).textContent =
-        formatMoney(shift.openingBalance);
+    document
+    .getElementById("activeShiftArea")
+    .classList.add("hidden");
 
-    document.getElementById(
-        "workerShiftStart"
-    ).textContent =
-        formatTime(shift.startTime);
 
-    document.getElementById(
-        "workerClosingBalance"
-    ).value =
-        shift.closingBalance;
+    document
+    .getElementById("workerShiftMessage")
+    .className="message success";
 
-    document.getElementById(
-        "workerClosingBalance"
-    ).disabled=true;
 
-    updateWorkerDashboard();
+    document
+    .getElementById("workerShiftMessage")
+    .textContent =
+        "Your shift for today has been closed.";
 
 }
 
 
 /* =====================================================
-   WORKER TRANSACTION FILTER
+   MY MOMO TRANSACTIONS
 ===================================================== */
 
 function getMyMoMoTransactions(){
@@ -2195,16 +2032,20 @@ function getMyMoMoTransactions(){
         return [];
     }
 
-    return getTransactions().filter(
-        transaction =>
-            transaction.category === "MoMo" &&
-            isToday(transaction.date) &&
-            transaction.workerUsername ===
-            currentUser.username
-    );
+    return getTransactions()
+        .filter(
+            transaction =>
+                isToday(transaction.date) &&
+                transaction.workerUsername ===
+                currentUser.username
+        );
 
 }
 
+
+/* =====================================================
+   MY ELECTRICITY TRANSACTIONS
+===================================================== */
 
 function getMyElectricityTransactions(){
 
@@ -2212,455 +2053,292 @@ function getMyElectricityTransactions(){
         return [];
     }
 
-    return getElectricityTransactions().filter(
-        transaction =>
-            transaction.category === "Electricity" &&
-            isToday(transaction.date) &&
-            transaction.workerUsername ===
-            currentUser.username
-    );
+    return getElectricityTransactions()
+        .filter(
+            transaction =>
+                isToday(transaction.date) &&
+                transaction.workerUsername ===
+                currentUser.username
+        );
 
 }
 
 
 /* =====================================================
-   WORKER MOMO FORM
+   SAVE MOMO
 ===================================================== */
 
-function openWorkerMoMoForm(){
+function saveMomoTransaction(){
 
-    const shift = getTodayShift();
+    const shift =
+        getTodayShift();
+
 
     if(
         !shift ||
-        shift.status !== "Open" ||
-        shift.workerUsername !== currentUser.username
+        shift.workerUsername !==
+        currentUser.username ||
+        shift.status !== "open"
     ){
 
         alert(
-            "You do not have the active shift today."
+            "You must have an active shift before recording transactions."
         );
 
         return;
 
     }
 
-    document.getElementById(
-        "workerMomoForm"
-    ).classList.remove("hidden");
-
-    document.getElementById(
-        "workerMomoDate"
-    ).value =
-        getLocalDateTime();
-
-}
-
-
-function closeWorkerMoMoForm(){
-
-    document.getElementById(
-        "workerMomoForm"
-    ).classList.add("hidden");
-
-    document.getElementById(
-        "workerMomoMessage"
-    ).textContent="";
-
-}
-
-
-/* =====================================================
-   SAVE WORKER MOMO
-===================================================== */
-
-function saveWorkerMoMo(){
-
-    const shift = getTodayShift();
-
-    if(
-        !shift ||
-        shift.status !== "Open" ||
-        shift.workerUsername !== currentUser.username
-    ){
-
-        alert("You do not have an active shift.");
-
-        return;
-
-    }
-
-
-    const network =
-        document.getElementById(
-            "workerMomoNetwork"
-        ).value;
 
     const type =
-        document.getElementById(
-            "workerMomoType"
-        ).value;
+        document
+        .getElementById("momoType")
+        .value;
+
 
     const amount =
         Number(
-            document.getElementById(
-                "workerMomoAmount"
-            ).value
+            document
+            .getElementById("momoAmount")
+            .value
         );
 
-    const commission =
-        Number(
-            document.getElementById(
-                "workerMomoCommission"
-            ).value
-        ) || 0;
+
+    const customer =
+        document
+        .getElementById("momoCustomer")
+        .value
+        .trim();
+
 
     const reference =
-        document.getElementById(
-            "workerMomoReference"
-        ).value.trim();
-
-    const date =
-        document.getElementById(
-            "workerMomoDate"
-        ).value;
-
-    const note =
-        document.getElementById(
-            "workerMomoNote"
-        ).value.trim();
+        document
+        .getElementById("momoReference")
+        .value
+        .trim();
 
 
-    if(!network){
+    if(
+        !amount ||
+        amount <= 0
+    ){
 
-        showWorkerMomoMessage(
-            "Please select a network.",
-            "red"
+        alert(
+            "Please enter a valid amount."
         );
 
         return;
 
     }
 
-    if(!type){
 
-        showWorkerMomoMessage(
-            "Please select Cash In or Cash Out.",
-            "red"
-        );
+    const transaction = {
 
-        return;
+        id:
+            "momo_" +
+            Date.now(),
 
-    }
+        date:
+            getLocalDateTime(),
 
-    if(!amount || amount <= 0){
+        workerName:
+            currentUser.name,
 
-        showWorkerMomoMessage(
-            "Please enter a valid amount.",
-            "red"
-        );
+        workerUsername:
+            currentUser.username,
 
-        return;
+        shiftId:
+            shift.id,
 
-    }
+        type:
+            type,
+
+        amount:
+            amount,
+
+        customer:
+            customer,
+
+        reference:
+            reference
+
+    };
 
 
     const transactions =
         getTransactions();
 
 
-    transactions.push({
-
-        id:Date.now(),
-
-        category:"MoMo",
-
-        network,
-
-        type,
-
-        amount,
-
-        commission,
-
-        reference,
-
-        date,
-
-        note,
-
-        workerName:currentUser.name,
-
-        workerUsername:currentUser.username,
-
-        shiftId:shift.id
-
-    });
-
+    transactions.push(transaction);
 
     saveTransactions(transactions);
 
 
-    document.getElementById(
-        "workerMomoAmount"
-    ).value="";
-
-    document.getElementById(
-        "workerMomoCommission"
-    ).value="0";
-
-    document.getElementById(
-        "workerMomoReference"
-    ).value="";
-
-    document.getElementById(
-        "workerMomoNote"
-    ).value="";
-
-    document.getElementById(
-        "workerMomoNetwork"
-    ).value="";
-
-    document.getElementById(
-        "workerMomoType"
-    ).value="";
+    document
+    .getElementById("momoAmount")
+    .value="";
 
 
-    showWorkerMomoMessage(
-        "MoMo transaction saved successfully.",
-        "green"
-    );
+    document
+    .getElementById("momoCustomer")
+    .value="";
+
+
+    document
+    .getElementById("momoReference")
+    .value="";
 
 
     updateWorkerDashboard();
+
     updateAdminPortal();
 
 }
 
 
-function showWorkerMomoMessage(message,color){
-
-    const element =
-        document.getElementById(
-            "workerMomoMessage"
-        );
-
-    element.textContent=message;
-    element.style.color=color;
-
-}
-
-
 /* =====================================================
-   ELECTRICITY
+   SAVE ELECTRICITY
 ===================================================== */
 
-function openWorkerElectricityForm(){
+function saveElectricityTransaction(){
 
-    const shift = getTodayShift();
+    const shift =
+        getTodayShift();
+
 
     if(
         !shift ||
-        shift.status !== "Open" ||
-        shift.workerUsername !== currentUser.username
+        shift.workerUsername !==
+        currentUser.username ||
+        shift.status !== "open"
     ){
 
         alert(
-            "You do not have the active shift today."
+            "You must have an active shift before recording transactions."
         );
 
         return;
 
     }
 
-
-    document.getElementById(
-        "workerElectricityForm"
-    ).classList.remove("hidden");
-
-    document.getElementById(
-        "workerElectricityDate"
-    ).value =
-        getLocalDateTime();
-
-}
-
-
-function closeWorkerElectricityForm(){
-
-    document.getElementById(
-        "workerElectricityForm"
-    ).classList.add("hidden");
-
-    document.getElementById(
-        "workerElectricityMessage"
-    ).textContent="";
-
-}
-
-
-function saveWorkerElectricity(){
-
-    const shift = getTodayShift();
-
-    if(
-        !shift ||
-        shift.status !== "Open" ||
-        shift.workerUsername !== currentUser.username
-    ){
-
-        alert(
-            "You do not have the active shift."
-        );
-
-        return;
-
-    }
-
-
-    const meter =
-        document.getElementById(
-            "workerElectricityMeter"
-        ).value.trim();
-
-    const customer =
-        document.getElementById(
-            "workerElectricityCustomer"
-        ).value.trim();
 
     const amount =
         Number(
-            document.getElementById(
-                "workerElectricityAmount"
-            ).value
+            document
+            .getElementById("electricityAmount")
+            .value
         );
 
-    const token =
-        document.getElementById(
-            "workerElectricityToken"
-        ).value.trim();
 
-    const date =
-        document.getElementById(
-            "workerElectricityDate"
-        ).value;
-
-    const note =
-        document.getElementById(
-            "workerElectricityNote"
-        ).value.trim();
+    const meter =
+        document
+        .getElementById("electricityMeter")
+        .value
+        .trim();
 
 
-    if(!meter){
+    const reference =
+        document
+        .getElementById("electricityReference")
+        .value
+        .trim();
 
-        showWorkerElectricityMessage(
-            "Please enter the meter number.",
-            "red"
+
+    const commission =
+        Number(
+            document
+            .getElementById("electricityCommission")
+            .value
+        ) || 0;
+
+
+    if(
+        !amount ||
+        amount <= 0
+    ){
+
+        alert(
+            "Please enter a valid electricity amount."
         );
 
         return;
 
     }
 
-    if(!amount || amount <= 0){
 
-        showWorkerElectricityMessage(
-            "Please enter the amount paid.",
-            "red"
-        );
+    const transaction = {
 
-        return;
+        id:
+            "electricity_" +
+            Date.now(),
 
-    }
+        date:
+            getLocalDateTime(),
+
+        workerName:
+            currentUser.name,
+
+        workerUsername:
+            currentUser.username,
+
+        shiftId:
+            shift.id,
+
+        amount:
+            amount,
+
+        meterNumber:
+            meter,
+
+        reference:
+            reference,
+
+        commission:
+            commission
+
+    };
 
 
     const transactions =
         getElectricityTransactions();
 
 
-    transactions.push({
-
-        id:Date.now(),
-
-        category:"Electricity",
-
-        meter,
-
-        customer,
-
-        amount,
-
-        token,
-
-        date,
-
-        note,
-
-        workerName:currentUser.name,
-
-        workerUsername:currentUser.username,
-
-        shiftId:shift.id
-
-    });
-
+    transactions.push(transaction);
 
     saveElectricityTransactions(
         transactions
     );
 
 
-    document.getElementById(
-        "workerElectricityMeter"
-    ).value="";
-
-    document.getElementById(
-        "workerElectricityCustomer"
-    ).value="";
-
-    document.getElementById(
-        "workerElectricityAmount"
-    ).value="";
-
-    document.getElementById(
-        "workerElectricityToken"
-    ).value="";
-
-    document.getElementById(
-        "workerElectricityNote"
-    ).value="";
+    document
+    .getElementById("electricityAmount")
+    .value="";
 
 
-    showWorkerElectricityMessage(
-        "Electricity transaction saved successfully.",
-        "green"
-    );
+    document
+    .getElementById("electricityMeter")
+    .value="";
+
+
+    document
+    .getElementById("electricityReference")
+    .value="";
+
+
+    document
+    .getElementById("electricityCommission")
+    .value="";
 
 
     updateWorkerDashboard();
+
     updateAdminPortal();
 
 }
 
 
-function showWorkerElectricityMessage(
-    message,
-    color
-){
-
-    const element =
-        document.getElementById(
-            "workerElectricityMessage"
-        );
-
-    element.textContent=message;
-    element.style.color=color;
-
-}
-
-
 /* =====================================================
-   WORKER CALCULATIONS
+   WORKER TOTALS
 ===================================================== */
 
 function calculateWorkerTotals(){
@@ -2668,53 +2346,89 @@ function calculateWorkerTotals(){
     const momo =
         getMyMoMoTransactions();
 
+
     const electricity =
         getMyElectricityTransactions();
 
 
-    let cashIn=0;
-    let cashOut=0;
-    let commission=0;
-    let electricitySales=0;
+    let cashIn = 0;
+
+    let cashOut = 0;
 
 
-    momo.forEach(transaction=>{
+    momo.forEach(
+        transaction => {
 
-        const amount =
-            Number(transaction.amount)||0;
+            if(
+                transaction.type ===
+                "Cash In"
+            ){
 
-        const comm =
-            Number(transaction.commission)||0;
+                cashIn +=
+                    Number(transaction.amount) || 0;
+
+            }
 
 
-        if(transaction.type==="Cash In"){
-            cashIn+=amount;
+            if(
+                transaction.type ===
+                "Cash Out"
+            ){
+
+                cashOut +=
+                    Number(transaction.amount) || 0;
+
+            }
+
         }
+    );
 
-        if(transaction.type==="Cash Out"){
-            cashOut+=amount;
+
+    let electricitySales = 0;
+
+    let commission = 0;
+
+
+    electricity.forEach(
+        transaction => {
+
+            electricitySales +=
+                Number(transaction.amount) || 0;
+
+            commission +=
+                Number(transaction.commission) || 0;
+
         }
-
-        commission+=comm;
-
-    });
+    );
 
 
-    electricity.forEach(transaction=>{
-
-        electricitySales +=
-            Number(transaction.amount)||0;
-
-    });
+    const shift =
+        getTodayShift();
 
 
-    return{
-        momo,
-        electricity,
+    const opening =
+        shift
+            ? Number(shift.openingBalance) || 0
+            : getPreviousClosingBalance();
+
+
+    const expectedClosing =
+        opening +
+        cashIn -
+        cashOut +
+        electricitySales +
+        commission;
+
+
+    return {
+
+        opening,
         cashIn,
         cashOut,
+        electricitySales,
         commission,
-        electricitySales
+        expectedClosing
+
     };
 
 }
@@ -2726,12 +2440,7 @@ function calculateWorkerTotals(){
 
 function updateWorkerDashboard(){
 
-    const shift = getTodayShift();
-
-    if(
-        !shift ||
-        shift.workerUsername !== currentUser.username
-    ){
+    if(!currentUser){
         return;
     }
 
@@ -2740,77 +2449,57 @@ function updateWorkerDashboard(){
         calculateWorkerTotals();
 
 
-    const expected =
-        Number(shift.openingBalance)||0 +
-        totals.cashIn -
-        totals.cashOut +
-        totals.electricitySales +
-        totals.commission;
+    document
+    .getElementById("workerOpeningBalance")
+    .textContent =
+        formatMoney(
+            totals.opening
+        );
 
 
-    document.getElementById(
-        "workerCashIn"
-    ).textContent =
-        formatMoney(totals.cashIn);
-
-    document.getElementById(
-        "workerCashOut"
-    ).textContent =
-        formatMoney(totals.cashOut);
-
-    document.getElementById(
-        "workerElectricity"
-    ).textContent =
-        formatMoney(totals.electricitySales);
-
-    document.getElementById(
-        "workerCommission"
-    ).textContent =
-        formatMoney(totals.commission);
-
-    document.getElementById(
-        "workerExpected"
-    ).textContent =
-        formatMoney(expected);
+    document
+    .getElementById("workerCashIn")
+    .textContent =
+        formatMoney(
+            totals.cashIn
+        );
 
 
-    document.getElementById(
-        "workerDisplayOpening"
-    ).textContent =
-        formatMoney(shift.openingBalance);
-
-    document.getElementById(
-        "workerDisplayExpected"
-    ).textContent =
-        formatMoney(expected);
+    document
+    .getElementById("workerCashOut")
+    .textContent =
+        formatMoney(
+            totals.cashOut
+        );
 
 
-    const actual =
-        Number(
-            document.getElementById(
-                "workerClosingBalance"
-            ).value
-        )||0;
+    document
+    .getElementById("workerElectricitySales")
+    .textContent =
+        formatMoney(
+            totals.electricitySales
+        );
 
 
-    document.getElementById(
-        "workerDisplayActual"
-    ).textContent =
-        formatMoney(actual);
-
-    document.getElementById(
-        "workerDisplayDifference"
-    ).textContent =
-        formatMoney(actual-expected);
+    document
+    .getElementById("workerCommission")
+    .textContent =
+        formatMoney(
+            totals.commission
+        );
 
 
-    renderWorkerMomo(
-        totals.momo
-    );
+    document
+    .getElementById("workerExpectedClosing")
+    .textContent =
+        formatMoney(
+            totals.expectedClosing
+        );
 
-    renderWorkerElectricity(
-        totals.electricity
-    );
+
+    renderWorkerMomo();
+
+    renderWorkerElectricity();
 
 }
 
@@ -2819,64 +2508,77 @@ function updateWorkerDashboard(){
    WORKER MOMO TABLE
 ===================================================== */
 
-function renderWorkerMomo(transactions){
+function renderWorkerMomo(){
 
     const tbody =
-        document.getElementById(
-            "workerMomoTable"
+        document
+        .getElementById(
+            "workerMomoTableBody"
         );
+
 
     tbody.innerHTML="";
 
 
+    const transactions =
+        getMyMoMoTransactions()
+        .sort(
+            (a,b) =>
+                new Date(b.date) -
+                new Date(a.date)
+        );
+
+
     if(!transactions.length){
 
-        tbody.innerHTML=`
-        <tr>
-        <td colspan="6" style="text-align:center">
-        No MoMo transactions recorded today.
-        </td>
-        </tr>
-        `;
+        tbody.innerHTML =
+            `<tr>
+                <td colspan="5">
+                    No MoMo transactions recorded today.
+                </td>
+            </tr>`;
 
         return;
 
     }
 
 
-    transactions
-    .slice()
-    .sort(
-        (a,b)=>
-            new Date(b.date)-
-            new Date(a.date)
-    )
-    .forEach(transaction=>{
+    transactions.forEach(
+        transaction => {
 
-        const row =
-            document.createElement("tr");
+            const row =
+                document.createElement("tr");
 
 
-        row.innerHTML=`
+            row.innerHTML = `
 
-        <td>${formatTime(transaction.date)}</td>
+                <td>
+                    ${formatTime(transaction.date)}
+                </td>
 
-        <td>${transaction.network||"-"}</td>
+                <td>
+                    ${transaction.type}
+                </td>
 
-        <td>${transaction.type||"-"}</td>
+                <td>
+                    ${formatMoney(transaction.amount)}
+                </td>
 
-        <td>${formatMoney(transaction.amount)}</td>
+                <td>
+                    ${transaction.customer || "-"}
+                </td>
 
-        <td>${formatMoney(transaction.commission)}</td>
+                <td>
+                    ${transaction.reference || "-"}
+                </td>
 
-        <td>${transaction.reference||"-"}</td>
-
-        `;
+            `;
 
 
-        tbody.appendChild(row);
+            tbody.appendChild(row);
 
-    });
+        }
+    );
 
 }
 
@@ -2885,92 +2587,100 @@ function renderWorkerMomo(transactions){
    WORKER ELECTRICITY TABLE
 ===================================================== */
 
-function renderWorkerElectricity(transactions){
+function renderWorkerElectricity(){
 
     const tbody =
-        document.getElementById(
-            "workerElectricityTable"
+        document
+        .getElementById(
+            "workerElectricityTableBody"
         );
+
 
     tbody.innerHTML="";
 
 
+    const transactions =
+        getMyElectricityTransactions()
+        .sort(
+            (a,b) =>
+                new Date(b.date) -
+                new Date(a.date)
+        );
+
+
     if(!transactions.length){
 
-        tbody.innerHTML=`
-        <tr>
-        <td colspan="5" style="text-align:center">
-        No electricity transactions recorded today.
-        </td>
-        </tr>
-        `;
+        tbody.innerHTML =
+            `<tr>
+                <td colspan="5">
+                    No electricity transactions recorded today.
+                </td>
+            </tr>`;
 
         return;
 
     }
 
 
-    transactions
-    .slice()
-    .sort(
-        (a,b)=>
-            new Date(b.date)-
-            new Date(a.date)
-    )
-    .forEach(transaction=>{
+    transactions.forEach(
+        transaction => {
 
-        const row =
-            document.createElement("tr");
+            const row =
+                document.createElement("tr");
 
 
-        row.innerHTML=`
+            row.innerHTML = `
 
-        <td>${formatTime(transaction.date)}</td>
+                <td>
+                    ${formatTime(transaction.date)}
+                </td>
 
-        <td>${transaction.meter||"-"}</td>
+                <td>
+                    ${formatMoney(transaction.amount)}
+                </td>
 
-        <td>${transaction.customer||"-"}</td>
+                <td>
+                    ${transaction.meterNumber || "-"}
+                </td>
 
-        <td>${formatMoney(transaction.amount)}</td>
+                <td>
+                    ${transaction.reference || "-"}
+                </td>
 
-        <td>${transaction.token||"-"}</td>
+                <td>
+                    ${formatMoney(transaction.commission)}
+                </td>
 
-        `;
+            `;
 
 
-        tbody.appendChild(row);
+            tbody.appendChild(row);
 
-    });
+        }
+    );
 
 }
 
 
 /* =====================================================
-   CLOSE SHIFT
+   CLOSE WORKER SHIFT
 ===================================================== */
 
 function closeWorkerShift(){
 
-    const shift = getTodayShift();
-
-    if(!shift){
-
-        alert(
-            "No shift has been started today."
-        );
-
-        return;
-
-    }
+    const shift =
+        getTodayShift();
 
 
     if(
+        !shift ||
         shift.workerUsername !==
-        currentUser.username
+        currentUser.username ||
+        shift.status !== "open"
     ){
 
         alert(
-            "You are not the worker assigned to today's shift."
+            "There is no active shift to close."
         );
 
         return;
@@ -2978,38 +2688,22 @@ function closeWorkerShift(){
     }
 
 
-    if(shift.status==="Closed"){
-
-        alert(
-            "Today's shift has already been closed."
-        );
-
-        return;
-
-    }
-
-
-    const actual =
+    const closing =
         Number(
-            document.getElementById(
-                "workerClosingBalance"
-            ).value
+            document
+            .getElementById("closingBalance")
+            .value
         );
 
 
     if(
-        isNaN(actual) ||
-        actual<0
+        isNaN(closing) ||
+        closing < 0
     ){
 
-        document.getElementById(
-            "closingMessage"
-        ).textContent =
-            "Please enter a valid closing balance.";
-
-        document.getElementById(
-            "closingMessage"
-        ).style.color="red";
+        alert(
+            "Please enter a valid closing balance."
+        );
 
         return;
 
@@ -3020,31 +2714,9 @@ function closeWorkerShift(){
         calculateWorkerTotals();
 
 
-    const expected =
-        Number(shift.openingBalance)||0 +
-        totals.cashIn -
-        totals.cashOut +
-        totals.electricitySales +
-        totals.commission;
-
-
     const difference =
-        actual-expected;
-
-
-    if(
-        !confirm(
-            "Close today's shift?\n\n"+
-            "Expected Closing: "+
-            formatMoney(expected)+
-            "\nActual Closing: "+
-            formatMoney(actual)+
-            "\nDifference: "+
-            formatMoney(difference)
-        )
-    ){
-        return;
-    }
+        closing -
+        totals.expectedClosing;
 
 
     const shifts =
@@ -3054,39 +2726,60 @@ function closeWorkerShift(){
     const index =
         shifts.findIndex(
             item =>
-                item.id===shift.id
+                item.id === shift.id
         );
 
 
-    if(index===-1){
+    if(index === -1){
+
+        alert(
+            "Shift could not be found."
+        );
+
         return;
+
     }
 
 
-    shifts[index].closingBalance=actual;
+    shifts[index].closingBalance =
+        closing;
 
-    shifts[index].endTime=
-        new Date().toISOString();
 
-    shifts[index].status="Closed";
+    shifts[index].expectedClosing =
+        totals.expectedClosing;
+
+
+    shifts[index].difference =
+        difference;
+
+
+    shifts[index].status =
+        "closed";
+
+
+    shifts[index].endTime =
+        getLocalDateTime();
 
 
     saveShifts(shifts);
 
 
-    document.getElementById(
-        "closingMessage"
-    ).textContent =
-        "Shift closed successfully.";
+    /* Legacy balance */
 
-    document.getElementById(
-        "closingMessage"
-    ).style.color="green";
+    localStorage.setItem(
+        "fameDailyBalance",
+        closing
+    );
 
 
     loadWorkerShift();
 
     updateAdminPortal();
+
+
+    alert(
+        "Shift closed successfully."
+    );
 
 }
 
@@ -3097,82 +2790,120 @@ function closeWorkerShift(){
 
 function calculateAdminTotals(){
 
-    const momo =
-        getTransactions().filter(
+    const shift =
+        getTodayShift();
+
+
+    const transactions =
+        getTransactions()
+        .filter(
             transaction =>
-                transaction.category==="MoMo" &&
                 isToday(transaction.date)
         );
 
 
     const electricity =
-        getElectricityTransactions().filter(
+        getElectricityTransactions()
+        .filter(
             transaction =>
-                transaction.category==="Electricity" &&
                 isToday(transaction.date)
         );
 
 
-    return calculateTotalsForTransactions(
-        momo,
-        electricity
+    let cashIn = 0;
+
+    let cashOut = 0;
+
+
+    transactions.forEach(
+        transaction => {
+
+            if(
+                transaction.type ===
+                "Cash In"
+            ){
+
+                cashIn +=
+                    Number(transaction.amount) || 0;
+
+            }
+
+
+            if(
+                transaction.type ===
+                "Cash Out"
+            ){
+
+                cashOut +=
+                    Number(transaction.amount) || 0;
+
+            }
+
+        }
     );
 
-}
+
+    let electricitySales = 0;
+
+    let commission = 0;
 
 
-/* =====================================================
-   GENERIC TOTAL CALCULATOR
-===================================================== */
+    electricity.forEach(
+        transaction => {
 
-function calculateTotalsForTransactions(
-    momo,
-    electricity
-){
+            electricitySales +=
+                Number(transaction.amount) || 0;
 
-    let cashIn=0;
-    let cashOut=0;
-    let commission=0;
-    let electricitySales=0;
+            commission +=
+                Number(transaction.commission) || 0;
 
-
-    momo.forEach(transaction=>{
-
-        const amount =
-            Number(transaction.amount)||0;
-
-        const comm =
-            Number(transaction.commission)||0;
-
-
-        if(transaction.type==="Cash In"){
-            cashIn+=amount;
         }
-
-        if(transaction.type==="Cash Out"){
-            cashOut+=amount;
-        }
-
-        commission+=comm;
-
-    });
+    );
 
 
-    electricity.forEach(transaction=>{
-
-        electricitySales +=
-            Number(transaction.amount)||0;
-
-    });
+    const opening =
+        shift
+            ? Number(shift.openingBalance) || 0
+            : 0;
 
 
-    return{
-        momo,
-        electricity,
+    const expectedClosing =
+        opening +
+        cashIn -
+        cashOut +
+        electricitySales +
+        commission;
+
+
+    const actualClosing =
+        shift &&
+        shift.closingBalance !== null &&
+        shift.closingBalance !== undefined
+            ? Number(shift.closingBalance) || 0
+            : 0;
+
+
+    const difference =
+        shift &&
+        shift.closingBalance !== null &&
+        shift.closingBalance !== undefined
+            ? actualClosing -
+              expectedClosing
+            : 0;
+
+
+    return {
+
+        shift,
+        opening,
         cashIn,
         cashOut,
+        electricitySales,
         commission,
-        electricitySales
+        expectedClosing,
+        actualClosing,
+        difference
+
     };
 
 }
@@ -3184,312 +2915,459 @@ function calculateTotalsForTransactions(
 
 function updateAdminPortal(){
 
-    const shift =
-        getTodayShift();
+    if(!currentUser){
+        return;
+    }
+
+
+    if(
+        currentUser.role !== "admin"
+    ){
+        return;
+    }
+
 
     const totals =
         calculateAdminTotals();
 
 
-    let opening=0;
-    let actual=0;
-    let worker="Not Started";
-    let status="Not Started";
+    const shift =
+        totals.shift;
 
 
-    if(shift){
-
-        opening =
-            Number(shift.openingBalance)||0;
-
-        worker =
-            shift.workerName;
-
-        status =
-            shift.status;
+    document
+    .getElementById("adminWorkerOnDuty")
+    .textContent =
+        shift
+            ? shift.workerName
+            : "-";
 
 
-        if(
-            shift.closingBalance!==null &&
-            shift.closingBalance!==undefined
-        ){
+    document
+    .getElementById("adminShiftStatus")
+    .textContent =
+        shift
+            ? (
+                shift.status === "open"
+                    ? "Open"
+                    : "Closed"
+            )
+            : "Not Started";
 
-            actual =
-                Number(
-                    shift.closingBalance
-                )||0;
+
+    document
+    .getElementById("adminOpeningBalance")
+    .textContent =
+        formatMoney(
+            totals.opening
+        );
+
+
+    document
+    .getElementById("adminActualClosing")
+    .textContent =
+        shift &&
+        shift.closingBalance !== null &&
+        shift.closingBalance !== undefined
+            ? formatMoney(
+                totals.actualClosing
+            )
+            : "-";
+
+
+    document
+    .getElementById("adminCashIn")
+    .textContent =
+        formatMoney(
+            totals.cashIn
+        );
+
+
+    document
+    .getElementById("adminCashOut")
+    .textContent =
+        formatMoney(
+            totals.cashOut
+        );
+
+
+    document
+    .getElementById("adminElectricitySales")
+    .textContent =
+        formatMoney(
+            totals.electricitySales
+        );
+
+
+    document
+    .getElementById("adminCommission")
+    .textContent =
+        formatMoney(
+            totals.commission
+        );
+
+
+    document
+    .getElementById("adminExpectedClosing")
+    .textContent =
+        formatMoney(
+            totals.expectedClosing
+        );
+
+
+    document
+    .getElementById("adminDifference")
+    .textContent =
+        shift &&
+        shift.closingBalance !== null &&
+        shift.closingBalance !== undefined
+            ? formatMoney(
+                totals.difference
+            )
+            : "-";
+
+
+    renderAdminMomo();
+
+    renderAdminElectricity();
+
+    renderAdminReconciliation();
+
+}
+
+
+/* =====================================================
+   ADMIN MOMO TABLE
+===================================================== */
+
+function renderAdminMomo(){
+
+    const tbody =
+        document
+        .getElementById(
+            "adminMomoTableBody"
+        );
+
+
+    tbody.innerHTML="";
+
+
+    const transactions =
+        getTransactions()
+        .filter(
+            transaction =>
+                isToday(transaction.date)
+        )
+        .sort(
+            (a,b) =>
+                new Date(b.date) -
+                new Date(a.date)
+        );
+
+
+    if(!transactions.length){
+
+        tbody.innerHTML =
+            `<tr>
+                <td colspan="6">
+                    No MoMo transactions recorded today.
+                </td>
+            </tr>`;
+
+        return;
+
+    }
+
+
+    transactions.forEach(
+        transaction => {
+
+            const row =
+                document.createElement("tr");
+
+
+            row.innerHTML = `
+
+                <td>
+                    ${formatTime(transaction.date)}
+                </td>
+
+                <td>
+                    ${
+                        transaction.workerName ||
+                        "Previous Entry"
+                    }
+                </td>
+
+                <td>
+                    ${transaction.type}
+                </td>
+
+                <td>
+                    ${formatMoney(transaction.amount)}
+                </td>
+
+                <td>
+                    ${transaction.customer || "-"}
+                </td>
+
+                <td>
+                    ${transaction.reference || "-"}
+                </td>
+
+            `;
+
+
+            tbody.appendChild(row);
 
         }
-
-    }
-
-
-    const expected =
-        opening+
-        totals.cashIn-
-        totals.cashOut+
-        totals.electricitySales+
-        totals.commission;
-
-
-    const difference =
-        actual-expected;
-
-
-    document.getElementById(
-        "adminWorker"
-    ).textContent=worker;
-
-    document.getElementById(
-        "adminShiftStatus"
-    ).textContent=status;
-
-    document.getElementById(
-        "adminOpening"
-    ).textContent=
-        formatMoney(opening);
-
-    document.getElementById(
-        "adminActual"
-    ).textContent=
-        formatMoney(actual);
-
-    document.getElementById(
-        "adminCashIn"
-    ).textContent=
-        formatMoney(totals.cashIn);
-
-    document.getElementById(
-        "adminCashOut"
-    ).textContent=
-        formatMoney(totals.cashOut);
-
-    document.getElementById(
-        "adminElectricity"
-    ).textContent=
-        formatMoney(totals.electricitySales);
-
-    document.getElementById(
-        "adminCommission"
-    ).textContent=
-        formatMoney(totals.commission);
-
-    document.getElementById(
-        "adminExpected"
-    ).textContent=
-        formatMoney(expected);
-
-    document.getElementById(
-        "adminDifference"
-    ).textContent=
-        formatMoney(difference);
-
-    document.getElementById(
-        "adminDisplayOpening"
-    ).textContent=
-        formatMoney(opening);
-
-    document.getElementById(
-        "adminDisplayExpected"
-    ).textContent=
-        formatMoney(expected);
-
-    document.getElementById(
-        "adminDisplayActual"
-    ).textContent=
-        formatMoney(actual);
-
-    document.getElementById(
-        "adminDisplayDifference"
-    ).textContent=
-        formatMoney(difference);
-
-
-    renderAdminMomo(
-        totals.momo
-    );
-
-    renderAdminElectricity(
-        totals.electricity
     );
 
 }
 
 
 /* =====================================================
-   ADMIN MOMO
+   ADMIN ELECTRICITY TABLE
 ===================================================== */
 
-function renderAdminMomo(transactions){
+function renderAdminElectricity(){
 
     const tbody =
-        document.getElementById(
-            "adminMomoTable"
+        document
+        .getElementById(
+            "adminElectricityTableBody"
         );
+
 
     tbody.innerHTML="";
 
 
+    const transactions =
+        getElectricityTransactions()
+        .filter(
+            transaction =>
+                isToday(transaction.date)
+        )
+        .sort(
+            (a,b) =>
+                new Date(b.date) -
+                new Date(a.date)
+        );
+
+
     if(!transactions.length){
 
-        tbody.innerHTML=`
-        <tr>
-        <td colspan="7" style="text-align:center">
-        No MoMo transactions recorded today.
-        </td>
-        </tr>
-        `;
+        tbody.innerHTML =
+            `<tr>
+                <td colspan="6">
+                    No electricity transactions recorded today.
+                </td>
+            </tr>`;
 
         return;
 
     }
 
 
-    transactions
-    .slice()
-    .sort(
-        (a,b)=>
-            new Date(b.date)-
-            new Date(a.date)
-    )
-    .forEach(transaction=>{
+    transactions.forEach(
+        transaction => {
 
-        const row =
-            document.createElement("tr");
+            const row =
+                document.createElement("tr");
 
 
-        row.innerHTML=`
+            row.innerHTML = `
 
-        <td>${formatTime(transaction.date)}</td>
+                <td>
+                    ${formatTime(transaction.date)}
+                </td>
 
-        <td>${transaction.workerName||"Previous Entry"}</td>
+                <td>
+                    ${
+                        transaction.workerName ||
+                        "Previous Entry"
+                    }
+                </td>
 
-        <td>${transaction.network||"-"}</td>
+                <td>
+                    ${formatMoney(transaction.amount)}
+                </td>
 
-        <td>${transaction.type||"-"}</td>
+                <td>
+                    ${transaction.meterNumber || "-"}
+                </td>
 
-        <td>${formatMoney(transaction.amount)}</td>
+                <td>
+                    ${transaction.reference || "-"}
+                </td>
 
-        <td>${formatMoney(transaction.commission)}</td>
+                <td>
+                    ${formatMoney(transaction.commission)}
+                </td>
 
-        <td>${transaction.reference||"-"}</td>
-
-        `;
+            `;
 
 
-        tbody.appendChild(row);
+            tbody.appendChild(row);
 
-    });
+        }
+    );
 
 }
 
 
 /* =====================================================
-   ADMIN ELECTRICITY
+   ADMIN RECONCILIATION
 ===================================================== */
 
-function renderAdminElectricity(transactions){
+function renderAdminReconciliation(){
 
-    const tbody =
-        document.getElementById(
-            "adminElectricityTable"
+    const totals =
+        calculateAdminTotals();
+
+
+    const container =
+        document
+        .getElementById(
+            "adminReconciliation"
         );
 
-    tbody.innerHTML="";
 
+    container.innerHTML = `
 
-    if(!transactions.length){
+        <div class="reconciliation-row">
+            <strong>Opening Balance</strong>
+            <span>
+                ${formatMoney(totals.opening)}
+            </span>
+        </div>
 
-        tbody.innerHTML=`
-        <tr>
-        <td colspan="6" style="text-align:center">
-        No electricity transactions recorded today.
-        </td>
-        </tr>
-        `;
+        <div class="reconciliation-row">
+            <strong>Cash In</strong>
+            <span>
+                ${formatMoney(totals.cashIn)}
+            </span>
+        </div>
 
-        return;
+        <div class="reconciliation-row">
+            <strong>Cash Out</strong>
+            <span>
+                ${formatMoney(totals.cashOut)}
+            </span>
+        </div>
 
-    }
+        <div class="reconciliation-row">
+            <strong>Electricity Sales</strong>
+            <span>
+                ${formatMoney(totals.electricitySales)}
+            </span>
+        </div>
 
+        <div class="reconciliation-row">
+            <strong>Commission</strong>
+            <span>
+                ${formatMoney(totals.commission)}
+            </span>
+        </div>
 
-    transactions
-    .slice()
-    .sort(
-        (a,b)=>
-            new Date(b.date)-
-            new Date(a.date)
-    )
-    .forEach(transaction=>{
+        <div class="reconciliation-row">
+            <strong>Expected Closing</strong>
+            <span>
+                ${formatMoney(totals.expectedClosing)}
+            </span>
+        </div>
 
-        const row =
-            document.createElement("tr");
+        <div class="reconciliation-row">
+            <strong>Actual Closing</strong>
+            <span>
+                ${
+                    totals.shift &&
+                    totals.shift.closingBalance !== null &&
+                    totals.shift.closingBalance !== undefined
+                        ? formatMoney(
+                            totals.actualClosing
+                        )
+                        : "-"
+                }
+            </span>
+        </div>
 
+        <div class="reconciliation-row">
+            <strong>Difference</strong>
+            <span>
+                ${
+                    totals.shift &&
+                    totals.shift.closingBalance !== null &&
+                    totals.shift.closingBalance !== undefined
+                        ? formatMoney(
+                            totals.difference
+                        )
+                        : "-"
+                }
+            </span>
+        </div>
 
-        row.innerHTML=`
-
-        <td>${formatTime(transaction.date)}</td>
-
-        <td>${transaction.workerName||"Previous Entry"}</td>
-
-        <td>${transaction.meter||"-"}</td>
-
-        <td>${transaction.customer||"-"}</td>
-
-        <td>${formatMoney(transaction.amount)}</td>
-
-        <td>${transaction.token||"-"}</td>
-
-        `;
-
-
-        tbody.appendChild(row);
-
-    });
+    `;
 
 }
 
 
 /* =====================================================
-   PREVIOUS DAYS
+   PREVIOUS DAYS DEFAULT
 ===================================================== */
 
 function setDefaultHistoryDate(){
 
     const input =
-        document.getElementById(
-            "historyDate"
-        );
-
-    if(!input){
-        return;
-    }
+        document
+        .getElementById("historyDate");
 
 
-    const yesterday =
+    const d =
         new Date();
 
-    yesterday.setDate(
-        yesterday.getDate()-1
+
+    d.setDate(
+        d.getDate() - 1
     );
 
 
-    const year =
-        yesterday.getFullYear();
-
-    const month =
+    const date =
+        d.getFullYear() +
+        "-" +
         String(
-            yesterday.getMonth()+1
-        ).padStart(2,"0");
-
-    const day =
+            d.getMonth()+1
+        ).padStart(2,"0") +
+        "-" +
         String(
-            yesterday.getDate()
+            d.getDate()
         ).padStart(2,"0");
 
 
     input.value =
-        year+"-"+month+"-"+day;
+        date;
+
+
+    document
+    .getElementById(
+        "previousDayResults"
+    )
+    .classList.add("hidden");
+
+
+    document
+    .getElementById(
+        "historyMessage"
+    )
+    .className="message";
+
+
+    document
+    .getElementById(
+        "historyMessage"
+    )
+    .textContent =
+        "Select a previous date and click View Day.";
 
 }
 
@@ -3501,45 +3379,42 @@ function setDefaultHistoryDate(){
 function viewPreviousDay(){
 
     const selectedDate =
-        document.getElementById(
-            "historyDate"
-        ).value;
+        document
+        .getElementById("historyDate")
+        .value;
+
 
     const message =
-        document.getElementById(
-            "historyMessage"
-        );
-
-    const results =
-        document.getElementById(
-            "previousDayResults"
-        );
+        document
+        .getElementById("historyMessage");
 
 
     if(!selectedDate){
 
+        message.className =
+            "message warning";
+
         message.textContent =
-            "Please select a date first.";
-
-        message.style.color="red";
-
-        results.classList.add("hidden");
+            "Please select a date.";
 
         return;
 
     }
 
 
-    if(
-        selectedDate === todayKey()
-    ){
+    if(selectedDate === todayKey()){
+
+        message.className =
+            "message warning";
 
         message.textContent =
-            "This section is for previous days. Today's work is shown above.";
+            "Today is already shown in the Today's Activity section above.";
 
-        message.style.color="#ef6c00";
-
-        results.classList.add("hidden");
+        document
+        .getElementById(
+            "previousDayResults"
+        )
+        .classList.add("hidden");
 
         return;
 
@@ -3554,173 +3429,39 @@ function viewPreviousDay(){
         shifts.find(
             item =>
                 item.date === selectedDate
-        ) || null;
+        );
 
 
     const momo =
-        getTransactions().filter(
+        getTransactions()
+        .filter(
             transaction =>
-                transaction.category === "MoMo" &&
                 isSameDate(
                     transaction.date,
                     selectedDate
                 )
+        )
+        .sort(
+            (a,b) =>
+                new Date(b.date) -
+                new Date(a.date)
         );
 
 
     const electricity =
-        getElectricityTransactions().filter(
+        getElectricityTransactions()
+        .filter(
             transaction =>
-                transaction.category === "Electricity" &&
                 isSameDate(
                     transaction.date,
                     selectedDate
                 )
+        )
+        .sort(
+            (a,b) =>
+                new Date(b.date) -
+                new Date(a.date)
         );
-
-
-    const totals =
-        calculateTotalsForTransactions(
-            momo,
-            electricity
-        );
-
-
-    let opening=0;
-    let actual=0;
-    let worker="No shift recorded";
-    let status="No shift recorded";
-
-
-    if(shift){
-
-        opening =
-            Number(
-                shift.openingBalance
-            ) || 0;
-
-        worker =
-            shift.workerName ||
-            "Unknown";
-
-        status =
-            shift.status ||
-            "Unknown";
-
-
-        if(
-            shift.closingBalance !== null &&
-            shift.closingBalance !== undefined
-        ){
-
-            actual =
-                Number(
-                    shift.closingBalance
-                ) || 0;
-
-        }
-
-    }
-
-
-    const expected =
-        opening +
-        totals.cashIn -
-        totals.cashOut +
-        totals.electricitySales +
-        totals.commission;
-
-
-    const difference =
-        actual - expected;
-
-
-    document.getElementById(
-        "historyDateTitle"
-    ).textContent =
-        "Work for " +
-        formatDateDisplay(selectedDate);
-
-
-    document.getElementById(
-        "historyWorker"
-    ).textContent =
-        worker;
-
-    document.getElementById(
-        "historyStatus"
-    ).textContent =
-        status;
-
-    document.getElementById(
-        "historyOpening"
-    ).textContent =
-        formatMoney(opening);
-
-    document.getElementById(
-        "historyActual"
-    ).textContent =
-        formatMoney(actual);
-
-
-    document.getElementById(
-        "historyCashIn"
-    ).textContent =
-        formatMoney(totals.cashIn);
-
-    document.getElementById(
-        "historyCashOut"
-    ).textContent =
-        formatMoney(totals.cashOut);
-
-    document.getElementById(
-        "historyElectricity"
-    ).textContent =
-        formatMoney(totals.electricitySales);
-
-    document.getElementById(
-        "historyCommission"
-    ).textContent =
-        formatMoney(totals.commission);
-
-    document.getElementById(
-        "historyExpected"
-    ).textContent =
-        formatMoney(expected);
-
-    document.getElementById(
-        "historyDifference"
-    ).textContent =
-        formatMoney(difference);
-
-
-    document.getElementById(
-        "historyDisplayOpening"
-    ).textContent =
-        formatMoney(opening);
-
-    document.getElementById(
-        "historyDisplayExpected"
-    ).textContent =
-        formatMoney(expected);
-
-    document.getElementById(
-        "historyDisplayActual"
-    ).textContent =
-        formatMoney(actual);
-
-    document.getElementById(
-        "historyDisplayDifference"
-    ).textContent =
-        formatMoney(difference);
-
-
-    renderHistoryMomo(momo);
-
-    renderHistoryElectricity(electricity);
-
-
-    results.classList.remove("hidden");
 
 
     if(
@@ -3729,173 +3470,467 @@ function viewPreviousDay(){
         !electricity.length
     ){
 
+        message.className =
+            "message warning";
+
         message.textContent =
             "No work or transactions were recorded for this date.";
 
-        message.style.color="#ef6c00";
+        document
+        .getElementById(
+            "previousDayResults"
+        )
+        .classList.add("hidden");
 
-    }else{
-
-        message.textContent =
-            "Showing all recorded work for " +
-            formatDateDisplay(selectedDate) +
-            ".";
-
-        message.style.color="#2e7d32";
+        return;
 
     }
+
+
+    let cashIn = 0;
+
+    let cashOut = 0;
+
+
+    momo.forEach(
+        transaction => {
+
+            if(
+                transaction.type ===
+                "Cash In"
+            ){
+
+                cashIn +=
+                    Number(transaction.amount) || 0;
+
+            }
+
+
+            if(
+                transaction.type ===
+                "Cash Out"
+            ){
+
+                cashOut +=
+                    Number(transaction.amount) || 0;
+
+            }
+
+        }
+    );
+
+
+    let electricitySales = 0;
+
+    let commission = 0;
+
+
+    electricity.forEach(
+        transaction => {
+
+            electricitySales +=
+                Number(transaction.amount) || 0;
+
+            commission +=
+                Number(transaction.commission) || 0;
+
+        }
+    );
+
+
+    const opening =
+        shift
+            ? Number(shift.openingBalance) || 0
+            : 0;
+
+
+    const expectedClosing =
+        opening +
+        cashIn -
+        cashOut +
+        electricitySales +
+        commission;
+
+
+    const actualClosing =
+        shift &&
+        shift.closingBalance !== null &&
+        shift.closingBalance !== undefined
+            ? Number(shift.closingBalance) || 0
+            : 0;
+
+
+    const difference =
+        shift &&
+        shift.closingBalance !== null &&
+        shift.closingBalance !== undefined
+            ? actualClosing -
+              expectedClosing
+            : 0;
+
+
+    document
+    .getElementById("historyWorker")
+    .textContent =
+        shift
+            ? shift.workerName
+            : "-";
+
+
+    document
+    .getElementById("historyShiftStatus")
+    .textContent =
+        shift
+            ? (
+                shift.status === "open"
+                    ? "Open"
+                    : "Closed"
+            )
+            : "No Shift";
+
+
+    document
+    .getElementById("historyOpeningBalance")
+    .textContent =
+        formatMoney(opening);
+
+
+    document
+    .getElementById("historyActualClosing")
+    .textContent =
+        shift &&
+        shift.closingBalance !== null &&
+        shift.closingBalance !== undefined
+            ? formatMoney(actualClosing)
+            : "-";
+
+
+    document
+    .getElementById("historyCashIn")
+    .textContent =
+        formatMoney(cashIn);
+
+
+    document
+    .getElementById("historyCashOut")
+    .textContent =
+        formatMoney(cashOut);
+
+
+    document
+    .getElementById("historyElectricitySales")
+    .textContent =
+        formatMoney(electricitySales);
+
+
+    document
+    .getElementById("historyCommission")
+    .textContent =
+        formatMoney(commission);
+
+
+    document
+    .getElementById("historyExpectedClosing")
+    .textContent =
+        formatMoney(expectedClosing);
+
+
+    document
+    .getElementById("historyDifference")
+    .textContent =
+        shift &&
+        shift.closingBalance !== null &&
+        shift.closingBalance !== undefined
+            ? formatMoney(difference)
+            : "-";
+
+
+    renderHistoryMomo(
+        momo
+    );
+
+
+    renderHistoryElectricity(
+        electricity
+    );
+
+
+    renderHistoryReconciliation({
+
+        shift,
+        opening,
+        cashIn,
+        cashOut,
+        electricitySales,
+        commission,
+        expectedClosing,
+        actualClosing,
+        difference
+
+    });
+
+
+    document
+    .getElementById(
+        "previousDayResults"
+    )
+    .classList.remove("hidden");
+
+
+    message.className =
+        "message success";
+
+
+    message.textContent =
+        "Showing work for " +
+        formatDateDisplay(selectedDate) +
+        ".";
 
 }
 
 
 /* =====================================================
-   HISTORY MOMO TABLE
+   HISTORY MOMO
 ===================================================== */
 
 function renderHistoryMomo(transactions){
 
     const tbody =
-        document.getElementById(
-            "historyMomoTable"
+        document
+        .getElementById(
+            "historyMomoTableBody"
         );
+
 
     tbody.innerHTML="";
 
 
     if(!transactions.length){
 
-        tbody.innerHTML=`
-        <tr>
-        <td colspan="7" style="text-align:center">
-        No MoMo transactions were recorded on this date.
-        </td>
-        </tr>
-        `;
+        tbody.innerHTML =
+            `<tr>
+                <td colspan="6">
+                    No MoMo transactions recorded for this date.
+                </td>
+            </tr>`;
 
         return;
 
     }
 
 
-    transactions
-    .slice()
-    .sort(
-        (a,b)=>
-            new Date(b.date) -
-            new Date(a.date)
-    )
-    .forEach(transaction=>{
+    transactions.forEach(
+        transaction => {
 
-        const row =
-            document.createElement("tr");
+            const row =
+                document.createElement("tr");
 
 
-        row.innerHTML=`
+            row.innerHTML = `
 
-        <td>${formatTime(transaction.date)}</td>
+                <td>
+                    ${formatTime(transaction.date)}
+                </td>
 
-        <td>${transaction.workerName||"Previous Entry"}</td>
+                <td>
+                    ${
+                        transaction.workerName ||
+                        "Previous Entry"
+                    }
+                </td>
 
-        <td>${transaction.network||"-"}</td>
+                <td>
+                    ${transaction.type}
+                </td>
 
-        <td>${transaction.type||"-"}</td>
+                <td>
+                    ${formatMoney(transaction.amount)}
+                </td>
 
-        <td>${formatMoney(transaction.amount)}</td>
+                <td>
+                    ${transaction.customer || "-"}
+                </td>
 
-        <td>${formatMoney(transaction.commission)}</td>
+                <td>
+                    ${transaction.reference || "-"}
+                </td>
 
-        <td>${transaction.reference||"-"}</td>
-
-        `;
+            `;
 
 
-        tbody.appendChild(row);
+            tbody.appendChild(row);
 
-    });
+        }
+    );
 
 }
 
 
 /* =====================================================
-   HISTORY ELECTRICITY TABLE
+   HISTORY ELECTRICITY
 ===================================================== */
 
 function renderHistoryElectricity(transactions){
 
     const tbody =
-        document.getElementById(
-            "historyElectricityTable"
+        document
+        .getElementById(
+            "historyElectricityTableBody"
         );
+
 
     tbody.innerHTML="";
 
 
     if(!transactions.length){
 
-        tbody.innerHTML=`
-        <tr>
-        <td colspan="6" style="text-align:center">
-        No electricity transactions were recorded on this date.
-        </td>
-        </tr>
-        `;
+        tbody.innerHTML =
+            `<tr>
+                <td colspan="6">
+                    No electricity transactions recorded for this date.
+                </td>
+            </tr>`;
 
         return;
 
     }
 
 
-    transactions
-    .slice()
-    .sort(
-        (a,b)=>
-            new Date(b.date) -
-            new Date(a.date)
-    )
-    .forEach(transaction=>{
+    transactions.forEach(
+        transaction => {
 
-        const row =
-            document.createElement("tr");
+            const row =
+                document.createElement("tr");
 
 
-        row.innerHTML=`
+            row.innerHTML = `
 
-        <td>${formatTime(transaction.date)}</td>
+                <td>
+                    ${formatTime(transaction.date)}
+                </td>
 
-        <td>${transaction.workerName||"Previous Entry"}</td>
+                <td>
+                    ${
+                        transaction.workerName ||
+                        "Previous Entry"
+                    }
+                </td>
 
-        <td>${transaction.meter||"-"}</td>
+                <td>
+                    ${formatMoney(transaction.amount)}
+                </td>
 
-        <td>${transaction.customer||"-"}</td>
+                <td>
+                    ${transaction.meterNumber || "-"}
+                </td>
 
-        <td>${formatMoney(transaction.amount)}</td>
+                <td>
+                    ${transaction.reference || "-"}
+                </td>
 
-        <td>${transaction.token||"-"}</td>
+                <td>
+                    ${formatMoney(transaction.commission)}
+                </td>
 
-        `;
+            `;
 
 
-        tbody.appendChild(row);
+            tbody.appendChild(row);
 
-    });
+        }
+    );
 
 }
 
 
 /* =====================================================
-   MONEY
+   HISTORY RECONCILIATION
 ===================================================== */
 
-function formatMoney(value){
+function renderHistoryReconciliation(totals){
 
-    return "GHS "+
-        Number(value||0).toLocaleString(
-            "en-GH",
-            {
-                minimumFractionDigits:2,
-                maximumFractionDigits:2
-            }
+    const container =
+        document
+        .getElementById(
+            "historyReconciliation"
         );
+
+
+    container.innerHTML = `
+
+        <div class="reconciliation-row">
+            <strong>Opening Balance</strong>
+            <span>
+                ${formatMoney(totals.opening)}
+            </span>
+        </div>
+
+        <div class="reconciliation-row">
+            <strong>Cash In</strong>
+            <span>
+                ${formatMoney(totals.cashIn)}
+            </span>
+        </div>
+
+        <div class="reconciliation-row">
+            <strong>Cash Out</strong>
+            <span>
+                ${formatMoney(totals.cashOut)}
+            </span>
+        </div>
+
+        <div class="reconciliation-row">
+            <strong>Electricity Sales</strong>
+            <span>
+                ${formatMoney(totals.electricitySales)}
+            </span>
+        </div>
+
+        <div class="reconciliation-row">
+            <strong>Commission</strong>
+            <span>
+                ${formatMoney(totals.commission)}
+            </span>
+        </div>
+
+        <div class="reconciliation-row">
+            <strong>Expected Closing</strong>
+            <span>
+                ${formatMoney(totals.expectedClosing)}
+            </span>
+        </div>
+
+        <div class="reconciliation-row">
+            <strong>Actual Closing</strong>
+            <span>
+                ${
+                    totals.shift &&
+                    totals.shift.closingBalance !== null &&
+                    totals.shift.closingBalance !== undefined
+                        ? formatMoney(
+                            totals.actualClosing
+                        )
+                        : "-"
+                }
+            </span>
+        </div>
+
+        <div class="reconciliation-row">
+            <strong>Difference</strong>
+            <span>
+                ${
+                    totals.shift &&
+                    totals.shift.closingBalance !== null &&
+                    totals.shift.closingBalance !== undefined
+                        ? formatMoney(
+                            totals.difference
+                        )
+                        : "-"
+                }
+            </span>
+        </div>
+
+    `;
 
 }
 
@@ -3904,16 +3939,83 @@ function formatMoney(value){
    LIVE CLOSING BALANCE
 ===================================================== */
 
-document.addEventListener(
+document
+.getElementById("closingBalance")
+.addEventListener(
     "input",
-    function(event){
+    function(){
+
+        if(!currentUser){
+            return;
+        }
+
+
+        const shift =
+            getTodayShift();
+
 
         if(
-            event.target.id===
-            "workerClosingBalance"
+            !shift ||
+            shift.workerUsername !==
+            currentUser.username
         ){
 
-            updateWorkerDashboard();
+            return;
+
+        }
+
+
+        const value =
+            Number(this.value);
+
+
+        if(
+            isNaN(value)
+        ){
+
+            return;
+
+        }
+
+
+        const totals =
+            calculateWorkerTotals();
+
+
+        /* Dashboard can show the current
+           difference while entering closing */
+
+        const difference =
+            value -
+            totals.expectedClosing;
+
+
+        /* Nothing is permanently saved
+           until Close Shift is clicked */
+
+        const status =
+            document
+            .getElementById(
+                "workerShiftMessage"
+            );
+
+
+        if(
+            shift.status === "open"
+        ){
+
+            status.className="message";
+
+
+            status.textContent =
+                "Current expected closing: " +
+                formatMoney(
+                    totals.expectedClosing
+                ) +
+                " | Difference at entered closing: " +
+                formatMoney(
+                    difference
+                );
 
         }
 
@@ -3922,23 +4024,36 @@ document.addEventListener(
 
 
 /* =====================================================
-   ENTER LOGIN
+   ENTER KEY LOGIN
 ===================================================== */
 
-document.addEventListener(
+document
+.getElementById("password")
+.addEventListener(
     "keydown",
     function(event){
 
         if(
-            event.key==="Enter" &&
-            document.getElementById(
-                "loginPage"
-            ).style.display!=="none"
+            event.key === "Enter"
         ){
 
             login();
 
         }
+
+    }
+);
+
+
+/* =====================================================
+   RESTORE SAVED LOGIN
+===================================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        restoreLogin();
 
     }
 );
