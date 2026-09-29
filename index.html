@@ -419,6 +419,53 @@ th{
     margin-bottom:20px
 }
 
+/* =====================================================
+   PREVIOUS DAYS
+===================================================== */
+
+.history-header{
+    display:flex;
+    align-items:end;
+    gap:15px;
+    flex-wrap:wrap
+}
+
+.history-date{
+    max-width:260px
+}
+
+.history-date label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:6px
+}
+
+.history-date input{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:7px
+}
+
+.history-btn{
+    background:#1976d2;
+    color:white;
+    border:0;
+    padding:12px 20px;
+    border-radius:8px;
+    font-weight:bold
+}
+
+.history-title{
+    color:#1976d2!important
+}
+
+.history-message{
+    margin-top:15px;
+    font-weight:bold;
+    color:#666
+}
+
 @media(max-width:600px){
     header{
         flex-direction:column;
@@ -428,6 +475,19 @@ th{
     .container{padding:12px}
 
     .card .value{font-size:22px}
+
+    .history-header{
+        display:block
+    }
+
+    .history-date{
+        max-width:none;
+        margin-bottom:10px
+    }
+
+    .history-btn{
+        width:100%
+    }
 }
 </style>
 </head>
@@ -551,6 +611,222 @@ th{
 
 </div>
 
+
+<!-- =====================================================
+     PREVIOUS DAYS WORK
+===================================================== -->
+
+<div class="info-box">
+
+<h2 class="history-title">
+Previous Days' Work
+</h2>
+
+<p>
+Select a date below to view the complete business activity
+for that day.
+</p>
+
+<div class="history-header">
+
+<div class="history-date">
+
+<label for="historyDate">
+Select Date
+</label>
+
+<input
+type="date"
+id="historyDate"
+>
+
+</div>
+
+<button
+class="history-btn"
+onclick="viewPreviousDay()"
+>
+View Day
+</button>
+
+</div>
+
+<div
+id="historyMessage"
+class="history-message"
+>
+Select a date to view previous work.
+</div>
+
+</div>
+
+
+<div
+id="previousDayResults"
+class="hidden"
+>
+
+<div class="info-box">
+
+<h2 id="historyDateTitle">
+Daily History
+</h2>
+
+<div class="info-grid">
+
+<div class="info-item">
+<span>Worker</span>
+<strong id="historyWorker">-</strong>
+</div>
+
+<div class="info-item">
+<span>Shift Status</span>
+<strong id="historyStatus">-</strong>
+</div>
+
+<div class="info-item">
+<span>Opening Balance</span>
+<strong id="historyOpening">GHS 0.00</strong>
+</div>
+
+<div class="info-item">
+<span>Actual Closing</span>
+<strong id="historyActual">GHS 0.00</strong>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="cards">
+
+<div class="card">
+<h3>Cash In</h3>
+<div class="value" id="historyCashIn">GHS 0.00</div>
+</div>
+
+<div class="card">
+<h3>Cash Out</h3>
+<div class="value" id="historyCashOut">GHS 0.00</div>
+</div>
+
+<div class="card">
+<h3>Electricity Sales</h3>
+<div class="value" id="historyElectricity">GHS 0.00</div>
+</div>
+
+<div class="card">
+<h3>Commission</h3>
+<div class="value" id="historyCommission">GHS 0.00</div>
+</div>
+
+<div class="card">
+<h3>Expected Closing</h3>
+<div class="value" id="historyExpected">GHS 0.00</div>
+</div>
+
+<div class="card">
+<h3>Difference</h3>
+<div class="value" id="historyDifference">GHS 0.00</div>
+</div>
+
+</div>
+
+
+<div class="table-section">
+
+<h2>
+MoMo Transactions
+</h2>
+
+<table>
+
+<thead>
+
+<tr>
+<th>Time</th>
+<th>Worker</th>
+<th>Network</th>
+<th>Type</th>
+<th>Amount</th>
+<th>Commission</th>
+<th>Reference</th>
+</tr>
+
+</thead>
+
+<tbody id="historyMomoTable"></tbody>
+
+</table>
+
+</div>
+
+
+<div class="table-section">
+
+<h2 class="electricity-heading">
+Electricity Transactions
+</h2>
+
+<table>
+
+<thead>
+
+<tr>
+<th>Time</th>
+<th>Worker</th>
+<th>Meter</th>
+<th>Customer</th>
+<th>Amount</th>
+<th>Token</th>
+</tr>
+
+</thead>
+
+<tbody id="historyElectricityTable"></tbody>
+
+</table>
+
+</div>
+
+
+<div class="balance-box">
+
+<h2>Daily Reconciliation</h2>
+
+<div class="balance-grid">
+
+<div class="balance-result">
+<h4>Opening Balance</h4>
+<strong id="historyDisplayOpening">GHS 0.00</strong>
+</div>
+
+<div class="balance-result">
+<h4>Expected Closing</h4>
+<strong id="historyDisplayExpected">GHS 0.00</strong>
+</div>
+
+<div class="balance-result">
+<h4>Actual Closing</h4>
+<strong id="historyDisplayActual">GHS 0.00</strong>
+</div>
+
+<div class="balance-result">
+<h4>Difference</h4>
+<strong id="historyDisplayDifference">GHS 0.00</strong>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+     TODAY'S TRANSACTIONS
+===================================================== -->
 
 <div class="table-section">
 
@@ -1311,6 +1587,30 @@ function todayKey(){
 
 }
 
+
+function dateKeyFromValue(dateValue){
+
+    if(!dateValue){
+        return "";
+    }
+
+    const d = new Date(dateValue);
+
+    if(isNaN(d.getTime())){
+        return "";
+    }
+
+    return (
+        d.getFullYear() +
+        "-" +
+        String(d.getMonth()+1).padStart(2,"0") +
+        "-" +
+        String(d.getDate()).padStart(2,"0")
+    );
+
+}
+
+
 function getLocalDateTime(){
 
     const now = new Date();
@@ -1324,6 +1624,7 @@ function getLocalDateTime(){
     return local.toISOString().slice(0,16);
 
 }
+
 
 function isToday(dateString){
 
@@ -1342,6 +1643,18 @@ function isToday(dateString){
 
 }
 
+
+function isSameDate(dateString, selectedDate){
+
+    if(!dateString || !selectedDate){
+        return false;
+    }
+
+    return dateKeyFromValue(dateString) === selectedDate;
+
+}
+
+
 function formatTime(dateString){
 
     if(!dateString){
@@ -1354,6 +1667,29 @@ function formatTime(dateString){
             hour:"2-digit",
             minute:"2-digit"
         }
+    );
+
+}
+
+
+function formatDateDisplay(dateValue){
+
+    if(!dateValue){
+        return "-";
+    }
+
+    const parts = dateValue.split("-");
+
+    if(parts.length !== 3){
+        return dateValue;
+    }
+
+    return (
+        parts[2] +
+        "/" +
+        parts[1] +
+        "/" +
+        parts[0]
     );
 
 }
@@ -1391,6 +1727,8 @@ function login(){
         document.getElementById("loginPage").style.display="none";
         document.getElementById("workerPortal").style.display="none";
         document.getElementById("portal").style.display="block";
+
+        setDefaultHistoryDate();
 
         updateAdminPortal();
 
@@ -1479,6 +1817,7 @@ function getTodayShift(){
     ) || null;
 
 }
+
 
 function getPreviousClosingBalance(){
 
@@ -1586,13 +1925,6 @@ function loadWorkerShift(){
 
     }
 
-
-    /*
-       IMPORTANT:
-       There is only one shift per day.
-       If another worker started it,
-       the other worker cannot operate that day.
-    */
 
     if(
         shift.workerUsername !==
@@ -1732,7 +2064,6 @@ function startShift(){
 
 
     saveShifts(shifts);
-
 
     loadWorkerShift();
 
@@ -2733,8 +3064,10 @@ function closeWorkerShift(){
 
 
     shifts[index].closingBalance=actual;
+
     shifts[index].endTime=
         new Date().toISOString();
+
     shifts[index].status="Closed";
 
 
@@ -2779,6 +3112,23 @@ function calculateAdminTotals(){
                 isToday(transaction.date)
         );
 
+
+    return calculateTotalsForTransactions(
+        momo,
+        electricity
+    );
+
+}
+
+
+/* =====================================================
+   GENERIC TOTAL CALCULATOR
+===================================================== */
+
+function calculateTotalsForTransactions(
+    momo,
+    electricity
+){
 
     let cashIn=0;
     let cashOut=0;
@@ -3068,6 +3418,438 @@ function renderAdminElectricity(transactions){
     .sort(
         (a,b)=>
             new Date(b.date)-
+            new Date(a.date)
+    )
+    .forEach(transaction=>{
+
+        const row =
+            document.createElement("tr");
+
+
+        row.innerHTML=`
+
+        <td>${formatTime(transaction.date)}</td>
+
+        <td>${transaction.workerName||"Previous Entry"}</td>
+
+        <td>${transaction.meter||"-"}</td>
+
+        <td>${transaction.customer||"-"}</td>
+
+        <td>${formatMoney(transaction.amount)}</td>
+
+        <td>${transaction.token||"-"}</td>
+
+        `;
+
+
+        tbody.appendChild(row);
+
+    });
+
+}
+
+
+/* =====================================================
+   PREVIOUS DAYS
+===================================================== */
+
+function setDefaultHistoryDate(){
+
+    const input =
+        document.getElementById(
+            "historyDate"
+        );
+
+    if(!input){
+        return;
+    }
+
+
+    const yesterday =
+        new Date();
+
+    yesterday.setDate(
+        yesterday.getDate()-1
+    );
+
+
+    const year =
+        yesterday.getFullYear();
+
+    const month =
+        String(
+            yesterday.getMonth()+1
+        ).padStart(2,"0");
+
+    const day =
+        String(
+            yesterday.getDate()
+        ).padStart(2,"0");
+
+
+    input.value =
+        year+"-"+month+"-"+day;
+
+}
+
+
+/* =====================================================
+   VIEW PREVIOUS DAY
+===================================================== */
+
+function viewPreviousDay(){
+
+    const selectedDate =
+        document.getElementById(
+            "historyDate"
+        ).value;
+
+    const message =
+        document.getElementById(
+            "historyMessage"
+        );
+
+    const results =
+        document.getElementById(
+            "previousDayResults"
+        );
+
+
+    if(!selectedDate){
+
+        message.textContent =
+            "Please select a date first.";
+
+        message.style.color="red";
+
+        results.classList.add("hidden");
+
+        return;
+
+    }
+
+
+    if(
+        selectedDate === todayKey()
+    ){
+
+        message.textContent =
+            "This section is for previous days. Today's work is shown above.";
+
+        message.style.color="#ef6c00";
+
+        results.classList.add("hidden");
+
+        return;
+
+    }
+
+
+    const shifts =
+        getShifts();
+
+
+    const shift =
+        shifts.find(
+            item =>
+                item.date === selectedDate
+        ) || null;
+
+
+    const momo =
+        getTransactions().filter(
+            transaction =>
+                transaction.category === "MoMo" &&
+                isSameDate(
+                    transaction.date,
+                    selectedDate
+                )
+        );
+
+
+    const electricity =
+        getElectricityTransactions().filter(
+            transaction =>
+                transaction.category === "Electricity" &&
+                isSameDate(
+                    transaction.date,
+                    selectedDate
+                )
+        );
+
+
+    const totals =
+        calculateTotalsForTransactions(
+            momo,
+            electricity
+        );
+
+
+    let opening=0;
+    let actual=0;
+    let worker="No shift recorded";
+    let status="No shift recorded";
+
+
+    if(shift){
+
+        opening =
+            Number(
+                shift.openingBalance
+            ) || 0;
+
+        worker =
+            shift.workerName ||
+            "Unknown";
+
+        status =
+            shift.status ||
+            "Unknown";
+
+
+        if(
+            shift.closingBalance !== null &&
+            shift.closingBalance !== undefined
+        ){
+
+            actual =
+                Number(
+                    shift.closingBalance
+                ) || 0;
+
+        }
+
+    }
+
+
+    const expected =
+        opening +
+        totals.cashIn -
+        totals.cashOut +
+        totals.electricitySales +
+        totals.commission;
+
+
+    const difference =
+        actual - expected;
+
+
+    document.getElementById(
+        "historyDateTitle"
+    ).textContent =
+        "Work for " +
+        formatDateDisplay(selectedDate);
+
+
+    document.getElementById(
+        "historyWorker"
+    ).textContent =
+        worker;
+
+    document.getElementById(
+        "historyStatus"
+    ).textContent =
+        status;
+
+    document.getElementById(
+        "historyOpening"
+    ).textContent =
+        formatMoney(opening);
+
+    document.getElementById(
+        "historyActual"
+    ).textContent =
+        formatMoney(actual);
+
+
+    document.getElementById(
+        "historyCashIn"
+    ).textContent =
+        formatMoney(totals.cashIn);
+
+    document.getElementById(
+        "historyCashOut"
+    ).textContent =
+        formatMoney(totals.cashOut);
+
+    document.getElementById(
+        "historyElectricity"
+    ).textContent =
+        formatMoney(totals.electricitySales);
+
+    document.getElementById(
+        "historyCommission"
+    ).textContent =
+        formatMoney(totals.commission);
+
+    document.getElementById(
+        "historyExpected"
+    ).textContent =
+        formatMoney(expected);
+
+    document.getElementById(
+        "historyDifference"
+    ).textContent =
+        formatMoney(difference);
+
+
+    document.getElementById(
+        "historyDisplayOpening"
+    ).textContent =
+        formatMoney(opening);
+
+    document.getElementById(
+        "historyDisplayExpected"
+    ).textContent =
+        formatMoney(expected);
+
+    document.getElementById(
+        "historyDisplayActual"
+    ).textContent =
+        formatMoney(actual);
+
+    document.getElementById(
+        "historyDisplayDifference"
+    ).textContent =
+        formatMoney(difference);
+
+
+    renderHistoryMomo(momo);
+
+    renderHistoryElectricity(electricity);
+
+
+    results.classList.remove("hidden");
+
+
+    if(
+        !shift &&
+        !momo.length &&
+        !electricity.length
+    ){
+
+        message.textContent =
+            "No work or transactions were recorded for this date.";
+
+        message.style.color="#ef6c00";
+
+    }else{
+
+        message.textContent =
+            "Showing all recorded work for " +
+            formatDateDisplay(selectedDate) +
+            ".";
+
+        message.style.color="#2e7d32";
+
+    }
+
+}
+
+
+/* =====================================================
+   HISTORY MOMO TABLE
+===================================================== */
+
+function renderHistoryMomo(transactions){
+
+    const tbody =
+        document.getElementById(
+            "historyMomoTable"
+        );
+
+    tbody.innerHTML="";
+
+
+    if(!transactions.length){
+
+        tbody.innerHTML=`
+        <tr>
+        <td colspan="7" style="text-align:center">
+        No MoMo transactions were recorded on this date.
+        </td>
+        </tr>
+        `;
+
+        return;
+
+    }
+
+
+    transactions
+    .slice()
+    .sort(
+        (a,b)=>
+            new Date(b.date) -
+            new Date(a.date)
+    )
+    .forEach(transaction=>{
+
+        const row =
+            document.createElement("tr");
+
+
+        row.innerHTML=`
+
+        <td>${formatTime(transaction.date)}</td>
+
+        <td>${transaction.workerName||"Previous Entry"}</td>
+
+        <td>${transaction.network||"-"}</td>
+
+        <td>${transaction.type||"-"}</td>
+
+        <td>${formatMoney(transaction.amount)}</td>
+
+        <td>${formatMoney(transaction.commission)}</td>
+
+        <td>${transaction.reference||"-"}</td>
+
+        `;
+
+
+        tbody.appendChild(row);
+
+    });
+
+}
+
+
+/* =====================================================
+   HISTORY ELECTRICITY TABLE
+===================================================== */
+
+function renderHistoryElectricity(transactions){
+
+    const tbody =
+        document.getElementById(
+            "historyElectricityTable"
+        );
+
+    tbody.innerHTML="";
+
+
+    if(!transactions.length){
+
+        tbody.innerHTML=`
+        <tr>
+        <td colspan="6" style="text-align:center">
+        No electricity transactions were recorded on this date.
+        </td>
+        </tr>
+        `;
+
+        return;
+
+    }
+
+
+    transactions
+    .slice()
+    .sort(
+        (a,b)=>
+            new Date(b.date) -
             new Date(a.date)
     )
     .forEach(transaction=>{
