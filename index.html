@@ -168,10 +168,6 @@ header small {
     box-shadow: 0 3px 12px rgba(0,0,0,0.08);
 }
 
-.network-card h3 {
-    margin-top: 0;
-}
-
 .network-card .network-name {
     font-size: 20px;
     font-weight: bold;
@@ -300,11 +296,16 @@ header small {
     cursor: pointer;
 }
 
-/* IMPORTANT NETWORK SELECT */
 .network-select {
     border: 2px solid #075e54 !important;
     font-weight: bold;
     background: #f0fffc;
+}
+
+.profit-field {
+    background: #f0fffc !important;
+    border: 2px solid #075e54 !important;
+    font-weight: bold;
 }
 
 /* BALANCE */
@@ -344,6 +345,7 @@ header small {
     border-radius: 12px;
     box-shadow: 0 3px 12px rgba(0,0,0,0.08);
     overflow-x: auto;
+    margin-bottom: 25px;
 }
 
 table {
@@ -380,6 +382,10 @@ th {
 .message {
     margin-top: 10px;
     font-weight: bold;
+}
+
+.electricity-heading {
+    color: #1976d2 !important;
 }
 
 @media (max-width: 600px) {
@@ -469,60 +475,42 @@ th {
 
         <div class="card">
             <h3>Total MoMo Cash</h3>
-            <div
-                class="value"
-                id="totalMoMo"
-            >
+            <div class="value" id="totalMoMo">
+                GHS 0.00
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>Electricity Sales</h3>
+            <div class="value" id="totalElectricity">
                 GHS 0.00
             </div>
         </div>
 
         <div class="card">
             <h3>Commission / Profit</h3>
-            <div
-                class="value"
-                id="totalCommission"
-            >
-                GHS 0.00
-            </div>
-        </div>
-
-        <div class="card">
-            <h3>Electricity</h3>
-            <div
-                class="value"
-                id="totalElectricity"
-            >
+            <div class="value" id="totalCommission">
                 GHS 0.00
             </div>
         </div>
 
         <div class="card">
             <h3>Expenses</h3>
-            <div
-                class="value"
-                id="totalExpenses"
-            >
+            <div class="value" id="totalExpenses">
                 GHS 0.00
             </div>
         </div>
 
         <div class="card">
             <h3>Net Earnings</h3>
-            <div
-                class="value"
-                id="netEarnings"
-            >
+            <div class="value" id="netEarnings">
                 GHS 0.00
             </div>
         </div>
 
         <div class="card">
             <h3>Total Transactions</h3>
-            <div
-                class="value"
-                id="transactionCount"
-            >
+            <div class="value" id="transactionCount">
                 0
             </div>
         </div>
@@ -612,7 +600,7 @@ th {
     </div>
 
 
-    <!-- QUICK ACTIONS -->
+    <!-- MOMO ACTIONS -->
 
     <div class="action-box">
 
@@ -643,13 +631,9 @@ th {
 
         <div class="form-grid">
 
-            <!-- NETWORK -->
-
             <div class="form-group">
 
-                <label>
-                    Network *
-                </label>
+                <label>Network *</label>
 
                 <select
                     id="momoNetwork"
@@ -677,17 +661,11 @@ th {
             </div>
 
 
-            <!-- TYPE -->
-
             <div class="form-group">
 
-                <label>
-                    Transaction Type *
-                </label>
+                <label>Transaction Type *</label>
 
-                <select
-                    id="momoType"
-                >
+                <select id="momoType">
 
                     <option value="">
                         -- Select Type --
@@ -706,13 +684,9 @@ th {
             </div>
 
 
-            <!-- AMOUNT -->
-
             <div class="form-group">
 
-                <label>
-                    Amount *
-                </label>
+                <label>Amount *</label>
 
                 <input
                     type="number"
@@ -725,13 +699,9 @@ th {
             </div>
 
 
-            <!-- COMMISSION -->
-
             <div class="form-group">
 
-                <label>
-                    Commission
-                </label>
+                <label>Commission</label>
 
                 <input
                     type="number"
@@ -745,13 +715,9 @@ th {
             </div>
 
 
-            <!-- REFERENCE -->
-
             <div class="form-group">
 
-                <label>
-                    Customer / Reference
-                </label>
+                <label>Customer / Reference</label>
 
                 <input
                     type="text"
@@ -762,13 +728,9 @@ th {
             </div>
 
 
-            <!-- DATE -->
-
             <div class="form-group">
 
-                <label>
-                    Date & Time
-                </label>
+                <label>Date & Time</label>
 
                 <input
                     type="datetime-local"
@@ -778,13 +740,9 @@ th {
             </div>
 
 
-            <!-- NOTE -->
-
             <div class="form-group">
 
-                <label>
-                    Note
-                </label>
+                <label>Note</label>
 
                 <textarea
                     id="momoNote"
@@ -818,6 +776,248 @@ th {
             id="momoMessage"
             class="message"
         ></div>
+
+    </div>
+
+
+    <!-- ELECTRICITY -->
+
+    <div class="action-box">
+
+        <h2 class="electricity-heading">
+            Electricity Prepaid
+        </h2>
+
+        <div class="action-buttons">
+
+            <button
+                class="btn-blue"
+                onclick="openElectricityForm()"
+            >
+                + New Electricity Transaction
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ELECTRICITY FORM -->
+
+    <div
+        id="electricityFormSection"
+        class="form-section hidden"
+    >
+
+        <h2 class="electricity-heading">
+            New Electricity Prepaid Transaction
+        </h2>
+
+        <div class="form-grid">
+
+            <!-- METER -->
+
+            <div class="form-group">
+
+                <label>
+                    Meter Number *
+                </label>
+
+                <input
+                    type="text"
+                    id="electricityMeter"
+                    placeholder="Enter meter number"
+                >
+
+            </div>
+
+
+            <!-- CUSTOMER -->
+
+            <div class="form-group">
+
+                <label>
+                    Customer Name / Phone
+                </label>
+
+                <input
+                    type="text"
+                    id="electricityCustomer"
+                    placeholder="Customer name or phone"
+                >
+
+            </div>
+
+
+            <!-- CUSTOMER PAYMENT -->
+
+            <div class="form-group">
+
+                <label>
+                    Amount Paid by Customer *
+                </label>
+
+                <input
+                    type="number"
+                    id="electricityCustomerAmount"
+                    min="0"
+                    step="0.01"
+                    placeholder="0.00"
+                    oninput="calculateElectricityProfit()"
+                >
+
+            </div>
+
+
+            <!-- PROVIDER PAYMENT -->
+
+            <div class="form-group">
+
+                <label>
+                    Amount Paid to Electricity Provider *
+                </label>
+
+                <input
+                    type="number"
+                    id="electricityProviderAmount"
+                    min="0"
+                    step="0.01"
+                    placeholder="0.00"
+                    oninput="calculateElectricityProfit()"
+                >
+
+            </div>
+
+
+            <!-- PROFIT -->
+
+            <div class="form-group">
+
+                <label>
+                    Commission / Profit
+                </label>
+
+                <input
+                    type="number"
+                    id="electricityProfit"
+                    class="profit-field"
+                    readonly
+                    value="0.00"
+                >
+
+            </div>
+
+
+            <!-- TOKEN -->
+
+            <div class="form-group">
+
+                <label>
+                    Electricity Token
+                </label>
+
+                <input
+                    type="text"
+                    id="electricityToken"
+                    placeholder="Enter token"
+                >
+
+            </div>
+
+
+            <!-- DATE -->
+
+            <div class="form-group">
+
+                <label>
+                    Date & Time
+                </label>
+
+                <input
+                    type="datetime-local"
+                    id="electricityDate"
+                >
+
+            </div>
+
+
+            <!-- NOTE -->
+
+            <div class="form-group">
+
+                <label>
+                    Note
+                </label>
+
+                <textarea
+                    id="electricityNote"
+                    placeholder="Optional note"
+                ></textarea>
+
+            </div>
+
+        </div>
+
+
+        <div class="form-actions">
+
+            <button
+                class="save-btn"
+                onclick="saveElectricityTransaction()"
+            >
+                Save Electricity Transaction
+            </button>
+
+            <button
+                class="cancel-btn"
+                onclick="closeElectricityForm()"
+            >
+                Cancel
+            </button>
+
+        </div>
+
+
+        <div
+            id="electricityMessage"
+            class="message"
+        ></div>
+
+    </div>
+
+
+    <!-- ELECTRICITY HISTORY -->
+
+    <div class="table-section">
+
+        <h2 class="electricity-heading">
+            Today's Electricity Transactions
+        </h2>
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>Time</th>
+                    <th>Meter Number</th>
+                    <th>Customer</th>
+                    <th>Customer Paid</th>
+                    <th>Provider Paid</th>
+                    <th>Profit</th>
+                    <th>Token</th>
+                    <th>Action</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="electricityTableBody">
+
+            </tbody>
+
+        </table>
 
     </div>
 
@@ -865,6 +1065,7 @@ th {
 
         </div>
 
+
         <div class="form-actions">
 
             <button
@@ -884,9 +1085,7 @@ th {
 
             <div class="balance-result">
 
-                <h4>
-                    Opening Balance
-                </h4>
+                <h4>Opening Balance</h4>
 
                 <strong id="displayOpening">
                     GHS 0.00
@@ -897,9 +1096,7 @@ th {
 
             <div class="balance-result">
 
-                <h4>
-                    Expected Closing
-                </h4>
+                <h4>Expected Closing</h4>
 
                 <strong id="expectedClosing">
                     GHS 0.00
@@ -910,9 +1107,7 @@ th {
 
             <div class="balance-result">
 
-                <h4>
-                    Actual Closing
-                </h4>
+                <h4>Actual Closing</h4>
 
                 <strong id="displayActualClosing">
                     GHS 0.00
@@ -923,9 +1118,7 @@ th {
 
             <div class="balance-result">
 
-                <h4>
-                    Difference
-                </h4>
+                <h4>Difference</h4>
 
                 <strong id="balanceDifference">
                     GHS 0.00
@@ -938,7 +1131,7 @@ th {
     </div>
 
 
-    <!-- TRANSACTION HISTORY -->
+    <!-- MOMO HISTORY -->
 
     <div class="table-section">
 
@@ -1000,6 +1193,8 @@ function login() {
 
         setDefaultDate();
 
+        setDefaultElectricityDate();
+
         loadDailyBalance();
 
         updateDashboard();
@@ -1024,7 +1219,7 @@ function logout() {
 
 
 /* =========================
-   STORAGE
+   STORAGE - MOMO
 ========================= */
 
 function getTransactions() {
@@ -1047,6 +1242,29 @@ function saveTransactions(transactions) {
 
 
 /* =========================
+   STORAGE - ELECTRICITY
+========================= */
+
+function getElectricityTransactions() {
+
+    return JSON.parse(
+        localStorage.getItem("fameElectricityTransactions")
+    ) || [];
+
+}
+
+
+function saveElectricityTransactions(transactions) {
+
+    localStorage.setItem(
+        "fameElectricityTransactions",
+        JSON.stringify(transactions)
+    );
+
+}
+
+
+/* =========================
    DATE
 ========================= */
 
@@ -1054,6 +1272,29 @@ function setDefaultDate() {
 
     const input =
         document.getElementById("momoDate");
+
+    if (!input.value) {
+
+        const now = new Date();
+
+        const local =
+            new Date(
+                now.getTime() -
+                now.getTimezoneOffset() * 60000
+            );
+
+        input.value =
+            local.toISOString().slice(0,16);
+
+    }
+
+}
+
+
+function setDefaultElectricityDate() {
+
+    const input =
+        document.getElementById("electricityDate");
 
     if (!input.value) {
 
@@ -1265,18 +1506,304 @@ function showMessage(message, color) {
 
 
 /* =========================
+   ELECTRICITY FORM
+========================= */
+
+function openElectricityForm() {
+
+    document
+        .getElementById("electricityFormSection")
+        .classList.remove("hidden");
+
+    setDefaultElectricityDate();
+
+    document
+        .getElementById("electricityMeter")
+        .focus();
+
+}
+
+
+function closeElectricityForm() {
+
+    document
+        .getElementById("electricityFormSection")
+        .classList.add("hidden");
+
+    document
+        .getElementById("electricityMessage")
+        .textContent = "";
+
+}
+
+
+function calculateElectricityProfit() {
+
+    const customerAmount =
+        Number(
+            document.getElementById(
+                "electricityCustomerAmount"
+            ).value
+        ) || 0;
+
+
+    const providerAmount =
+        Number(
+            document.getElementById(
+                "electricityProviderAmount"
+            ).value
+        ) || 0;
+
+
+    const profit =
+        customerAmount - providerAmount;
+
+
+    document.getElementById(
+        "electricityProfit"
+    ).value =
+        profit.toFixed(2);
+
+}
+
+
+function saveElectricityTransaction() {
+
+    const meter =
+        document.getElementById(
+            "electricityMeter"
+        ).value.trim();
+
+
+    const customer =
+        document.getElementById(
+            "electricityCustomer"
+        ).value.trim();
+
+
+    const customerAmount =
+        Number(
+            document.getElementById(
+                "electricityCustomerAmount"
+            ).value
+        );
+
+
+    const providerAmount =
+        Number(
+            document.getElementById(
+                "electricityProviderAmount"
+            ).value
+        );
+
+
+    const profit =
+        customerAmount - providerAmount;
+
+
+    const token =
+        document.getElementById(
+            "electricityToken"
+        ).value.trim();
+
+
+    const date =
+        document.getElementById(
+            "electricityDate"
+        ).value;
+
+
+    const note =
+        document.getElementById(
+            "electricityNote"
+        ).value.trim();
+
+
+    if (!meter) {
+
+        showElectricityMessage(
+            "Please enter the meter number.",
+            "red"
+        );
+
+        return;
+
+    }
+
+
+    if (
+        !customerAmount ||
+        customerAmount <= 0
+    ) {
+
+        showElectricityMessage(
+            "Please enter the amount paid by the customer.",
+            "red"
+        );
+
+        return;
+
+    }
+
+
+    if (
+        isNaN(providerAmount) ||
+        providerAmount < 0
+    ) {
+
+        showElectricityMessage(
+            "Please enter the amount paid to the electricity provider.",
+            "red"
+        );
+
+        return;
+
+    }
+
+
+    if (profit < 0) {
+
+        showElectricityMessage(
+            "Provider amount cannot be greater than customer payment.",
+            "red"
+        );
+
+        return;
+
+    }
+
+
+    if (!date) {
+
+        showElectricityMessage(
+            "Please select the date and time.",
+            "red"
+        );
+
+        return;
+
+    }
+
+
+    const transactions =
+        getElectricityTransactions();
+
+
+    transactions.push({
+
+        id: Date.now(),
+
+        category: "Electricity",
+
+        meter: meter,
+
+        customer: customer,
+
+        customerAmount: customerAmount,
+
+        providerAmount: providerAmount,
+
+        profit: profit,
+
+        token: token,
+
+        date: date,
+
+        note: note
+
+    });
+
+
+    saveElectricityTransactions(
+        transactions
+    );
+
+
+    showElectricityMessage(
+        "Electricity transaction saved successfully.",
+        "green"
+    );
+
+
+    document.getElementById(
+        "electricityMeter"
+    ).value = "";
+
+    document.getElementById(
+        "electricityCustomer"
+    ).value = "";
+
+    document.getElementById(
+        "electricityCustomerAmount"
+    ).value = "";
+
+    document.getElementById(
+        "electricityProviderAmount"
+    ).value = "";
+
+    document.getElementById(
+        "electricityProfit"
+    ).value = "0.00";
+
+    document.getElementById(
+        "electricityToken"
+    ).value = "";
+
+    document.getElementById(
+        "electricityNote"
+    ).value = "";
+
+
+    setDefaultElectricityDate();
+
+    updateDashboard();
+
+}
+
+
+function showElectricityMessage(
+    message,
+    color
+) {
+
+    const element =
+        document.getElementById(
+            "electricityMessage"
+        );
+
+    element.textContent = message;
+
+    element.style.color = color;
+
+}
+
+
+/* =========================
    DASHBOARD
 ========================= */
 
 function updateDashboard() {
 
-    const transactions =
+    const momoTransactions =
         getTransactions();
 
-    const todayTransactions =
-        transactions.filter(
+
+    const electricityTransactions =
+        getElectricityTransactions();
+
+
+    const todayMomo =
+        momoTransactions.filter(
             transaction =>
                 transaction.category === "MoMo" &&
+                isToday(transaction.date)
+        );
+
+
+    const todayElectricity =
+        electricityTransactions.filter(
+            transaction =>
+                transaction.category === "Electricity" &&
                 isToday(transaction.date)
         );
 
@@ -1285,7 +1812,7 @@ function updateDashboard() {
 
     let cashOut = 0;
 
-    let commission = 0;
+    let momoCommission = 0;
 
 
     const networks = {
@@ -1311,7 +1838,7 @@ function updateDashboard() {
     };
 
 
-    todayTransactions.forEach(transaction => {
+    todayMomo.forEach(transaction => {
 
         const amount =
             Number(transaction.amount) || 0;
@@ -1320,7 +1847,7 @@ function updateDashboard() {
             Number(transaction.commission) || 0;
 
 
-        commission += comm;
+        momoCommission += comm;
 
 
         if (transaction.type === "Cash In") {
@@ -1342,19 +1869,29 @@ function updateDashboard() {
             networks[transaction.network]
         ) {
 
-            networks[transaction.network].commission += comm;
+            networks[
+                transaction.network
+            ].commission += comm;
 
 
-            if (transaction.type === "Cash In") {
+            if (
+                transaction.type === "Cash In"
+            ) {
 
-                networks[transaction.network].in += amount;
+                networks[
+                    transaction.network
+                ].in += amount;
 
             }
 
 
-            if (transaction.type === "Cash Out") {
+            if (
+                transaction.type === "Cash Out"
+            ) {
 
-                networks[transaction.network].out += amount;
+                networks[
+                    transaction.network
+                ].out += amount;
 
             }
 
@@ -1363,87 +1900,164 @@ function updateDashboard() {
     });
 
 
+    let electricitySales = 0;
+
+    let electricityProviderPayments = 0;
+
+    let electricityProfit = 0;
+
+
+    todayElectricity.forEach(transaction => {
+
+        electricitySales +=
+            Number(
+                transaction.customerAmount
+            ) || 0;
+
+
+        electricityProviderPayments +=
+            Number(
+                transaction.providerAmount
+            ) || 0;
+
+
+        electricityProfit +=
+            Number(
+                transaction.profit
+            ) || 0;
+
+    });
+
+
     const totalMoMo =
         cashIn - cashOut;
 
 
-    document.getElementById("totalMoMo").textContent =
+    const totalProfit =
+        momoCommission +
+        electricityProfit;
+
+
+    document.getElementById(
+        "totalMoMo"
+    ).textContent =
         formatMoney(totalMoMo);
 
 
-    document.getElementById("totalCommission").textContent =
-        formatMoney(commission);
+    document.getElementById(
+        "totalElectricity"
+    ).textContent =
+        formatMoney(electricitySales);
 
 
-    document.getElementById("totalElectricity").textContent =
+    document.getElementById(
+        "totalCommission"
+    ).textContent =
+        formatMoney(totalProfit);
+
+
+    document.getElementById(
+        "totalExpenses"
+    ).textContent =
         formatMoney(0);
 
 
-    document.getElementById("totalExpenses").textContent =
-        formatMoney(0);
+    document.getElementById(
+        "netEarnings"
+    ).textContent =
+        formatMoney(totalProfit);
 
 
-    document.getElementById("netEarnings").textContent =
-        formatMoney(commission);
-
-
-    document.getElementById("transactionCount").textContent =
-        todayTransactions.length;
+    document.getElementById(
+        "transactionCount"
+    ).textContent =
+        todayMomo.length +
+        todayElectricity.length;
 
 
     /* NETWORKS */
 
-    document.getElementById("mtnIn").textContent =
+    document.getElementById(
+        "mtnIn"
+    ).textContent =
         formatMoney(networks.MTN.in);
 
-    document.getElementById("mtnOut").textContent =
+    document.getElementById(
+        "mtnOut"
+    ).textContent =
         formatMoney(networks.MTN.out);
 
-    document.getElementById("mtnCommission").textContent =
+    document.getElementById(
+        "mtnCommission"
+    ).textContent =
         formatMoney(networks.MTN.commission);
 
 
-    document.getElementById("telecelIn").textContent =
+    document.getElementById(
+        "telecelIn"
+    ).textContent =
         formatMoney(networks.Telecel.in);
 
-    document.getElementById("telecelOut").textContent =
+    document.getElementById(
+        "telecelOut"
+    ).textContent =
         formatMoney(networks.Telecel.out);
 
-    document.getElementById("telecelCommission").textContent =
-        formatMoney(networks.Telecel.commission);
+    document.getElementById(
+        "telecelCommission"
+    ).textContent =
+        formatMoney(
+            networks.Telecel.commission
+        );
 
 
-    document.getElementById("tigoIn").textContent =
+    document.getElementById(
+        "tigoIn"
+    ).textContent =
         formatMoney(networks.Tigo.in);
 
-    document.getElementById("tigoOut").textContent =
+    document.getElementById(
+        "tigoOut"
+    ).textContent =
         formatMoney(networks.Tigo.out);
 
-    document.getElementById("tigoCommission").textContent =
+    document.getElementById(
+        "tigoCommission"
+    ).textContent =
         formatMoney(networks.Tigo.commission);
 
 
-    renderTransactions(todayTransactions);
+    renderTransactions(todayMomo);
+
+    renderElectricityTransactions(
+        todayElectricity
+    );
+
 
     updateExpectedClosing(
         cashIn,
         cashOut,
-        commission
+        electricitySales,
+        electricityProviderPayments,
+        totalProfit
     );
 
 }
 
 
 /* =========================
-   TRANSACTION TABLE
+   MOMO TABLE
 ========================= */
 
-function renderTransactions(transactions) {
+function renderTransactions(
+    transactions
+) {
 
     const tbody =
         document.getElementById(
             "transactionTableBody"
         );
+
 
     tbody.innerHTML = "";
 
@@ -1453,7 +2067,7 @@ function renderTransactions(transactions) {
         tbody.innerHTML = `
             <tr>
                 <td colspan="7" style="text-align:center;">
-                    No transactions recorded today.
+                    No MoMo transactions recorded today.
                 </td>
             </tr>
         `;
@@ -1534,14 +2148,124 @@ function renderTransactions(transactions) {
 
 
 /* =========================
-   DELETE
+   ELECTRICITY TABLE
+========================= */
+
+function renderElectricityTransactions(
+    transactions
+) {
+
+    const tbody =
+        document.getElementById(
+            "electricityTableBody"
+        );
+
+
+    tbody.innerHTML = "";
+
+
+    if (transactions.length === 0) {
+
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="8" style="text-align:center;">
+                    No electricity transactions recorded today.
+                </td>
+            </tr>
+        `;
+
+        return;
+
+    }
+
+
+    transactions
+        .slice()
+        .sort(
+            (a,b) =>
+                new Date(b.date) -
+                new Date(a.date)
+        )
+        .forEach(transaction => {
+
+            const row =
+                document.createElement("tr");
+
+
+            const time =
+                new Date(
+                    transaction.date
+                ).toLocaleTimeString(
+                    [],
+                    {
+                        hour: "2-digit",
+                        minute: "2-digit"
+                    }
+                );
+
+
+            row.innerHTML = `
+
+                <td>${time}</td>
+
+                <td>${transaction.meter}</td>
+
+                <td>
+                    ${transaction.customer || "-"}
+                </td>
+
+                <td>
+                    ${formatMoney(
+                        transaction.customerAmount
+                    )}
+                </td>
+
+                <td>
+                    ${formatMoney(
+                        transaction.providerAmount
+                    )}
+                </td>
+
+                <td>
+                    ${formatMoney(
+                        transaction.profit
+                    )}
+                </td>
+
+                <td>
+                    ${transaction.token || "-"}
+                </td>
+
+                <td>
+
+                    <button
+                        class="delete-btn"
+                        onclick="deleteElectricityTransaction(${transaction.id})"
+                    >
+                        Delete
+                    </button>
+
+                </td>
+
+            `;
+
+
+            tbody.appendChild(row);
+
+        });
+
+}
+
+
+/* =========================
+   DELETE MOMO
 ========================= */
 
 function deleteTransaction(id) {
 
     if (
         !confirm(
-            "Delete this transaction?"
+            "Delete this MoMo transaction?"
         )
     ) {
 
@@ -1561,7 +2285,49 @@ function deleteTransaction(id) {
         );
 
 
-    saveTransactions(transactions);
+    saveTransactions(
+        transactions
+    );
+
+    updateDashboard();
+
+}
+
+
+/* =========================
+   DELETE ELECTRICITY
+========================= */
+
+function deleteElectricityTransaction(
+    id
+) {
+
+    if (
+        !confirm(
+            "Delete this electricity transaction?"
+        )
+    ) {
+
+        return;
+
+    }
+
+
+    let transactions =
+        getElectricityTransactions();
+
+
+    transactions =
+        transactions.filter(
+            transaction =>
+                transaction.id !== id
+        );
+
+
+    saveElectricityTransactions(
+        transactions
+    );
+
 
     updateDashboard();
 
@@ -1594,11 +2360,14 @@ function saveDailyBalance() {
         "fameDailyBalance",
         JSON.stringify({
 
-            date: new Date().toDateString(),
+            date:
+                new Date().toDateString(),
 
-            opening: opening,
+            opening:
+                opening,
 
-            actual: actual
+            actual:
+                actual
 
         })
     );
@@ -1633,12 +2402,14 @@ function loadDailyBalance() {
 
         document.getElementById(
             "openingBalance"
-        ).value = saved.opening;
+        ).value =
+            saved.opening;
 
 
         document.getElementById(
             "actualClosingBalance"
-        ).value = saved.actual;
+        ).value =
+            saved.actual;
 
     }
 
@@ -1648,7 +2419,9 @@ function loadDailyBalance() {
 function updateExpectedClosing(
     cashIn,
     cashOut,
-    commission
+    electricitySales,
+    electricityProviderPayments,
+    totalProfit
 ) {
 
     const opening =
@@ -1671,7 +2444,9 @@ function updateExpectedClosing(
         opening +
         cashIn -
         cashOut +
-        commission;
+        electricitySales -
+        electricityProviderPayments +
+        totalProfit;
 
 
     const difference =
@@ -1711,7 +2486,9 @@ function updateExpectedClosing(
 function formatMoney(value) {
 
     return "GHS " +
-        Number(value || 0).toLocaleString(
+        Number(
+            value || 0
+        ).toLocaleString(
             "en-GH",
             {
                 minimumFractionDigits: 2,
