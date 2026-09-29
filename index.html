@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FAME Portal</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --primary: #0f766e;
+    --primary-dark: #115e59;
+    --light: #f0fdfa;
+    --background: #f5f7f9;
+    --white: #ffffff;
+    --text: #172033;
+    --muted: #64748b;
+    --border: #e2e8f0;
+    --danger: #dc2626;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--background);
+    color: var(--text);
+    min-height: 100vh;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* =========================
+   LOGIN
+========================= */
+
+#loginScreen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: linear-gradient(135deg, #ecfeff, #f8fafc);
+}
+
+.login-card {
+    width: 100%;
+    max-width: 420px;
+    background: white;
+    border-radius: 20px;
+    padding: 35px 28px;
+    border: 1px solid var(--border);
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+.logo {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 15px;
+    border-radius: 18px;
+    background: var(--primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.brand {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.brand h1 {
+    color: var(--primary-dark);
+    font-size: 30px;
+}
+
+.brand p {
+    color: var(--muted);
+    font-size: 14px;
+    margin-top: 6px;
+}
+
+.form-group {
+    margin-bottom: 17px;
+}
+
+label {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 7px;
+}
+
+input {
+    width: 100%;
+    height: 48px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    padding: 0 13px;
+    font-size: 15px;
+    outline: none;
+}
+
+input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.12);
+}
+
+.login-btn {
+    width: 100%;
+    height: 50px;
+    border: none;
+    border-radius: 10px;
+    background: var(--primary);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.login-btn:hover {
+    background: var(--primary-dark);
+}
+
+.login-error {
+    background: #fef2f2;
+    color: var(--danger);
+    border: 1px solid #fecaca;
+    padding: 10px;
+    border-radius: 9px;
+    text-align: center;
+    font-size: 13px;
+    margin-bottom: 14px;
+}
+
+.login-hint {
+    text-align: center;
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 15px;
+}
+
+/* =========================
+   TOP BAR
+========================= */
+
+.topbar {
+    min-height: 70px;
+    background: white;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 24px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.topbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+}
+
+.small-logo {
+    width: 42px;
+    height: 42px;
+    border-radius: 11px;
+    background: var(--primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.topbar-brand strong {
+    display: block;
+    font-size: 17px;
+}
+
+.topbar-brand span {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.logout-btn {
+    border: 1px solid #cbd5e1;
+    background: white;
+    color: #334155;
+    border-radius: 9px;
+    padding: 10px 14px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* =========================
+   DASHBOARD
+========================= */
+
+.content {
+    max-width: 1250px;
+    margin: auto;
+    padding: 28px 22px 40px;
+}
+
+.welcome {
+    margin-bottom: 22px;
+}
+
+.welcome h2 {
+    font-size: 27px;
+    margin-bottom: 5px;
+}
+
+.welcome p {
+    color: var(--muted);
+}
+
+.date-box {
+    display: inline-block;
+    margin-top: 14px;
+    background: var(--light);
+    color: var(--primary-dark);
+    padding: 8px 11px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+/* SUMMARY CARDS */
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+.summary-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+}
+
+.summary-label {
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 9px;
+}
+
+.summary-value {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.summary-sub {
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 7px;
+}
+
+/* QUICK ACTIONS */
+
+.section-title {
+    margin: 30px 0 14px;
+    font-size: 19px;
+}
+
+.action-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.action-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px;
+    min-height: 135px;
+    cursor: pointer;
+    text-align: left;
+}
+
+.action-card:hover {
+    border-color: #99f6e4;
+    transform: translateY(-2px);
+}
+
+.action-icon {
+    width: 43px;
+    height: 43px;
+    border-radius: 11px;
+    background: var(--light);
+    color: var(--primary-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    margin-bottom: 13px;
+}
+
+.action-card h3 {
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.action-card p {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.45;
+}
+
+/* ACTIVITY */
+
+.activity {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 25px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+/* FOOTER */
+
+.footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 30px;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 900px) {
+
+    .summary-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .action-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 560px) {
+
+    .topbar {
+        padding: 11px 15px;
+    }
+
+    .content {
+        padding: 22px 15px 30px;
+    }
+
+    .topbar-brand span {
+        display: none;
+    }
+
+    .summary-grid,
+    .action-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .welcome h2 {
+        font-size: 23px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+     LOGIN SCREEN
+========================= -->
+
+<section id="loginScreen">
+
+    <div class="login-card">
+
+        <div class="brand">
+
+            <div class="logo">
+                FM
+            </div>
+
+            <h1>FAME PORTAL</h1>
+
+            <p>
+                Faustina Ansa-Mensah Enterprise
+            </p>
+
+        </div>
+
+        <div id="loginError" class="login-error hidden">
+            Incorrect username or password.
+        </div>
+
+        <form id="loginForm">
+
+            <div class="form-group">
+
+                <label for="username">
+                    Username
+                </label>
+
+                <input
+                    type="text"
+                    id="username"
+                    placeholder="Enter username"
+                    required
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="password">
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Enter password"
+                    required
+                >
+
+            </div>
+
+            <button
+                type="submit"
+                class="login-btn"
+            >
+                Login to FAME Portal
+            </button>
+
+        </form>
+
+        <div class="login-hint">
+            Default login: admin / fame123
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     MAIN APPLICATION
+========================= -->
+
+<section id="app" class="hidden">
+
+    <!-- TOP BAR -->
+
+    <header class="topbar">
+
+        <div class="topbar-brand">
+
+            <div class="small-logo">
+                FM
+            </div>
+
+            <div>
+
+                <strong>
+                    FAME Portal
+                </strong>
+
+                <span>
+                    Faustina Ansa-Mensah Enterprise
+                </span>
+
+            </div>
+
+        </div>
+
+        <button
+            type="button"
+            id="logoutBtn"
+            class="logout-btn"
+        >
+            Logout
+        </button>
+
+    </header>
+
+
+    <!-- DASHBOARD -->
+
+    <main class="content">
+
+        <div class="welcome">
+
+            <h2>
+                Dashboard
+            </h2>
+
+            <p>
+                Welcome to the FAME business management portal.
+            </p>
+
+            <div
+                id="todayDate"
+                class="date-box"
+            ></div>
+
+        </div>
+
+
+        <!-- SUMMARY -->
+
+        <div class="summary-grid">
+
+            <div class="summary-card">
+
+                <div class="summary-label">
+                    MoMo Transactions
+                </div>
+
+                <div
+                    class="summary-value"
+                    id="momoTransactions"
+                >
+                    0
+                </div>
+
+                <div class="summary-sub">
+                    Cash In + Cash Out
+                </div>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <div class="summary-label">
+                    Cash In
+                </div>
+
+                <div
+                    class="summary-value"
+                    id="cashIn"
+                >
+                    GH₵ 0.00
+                </div>
+
+                <div class="summary-sub">
+                    Today's MoMo cash in
+                </div>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <div class="summary-label">
+                    Cash Out
+                </div>
+
+                <div
+                    class="summary-value"
+                    id="cashOut"
+                >
+                    GH₵ 0.00
+                </div>
+
+                <div class="summary-sub">
+                    Today's MoMo cash out
+                </div>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <div class="summary-label">
+                    Electricity Prepaid
+                </div>
+
+                <div
+                    class="summary-value"
+                    id="electricity"
+                >
+                    GH₵ 0.00
+                </div>
+
+                <div class="summary-sub">
+                    Today's prepaid sales
+                </div>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <div class="summary-label">
+                    Total Transactions
+                </div>
+
+                <div
+                    class="summary-value"
+                    id="totalTransactions"
+                >
+                    0
+                </div>
+
+                <div class="summary-sub">
+                    All services today
+                </div>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <div class="summary-label">
+                    Commission / Profit
+                </div>
+
+                <div
+                    class="summary-value"
+                    id="profit"
+                >
+                    GH₵ 0.00
+                </div>
+
+                <div class="summary-sub">
+                    Today's earnings
+                </div>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <div class="summary-label">
+                    Expenses
+                </div>
+
+                <div
+                    class="summary-value"
+                    id="expenses"
+                >
+                    GH₵ 0.00
+                </div>
+
+                <div class="summary-sub">
+                    Today's expenses
+                </div>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <div class="summary-label">
+                    Net Earnings
+                </div>
+
+                <div
+                    class="summary-value"
+                    id="netEarnings"
+                >
+                    GH₵ 0.00
+                </div>
+
+                <div class="summary-sub">
+                    Earnings minus expenses
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- QUICK ACTIONS -->
+
+        <h3 class="section-title">
+            Quick Actions
+        </h3>
+
+        <div class="action-grid">
+
+            <button
+                type="button"
+                class="action-card"
+                data-action="cash-in"
+            >
+
+                <div class="action-icon">
+                    IN
+                </div>
+
+                <h3>
+                    MoMo Cash In
+                </h3>
+
+                <p>
+                    Record a customer's cash-in transaction.
+                </p>
+
+            </button>
+
+
+            <button
+                type="button"
+                class="action-card"
+                data-action="cash-out"
+            >
+
+                <div class="action-icon">
+                    OUT
+                </div>
+
+                <h3>
+                    MoMo Cash Out
+                </h3>
+
+                <p>
+                    Record a customer's cash-out transaction.
+                </p>
+
+            </button>
+
+
+            <button
+                type="button"
+                class="action-card"
+                data-action="electricity"
+            >
+
+                <div class="action-icon">
+                    ⚡
+                </div>
+
+                <h3>
+                    Electricity Prepaid
+                </h3>
+
+                <p>
+                    Record an electricity prepaid purchase.
+                </p>
+
+            </button>
+
+        </div>
+
+
+        <!-- ACTIVITY -->
+
+        <h3 class="section-title">
+            Today's Activity
+        </h3>
+
+        <div class="activity">
+
+            No transactions have been recorded yet.
+
+        </div>
+
+
+        <div class="footer">
+
+            FAME Portal • Faustina Ansa-Mensah Enterprise
+
+        </div>
+
+    </main>
+
+</section>
+
+
+<script>
+
+(function () {
+
+    const loginScreen =
+        document.getElementById("loginScreen");
+
+    const app =
+        document.getElementById("app");
+
+    const loginForm =
+        document.getElementById("loginForm");
+
+    const loginError =
+        document.getElementById("loginError");
+
+    const logoutBtn =
+        document.getElementById("logoutBtn");
+
+
+    /* =========================
+       LOGIN
+    ========================= */
+
+    loginForm.addEventListener("submit", function (event) {
+
+        event.preventDefault();
+
+        const username =
+            document.getElementById("username").value.trim();
+
+        const password =
+            document.getElementById("password").value;
+
+
+        if (
+            username === "admin" &&
+            password === "fame123"
+        ) {
+
+            loginScreen.classList.add("hidden");
+
+            app.classList.remove("hidden");
+
+            updateDate();
+
+        } else {
+
+            loginError.classList.remove("hidden");
+
+        }
+
+    });
+
+
+    /* =========================
+       LOGOUT
+    ========================= */
+
+    logoutBtn.addEventListener("click", function () {
+
+        app.classList.add("hidden");
+
+        loginScreen.classList.remove("hidden");
+
+        loginForm.reset();
+
+        loginError.classList.add("hidden");
+
+    });
+
+
+    /* =========================
+       DATE
+    ========================= */
+
+    function updateDate() {
+
+        const today =
+            new Date();
+
+        document.getElementById("todayDate").textContent =
+            today.toLocaleDateString(
+                "en-GH",
+                {
+                    weekday: "long",
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric"
+                }
+            );
+
+    }
+
+
+    /* =========================
+       QUICK ACTIONS
+    ========================= */
+
+    document.querySelectorAll(".action-card")
+        .forEach(function (button) {
+
+            button.addEventListener("click", function () {
+
+                const action =
+                    button.dataset.action;
+
+                if (action === "cash-in") {
+
+                    alert(
+                        "MoMo Cash In module will be added next."
+                    );
+
+                }
+
+                if (action === "cash-out") {
+
+                    alert(
+                        "MoMo Cash Out module will be added next."
+                    );
+
+                }
+
+                if (action === "electricity") {
+
+                    alert(
+                        "Electricity Prepaid module will be added next."
+                    );
+
+                }
+
+            });
+
+        });
+
+})();
+
+</script>
+
+</body>
+</html>
