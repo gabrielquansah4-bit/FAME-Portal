@@ -302,12 +302,6 @@ header small {
     background: #f0fffc;
 }
 
-.profit-field {
-    background: #f0fffc !important;
-    border: 2px solid #075e54 !important;
-    font-weight: bold;
-}
-
 /* BALANCE */
 .balance-box {
     background: white;
@@ -386,6 +380,12 @@ th {
 
 .electricity-heading {
     color: #1976d2 !important;
+}
+
+.electricity-amount {
+    border: 2px solid #1976d2 !important;
+    background: #f2f8ff;
+    font-weight: bold;
 }
 
 @media (max-width: 600px) {
@@ -849,7 +849,7 @@ th {
             </div>
 
 
-            <!-- CUSTOMER PAYMENT -->
+            <!-- AMOUNT -->
 
             <div class="form-group">
 
@@ -859,50 +859,11 @@ th {
 
                 <input
                     type="number"
-                    id="electricityCustomerAmount"
+                    id="electricityAmount"
+                    class="electricity-amount"
                     min="0"
                     step="0.01"
                     placeholder="0.00"
-                    oninput="calculateElectricityProfit()"
-                >
-
-            </div>
-
-
-            <!-- PROVIDER PAYMENT -->
-
-            <div class="form-group">
-
-                <label>
-                    Amount Paid to Electricity Provider *
-                </label>
-
-                <input
-                    type="number"
-                    id="electricityProviderAmount"
-                    min="0"
-                    step="0.01"
-                    placeholder="0.00"
-                    oninput="calculateElectricityProfit()"
-                >
-
-            </div>
-
-
-            <!-- PROFIT -->
-
-            <div class="form-group">
-
-                <label>
-                    Commission / Profit
-                </label>
-
-                <input
-                    type="number"
-                    id="electricityProfit"
-                    class="profit-field"
-                    readonly
-                    value="0.00"
                 >
 
             </div>
@@ -1003,9 +964,7 @@ th {
                     <th>Time</th>
                     <th>Meter Number</th>
                     <th>Customer</th>
-                    <th>Customer Paid</th>
-                    <th>Provider Paid</th>
-                    <th>Profit</th>
+                    <th>Amount Paid</th>
                     <th>Token</th>
                     <th>Action</th>
 
@@ -1537,36 +1496,6 @@ function closeElectricityForm() {
 }
 
 
-function calculateElectricityProfit() {
-
-    const customerAmount =
-        Number(
-            document.getElementById(
-                "electricityCustomerAmount"
-            ).value
-        ) || 0;
-
-
-    const providerAmount =
-        Number(
-            document.getElementById(
-                "electricityProviderAmount"
-            ).value
-        ) || 0;
-
-
-    const profit =
-        customerAmount - providerAmount;
-
-
-    document.getElementById(
-        "electricityProfit"
-    ).value =
-        profit.toFixed(2);
-
-}
-
-
 function saveElectricityTransaction() {
 
     const meter =
@@ -1581,24 +1510,12 @@ function saveElectricityTransaction() {
         ).value.trim();
 
 
-    const customerAmount =
+    const amount =
         Number(
             document.getElementById(
-                "electricityCustomerAmount"
+                "electricityAmount"
             ).value
         );
-
-
-    const providerAmount =
-        Number(
-            document.getElementById(
-                "electricityProviderAmount"
-            ).value
-        );
-
-
-    const profit =
-        customerAmount - providerAmount;
 
 
     const token =
@@ -1631,40 +1548,10 @@ function saveElectricityTransaction() {
     }
 
 
-    if (
-        !customerAmount ||
-        customerAmount <= 0
-    ) {
+    if (!amount || amount <= 0) {
 
         showElectricityMessage(
             "Please enter the amount paid by the customer.",
-            "red"
-        );
-
-        return;
-
-    }
-
-
-    if (
-        isNaN(providerAmount) ||
-        providerAmount < 0
-    ) {
-
-        showElectricityMessage(
-            "Please enter the amount paid to the electricity provider.",
-            "red"
-        );
-
-        return;
-
-    }
-
-
-    if (profit < 0) {
-
-        showElectricityMessage(
-            "Provider amount cannot be greater than customer payment.",
             "red"
         );
 
@@ -1699,11 +1586,7 @@ function saveElectricityTransaction() {
 
         customer: customer,
 
-        customerAmount: customerAmount,
-
-        providerAmount: providerAmount,
-
-        profit: profit,
+        amount: amount,
 
         token: token,
 
@@ -1734,16 +1617,8 @@ function saveElectricityTransaction() {
     ).value = "";
 
     document.getElementById(
-        "electricityCustomerAmount"
+        "electricityAmount"
     ).value = "";
-
-    document.getElementById(
-        "electricityProviderAmount"
-    ).value = "";
-
-    document.getElementById(
-        "electricityProfit"
-    ).value = "0.00";
 
     document.getElementById(
         "electricityToken"
@@ -1900,30 +1775,16 @@ function updateDashboard() {
     });
 
 
+    /* ELECTRICITY */
+
     let electricitySales = 0;
-
-    let electricityProviderPayments = 0;
-
-    let electricityProfit = 0;
 
 
     todayElectricity.forEach(transaction => {
 
         electricitySales +=
             Number(
-                transaction.customerAmount
-            ) || 0;
-
-
-        electricityProviderPayments +=
-            Number(
-                transaction.providerAmount
-            ) || 0;
-
-
-        electricityProfit +=
-            Number(
-                transaction.profit
+                transaction.amount
             ) || 0;
 
     });
@@ -1934,8 +1795,7 @@ function updateDashboard() {
 
 
     const totalProfit =
-        momoCommission +
-        electricityProfit;
+        momoCommission;
 
 
     document.getElementById(
@@ -2038,8 +1898,7 @@ function updateDashboard() {
         cashIn,
         cashOut,
         electricitySales,
-        electricityProviderPayments,
-        totalProfit
+        momoCommission
     );
 
 }
@@ -2168,7 +2027,7 @@ function renderElectricityTransactions(
 
         tbody.innerHTML = `
             <tr>
-                <td colspan="8" style="text-align:center;">
+                <td colspan="6" style="text-align:center;">
                     No electricity transactions recorded today.
                 </td>
             </tr>
@@ -2215,21 +2074,7 @@ function renderElectricityTransactions(
                 </td>
 
                 <td>
-                    ${formatMoney(
-                        transaction.customerAmount
-                    )}
-                </td>
-
-                <td>
-                    ${formatMoney(
-                        transaction.providerAmount
-                    )}
-                </td>
-
-                <td>
-                    ${formatMoney(
-                        transaction.profit
-                    )}
+                    ${formatMoney(transaction.amount)}
                 </td>
 
                 <td>
@@ -2416,12 +2261,15 @@ function loadDailyBalance() {
 }
 
 
+/* =========================
+   EXPECTED CLOSING
+========================= */
+
 function updateExpectedClosing(
     cashIn,
     cashOut,
     electricitySales,
-    electricityProviderPayments,
-    totalProfit
+    momoCommission
 ) {
 
     const opening =
@@ -2440,13 +2288,22 @@ function updateExpectedClosing(
         ) || 0;
 
 
+    /*
+       Expected Closing:
+
+       Opening Balance
+       + MoMo Cash In
+       - MoMo Cash Out
+       + Electricity Sales
+       + MoMo Commission
+    */
+
     const expected =
         opening +
         cashIn -
         cashOut +
-        electricitySales -
-        electricityProviderPayments +
-        totalProfit;
+        electricitySales +
+        momoCommission;
 
 
     const difference =
