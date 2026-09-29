@@ -80,7 +80,8 @@ textarea {
 }
 
 /* PORTAL */
-#portal {
+#portal,
+#workerPortal {
     display: none;
 }
 
@@ -388,6 +389,50 @@ th {
     font-weight: bold;
 }
 
+/* WORKER PORTAL */
+.worker-welcome {
+    background: white;
+    padding: 30px;
+    border-radius: 14px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.worker-welcome h2 {
+    color: #075e54;
+    margin-top: 0;
+}
+
+.worker-welcome .worker-name {
+    font-size: 28px;
+    font-weight: bold;
+    color: #1976d2;
+    margin: 15px 0;
+}
+
+.worker-info-card {
+    background: white;
+    padding: 25px;
+    border-radius: 14px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+    margin-bottom: 20px;
+}
+
+.worker-info-card h3 {
+    color: #075e54;
+    margin-top: 0;
+}
+
+.worker-status {
+    display: inline-block;
+    background: #e8f5e9;
+    color: #2e7d32;
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-weight: bold;
+}
+
 @media (max-width: 600px) {
 
     header {
@@ -445,14 +490,14 @@ th {
 </div>
 
 
-<!-- PORTAL -->
+<!-- ADMIN PORTAL -->
 <div id="portal">
 
 <header>
 
     <div>
         <h1>FAME Portal</h1>
-        <small>Faustina Ansa-Mensah Enterprise</small>
+        <small>Admin Portal — Faustina Ansa-Mensah Enterprise</small>
     </div>
 
     <button
@@ -815,8 +860,6 @@ th {
 
         <div class="form-grid">
 
-            <!-- METER -->
-
             <div class="form-group">
 
                 <label>
@@ -832,8 +875,6 @@ th {
             </div>
 
 
-            <!-- CUSTOMER -->
-
             <div class="form-group">
 
                 <label>
@@ -848,8 +889,6 @@ th {
 
             </div>
 
-
-            <!-- AMOUNT -->
 
             <div class="form-group">
 
@@ -869,8 +908,6 @@ th {
             </div>
 
 
-            <!-- TOKEN -->
-
             <div class="form-group">
 
                 <label>
@@ -886,8 +923,6 @@ th {
             </div>
 
 
-            <!-- DATE -->
-
             <div class="form-group">
 
                 <label>
@@ -901,8 +936,6 @@ th {
 
             </div>
 
-
-            <!-- NOTE -->
 
             <div class="form-group">
 
@@ -1127,7 +1160,81 @@ th {
 </div>
 
 
+<!-- WORKER PORTAL -->
+<div id="workerPortal">
+
+<header>
+
+    <div>
+        <h1>FAME Portal</h1>
+        <small>Worker Portal — Faustina Ansa-Mensah Enterprise</small>
+    </div>
+
+    <button
+        class="logout-btn"
+        onclick="logout()"
+    >
+        Logout
+    </button>
+
+</header>
+
+
+<div class="container">
+
+    <div class="worker-welcome">
+
+        <h2>Welcome</h2>
+
+        <div
+            class="worker-name"
+            id="loggedWorkerName"
+        >
+            Worker
+        </div>
+
+        <div class="worker-status">
+            Logged In
+        </div>
+
+        <p>
+            Your worker portal will be used to record your daily
+            transactions and manage your daily shift.
+        </p>
+
+    </div>
+
+
+    <div class="worker-info-card">
+
+        <h3>Today's Work</h3>
+
+        <p>
+            Your daily shift and transaction recording system
+            will appear here in the next step.
+        </p>
+
+        <p>
+            You will be able to start your day, record MoMo
+            transactions, record electricity sales and close
+            your day's balance.
+        </p>
+
+    </div>
+
+</div>
+
+</div>
+
+
 <script>
+
+/* =========================
+   CURRENT USER
+========================= */
+
+let currentUser = null;
+
 
 /* =========================
    LOGIN
@@ -1136,19 +1243,37 @@ th {
 function login() {
 
     const username =
-        document.getElementById("username").value.trim();
+        document.getElementById("username").value.trim().toLowerCase();
 
     const password =
         document.getElementById("password").value;
+
+
+    const loginError =
+        document.getElementById("loginError");
+
+
+    /*
+       ADMIN
+    */
 
     if (
         username === "admin" &&
         password === "fame123"
     ) {
 
+        currentUser = {
+            role: "admin",
+            name: "Administrator"
+        };
+
+
         document.getElementById("loginPage").style.display = "none";
 
+        document.getElementById("workerPortal").style.display = "none";
+
         document.getElementById("portal").style.display = "block";
+
 
         setDefaultDate();
 
@@ -1158,21 +1283,101 @@ function login() {
 
         updateDashboard();
 
-    } else {
+        loginError.textContent = "";
 
-        document.getElementById("loginError").textContent =
-            "Invalid username or password.";
+        return;
 
     }
+
+
+    /*
+       ABI FAME
+    */
+
+    if (
+        username === "abi" &&
+        password === "abi123"
+    ) {
+
+        currentUser = {
+            role: "worker",
+            name: "Abi Fame",
+            username: "abi"
+        };
+
+
+        openWorkerPortal();
+
+        loginError.textContent = "";
+
+        return;
+
+    }
+
+
+    /*
+       BAB FAME
+    */
+
+    if (
+        username === "bab" &&
+        password === "bab123"
+    ) {
+
+        currentUser = {
+            role: "worker",
+            name: "Bab Fame",
+            username: "bab"
+        };
+
+
+        openWorkerPortal();
+
+        loginError.textContent = "";
+
+        return;
+
+    }
+
+
+    loginError.textContent =
+        "Invalid username or password.";
+
+}
+
+
+function openWorkerPortal() {
+
+    document.getElementById("loginPage").style.display = "none";
+
+    document.getElementById("portal").style.display = "none";
+
+    document.getElementById("workerPortal").style.display = "block";
+
+
+    document.getElementById(
+        "loggedWorkerName"
+    ).textContent =
+        currentUser.name;
 
 }
 
 
 function logout() {
 
+    currentUser = null;
+
     document.getElementById("portal").style.display = "none";
 
+    document.getElementById("workerPortal").style.display = "none";
+
     document.getElementById("loginPage").style.display = "flex";
+
+    document.getElementById("username").value = "";
+
+    document.getElementById("password").value = "";
+
+    document.getElementById("loginError").textContent = "";
 
 }
 
@@ -2287,16 +2492,6 @@ function updateExpectedClosing(
             ).value
         ) || 0;
 
-
-    /*
-       Expected Closing:
-
-       Opening Balance
-       + MoMo Cash In
-       - MoMo Cash Out
-       + Electricity Sales
-       + MoMo Commission
-    */
 
     const expected =
         opening +
