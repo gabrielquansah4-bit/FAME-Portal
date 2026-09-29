@@ -7,6 +7,7 @@
 <title>FAME Portal</title>
 
 <style>
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -20,6 +21,7 @@ body {
 }
 
 /* LOGIN */
+
 .login-page {
     min-height: 100vh;
     display: flex;
@@ -73,16 +75,13 @@ button {
     color: white;
 }
 
-.login-btn:hover {
-    background: #1558b0;
-}
-
 .error {
     color: #d93025;
     margin-top: 10px;
 }
 
 /* MAIN */
+
 #app {
     display: none;
 }
@@ -114,7 +113,7 @@ header {
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 1250px;
     margin: auto;
     padding: 25px;
 }
@@ -132,6 +131,7 @@ header {
 }
 
 /* CARDS */
+
 .cards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
@@ -157,7 +157,58 @@ header {
     font-weight: bold;
 }
 
-/* QUICK ACTIONS */
+/* NETWORK CARDS */
+
+.network-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.network-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.07);
+}
+
+.network-title {
+    font-size: 19px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.network-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.network-row:last-child {
+    border-bottom: none;
+}
+
+.network-label {
+    color: #666;
+}
+
+.network-value {
+    font-weight: bold;
+}
+
+.network-net {
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 2px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+}
+
+/* SECTIONS */
+
 .section {
     background: white;
     border-radius: 12px;
@@ -169,6 +220,8 @@ header {
 .section h3 {
     margin-bottom: 15px;
 }
+
+/* QUICK ACTIONS */
 
 .actions {
     display: flex;
@@ -192,6 +245,7 @@ header {
 }
 
 /* FORMS */
+
 .form-container {
     display: none;
 }
@@ -245,7 +299,51 @@ header {
     background: #ddd;
 }
 
+/* BALANCE */
+
+.balance-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.balance-box {
+    background: #f8f9fa;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 18px;
+}
+
+.balance-title {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.balance-value {
+    font-size: 23px;
+    font-weight: bold;
+}
+
+.difference-box {
+    margin-top: 15px;
+    padding: 18px;
+    border-radius: 10px;
+    background: #f8f9fa;
+}
+
+.difference-label {
+    color: #666;
+    margin-bottom: 7px;
+}
+
+.difference-value {
+    font-size: 25px;
+    font-weight: bold;
+}
+
 /* TABLE */
+
 .table-container {
     overflow-x: auto;
 }
@@ -253,7 +351,7 @@ header {
 table {
     width: 100%;
     border-collapse: collapse;
-    min-width: 700px;
+    min-width: 800px;
 }
 
 th,
@@ -276,6 +374,16 @@ th {
 }
 
 /* MOBILE */
+
+@media (max-width: 800px) {
+
+    .network-grid,
+    .balance-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
 @media (max-width: 700px) {
 
     header {
@@ -305,18 +413,24 @@ th {
     .actions button {
         width: 100%;
     }
+
 }
+
 </style>
 </head>
 
 <body>
 
-<!-- LOGIN PAGE -->
+
+<!-- LOGIN -->
+
 <div id="loginPage" class="login-page">
 
     <div class="login-box">
 
-        <div class="logo">FAME Portal</div>
+        <div class="logo">
+            FAME Portal
+        </div>
 
         <div class="business-name">
             Faustina Ansa-Mensah Enterprise
@@ -341,7 +455,10 @@ th {
             Login
         </button>
 
-        <div id="loginError" class="error"></div>
+        <div
+            id="loginError"
+            class="error"
+        ></div>
 
     </div>
 
@@ -349,11 +466,13 @@ th {
 
 
 <!-- APPLICATION -->
+
 <div id="app">
 
 <header>
 
     <div>
+
         <div class="header-title">
             FAME Portal
         </div>
@@ -361,6 +480,7 @@ th {
         <div class="header-subtitle">
             Faustina Ansa-Mensah Enterprise
         </div>
+
     </div>
 
     <button
@@ -375,18 +495,27 @@ th {
 
 <div class="container">
 
+
+    <!-- WELCOME -->
+
     <div class="welcome">
 
-        <h2>Dashboard</h2>
+        <h2>
+            Dashboard
+        </h2>
 
-        <div class="date" id="todayDate"></div>
+        <div
+            class="date"
+            id="todayDate"
+        ></div>
 
     </div>
 
 
-    <!-- DASHBOARD CARDS -->
+    <!-- MAIN DASHBOARD -->
 
     <div class="cards">
+
 
         <div class="card">
 
@@ -407,7 +536,7 @@ th {
         <div class="card">
 
             <div class="card-title">
-                Cash In
+                Total Cash In
             </div>
 
             <div
@@ -423,12 +552,44 @@ th {
         <div class="card">
 
             <div class="card-title">
-                Cash Out
+                Total Cash Out
             </div>
 
             <div
                 class="card-value"
                 id="cashOutTotal"
+            >
+                GH₵ 0.00
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-title">
+                Total MoMo Cash
+            </div>
+
+            <div
+                class="card-value"
+                id="totalMomoCash"
+            >
+                GH₵ 0.00
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-title">
+                Commission / Profit
+            </div>
+
+            <div
+                class="card-value"
+                id="commissionTotal"
             >
                 GH₵ 0.00
             </div>
@@ -445,38 +606,6 @@ th {
             <div
                 class="card-value"
                 id="electricityTotal"
-            >
-                GH₵ 0.00
-            </div>
-
-        </div>
-
-
-        <div class="card">
-
-            <div class="card-title">
-                Total Transactions
-            </div>
-
-            <div
-                class="card-value"
-                id="totalTransactions"
-            >
-                0
-            </div>
-
-        </div>
-
-
-        <div class="card">
-
-            <div class="card-title">
-                Commission / Profit
-            </div>
-
-            <div
-                class="card-value"
-                id="commissionTotal"
             >
                 GH₵ 0.00
             </div>
@@ -518,11 +647,233 @@ th {
     </div>
 
 
+    <!-- NETWORK SUMMARY -->
+
+    <div class="section">
+
+        <h3>
+            MoMo Network Summary
+        </h3>
+
+
+        <div class="network-grid">
+
+
+            <!-- MTN -->
+
+            <div class="network-card">
+
+                <div class="network-title">
+                    MTN MoMo
+                </div>
+
+                <div class="network-row">
+
+                    <span class="network-label">
+                        Cash In
+                    </span>
+
+                    <span
+                        class="network-value"
+                        id="mtnCashIn"
+                    >
+                        GH₵ 0.00
+                    </span>
+
+                </div>
+
+                <div class="network-row">
+
+                    <span class="network-label">
+                        Cash Out
+                    </span>
+
+                    <span
+                        class="network-value"
+                        id="mtnCashOut"
+                    >
+                        GH₵ 0.00
+                    </span>
+
+                </div>
+
+                <div class="network-row">
+
+                    <span class="network-label">
+                        Commission
+                    </span>
+
+                    <span
+                        class="network-value"
+                        id="mtnCommission"
+                    >
+                        GH₵ 0.00
+                    </span>
+
+                </div>
+
+                <div class="network-net">
+
+                    <span>
+                        Net Movement
+                    </span>
+
+                    <span id="mtnNet">
+                        GH₵ 0.00
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- TELECEL -->
+
+            <div class="network-card">
+
+                <div class="network-title">
+                    Telecel Cash
+                </div>
+
+                <div class="network-row">
+
+                    <span class="network-label">
+                        Cash In
+                    </span>
+
+                    <span
+                        class="network-value"
+                        id="telecelCashIn"
+                    >
+                        GH₵ 0.00
+                    </span>
+
+                </div>
+
+                <div class="network-row">
+
+                    <span class="network-label">
+                        Cash Out
+                    </span>
+
+                    <span
+                        class="network-value"
+                        id="telecelCashOut"
+                    >
+                        GH₵ 0.00
+                    </span>
+
+                </div>
+
+                <div class="network-row">
+
+                    <span class="network-label">
+                        Commission
+                    </span>
+
+                    <span
+                        class="network-value"
+                        id="telecelCommission"
+                    >
+                        GH₵ 0.00
+                    </span>
+
+                </div>
+
+                <div class="network-net">
+
+                    <span>
+                        Net Movement
+                    </span>
+
+                    <span id="telecelNet">
+                        GH₵ 0.00
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- TIGO -->
+
+            <div class="network-card">
+
+                <div class="network-title">
+                    Tigo Cash
+                </div>
+
+                <div class="network-row">
+
+                    <span class="network-label">
+                        Cash In
+                    </span>
+
+                    <span
+                        class="network-value"
+                        id="tigoCashIn"
+                    >
+                        GH₵ 0.00
+                    </span>
+
+                </div>
+
+                <div class="network-row">
+
+                    <span class="network-label">
+                        Cash Out
+                    </span>
+
+                    <span
+                        class="network-value"
+                        id="tigoCashOut"
+                    >
+                        GH₵ 0.00
+                    </span>
+
+                </div>
+
+                <div class="network-row">
+
+                    <span class="network-label">
+                        Commission
+                    </span>
+
+                    <span
+                        class="network-value"
+                        id="tigoCommission"
+                    >
+                        GH₵ 0.00
+                    </span>
+
+                </div>
+
+                <div class="network-net">
+
+                    <span>
+                        Net Movement
+                    </span>
+
+                    <span id="tigoNet">
+                        GH₵ 0.00
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
     <!-- QUICK ACTIONS -->
 
     <div class="section">
 
-        <h3>Quick Actions</h3>
+        <h3>
+            Quick Actions
+        </h3>
 
         <div class="actions">
 
@@ -559,9 +910,41 @@ th {
         class="section form-container"
     >
 
-        <h3>MoMo Cash In</h3>
+        <h3>
+            MoMo Cash In
+        </h3>
 
         <div class="form-grid">
+
+
+            <div class="form-group">
+
+                <label>
+                    Network
+                </label>
+
+                <select id="cashInNetwork">
+
+                    <option value="">
+                        Select Network
+                    </option>
+
+                    <option value="MTN">
+                        MTN
+                    </option>
+
+                    <option value="Telecel">
+                        Telecel
+                    </option>
+
+                    <option value="Tigo">
+                        Tigo
+                    </option>
+
+                </select>
+
+            </div>
+
 
             <div class="form-group">
 
@@ -671,9 +1054,41 @@ th {
         class="section form-container"
     >
 
-        <h3>MoMo Cash Out</h3>
+        <h3>
+            MoMo Cash Out
+        </h3>
 
         <div class="form-grid">
+
+
+            <div class="form-group">
+
+                <label>
+                    Network
+                </label>
+
+                <select id="cashOutNetwork">
+
+                    <option value="">
+                        Select Network
+                    </option>
+
+                    <option value="MTN">
+                        MTN
+                    </option>
+
+                    <option value="Telecel">
+                        Telecel
+                    </option>
+
+                    <option value="Tigo">
+                        Tigo
+                    </option>
+
+                </select>
+
+            </div>
+
 
             <div class="form-group">
 
@@ -776,11 +1191,132 @@ th {
     </div>
 
 
+    <!-- DAILY BALANCE -->
+
+    <div class="section">
+
+        <h3>
+            Daily Balance & Reconciliation
+        </h3>
+
+        <div class="form-grid">
+
+            <div class="form-group">
+
+                <label>
+                    Opening Total Balance (GH₵)
+                </label>
+
+                <input
+                    type="number"
+                    id="openingBalance"
+                    min="0"
+                    step="0.01"
+                    placeholder="Enter opening balance"
+                    oninput="updateDashboard()"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Actual Closing Balance (GH₵)
+                </label>
+
+                <input
+                    type="number"
+                    id="actualClosingBalance"
+                    min="0"
+                    step="0.01"
+                    placeholder="Enter actual closing balance"
+                    oninput="updateDashboard()"
+                >
+
+            </div>
+
+        </div>
+
+
+        <div class="balance-grid" style="margin-top:20px;">
+
+
+            <div class="balance-box">
+
+                <div class="balance-title">
+                    Opening Balance
+                </div>
+
+                <div
+                    class="balance-value"
+                    id="displayOpeningBalance"
+                >
+                    GH₵ 0.00
+                </div>
+
+            </div>
+
+
+            <div class="balance-box">
+
+                <div class="balance-title">
+                    Expected Closing Balance
+                </div>
+
+                <div
+                    class="balance-value"
+                    id="expectedClosingBalance"
+                >
+                    GH₵ 0.00
+                </div>
+
+            </div>
+
+
+            <div class="balance-box">
+
+                <div class="balance-title">
+                    Actual Closing Balance
+                </div>
+
+                <div
+                    class="balance-value"
+                    id="displayActualClosing"
+                >
+                    GH₵ 0.00
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="difference-box">
+
+            <div class="difference-label">
+                Balance Difference
+            </div>
+
+            <div
+                class="difference-value"
+                id="balanceDifference"
+            >
+                GH₵ 0.00
+            </div>
+
+        </div>
+
+    </div>
+
+
     <!-- TRANSACTION HISTORY -->
 
     <div class="section">
 
-        <h3>Today's MoMo Transactions</h3>
+        <h3>
+            Today's MoMo Transactions
+        </h3>
 
         <div class="table-container">
 
@@ -791,6 +1327,7 @@ th {
                     <tr>
 
                         <th>Time</th>
+                        <th>Network</th>
                         <th>Type</th>
                         <th>Amount</th>
                         <th>Commission</th>
@@ -801,9 +1338,9 @@ th {
 
                 </thead>
 
-                <tbody id="transactionTable">
-
-                </tbody>
+                <tbody
+                    id="transactionTable"
+                ></tbody>
 
             </table>
 
@@ -835,11 +1372,15 @@ function login() {
         password === "fame123"
     ) {
 
-        document.getElementById("loginPage").style.display = "none";
+        document.getElementById("loginPage").style.display =
+            "none";
 
-        document.getElementById("app").style.display = "block";
+        document.getElementById("app").style.display =
+            "block";
 
         setDate();
+
+        loadBalanceSettings();
 
         updateDashboard();
 
@@ -859,9 +1400,11 @@ function login() {
 
 function logout() {
 
-    document.getElementById("app").style.display = "none";
+    document.getElementById("app").style.display =
+        "none";
 
-    document.getElementById("loginPage").style.display = "flex";
+    document.getElementById("loginPage").style.display =
+        "flex";
 
     document.getElementById("username").value = "";
 
@@ -902,7 +1445,8 @@ function showForm(type) {
 
     if (type === "cashIn") {
 
-        document.getElementById("cashInForm").style.display = "block";
+        document.getElementById("cashInForm").style.display =
+            "block";
 
         document.getElementById("cashInDate").value =
             getCurrentDateTime();
@@ -911,7 +1455,8 @@ function showForm(type) {
 
     if (type === "cashOut") {
 
-        document.getElementById("cashOutForm").style.display = "block";
+        document.getElementById("cashOutForm").style.display =
+            "block";
 
         document.getElementById("cashOutDate").value =
             getCurrentDateTime();
@@ -923,9 +1468,11 @@ function showForm(type) {
 
 function hideForms() {
 
-    document.getElementById("cashInForm").style.display = "none";
+    document.getElementById("cashInForm").style.display =
+        "none";
 
-    document.getElementById("cashOutForm").style.display = "none";
+    document.getElementById("cashOutForm").style.display =
+        "none";
 
 }
 
@@ -939,7 +1486,8 @@ function getCurrentDateTime() {
 
     const local =
         new Date(
-            now.getTime() - offset * 60000
+            now.getTime() -
+            offset * 60000
         );
 
     return local.toISOString().slice(0,16);
@@ -948,7 +1496,7 @@ function getCurrentDateTime() {
 
 
 /* =========================
-   GET TRANSACTIONS
+   TRANSACTIONS
 ========================= */
 
 function getTransactions() {
@@ -976,6 +1524,9 @@ function saveTransactions(transactions) {
 
 function saveCashIn() {
 
+    const network =
+        document.getElementById("cashInNetwork").value;
+
     const amount =
         parseFloat(
             document.getElementById("cashInAmount").value
@@ -996,6 +1547,15 @@ function saveCashIn() {
         document.getElementById("cashInNote").value.trim();
 
 
+    if (!network) {
+
+        alert("Please select the MoMo network.");
+
+        return;
+
+    }
+
+
     if (!amount || amount <= 0) {
 
         alert("Please enter a valid Cash In amount.");
@@ -1012,6 +1572,8 @@ function saveCashIn() {
     transactions.push({
 
         id: Date.now(),
+
+        network: network,
 
         type: "Cash In",
 
@@ -1047,6 +1609,9 @@ function saveCashIn() {
 
 function saveCashOut() {
 
+    const network =
+        document.getElementById("cashOutNetwork").value;
+
     const amount =
         parseFloat(
             document.getElementById("cashOutAmount").value
@@ -1067,6 +1632,15 @@ function saveCashOut() {
         document.getElementById("cashOutNote").value.trim();
 
 
+    if (!network) {
+
+        alert("Please select the MoMo network.");
+
+        return;
+
+    }
+
+
     if (!amount || amount <= 0) {
 
         alert("Please enter a valid Cash Out amount.");
@@ -1083,6 +1657,8 @@ function saveCashOut() {
     transactions.push({
 
         id: Date.now(),
+
+        network: network,
 
         type: "Cash Out",
 
@@ -1118,6 +1694,8 @@ function saveCashOut() {
 
 function clearCashInForm() {
 
+    document.getElementById("cashInNetwork").value = "";
+
     document.getElementById("cashInAmount").value = "";
 
     document.getElementById("cashInCommission").value = "";
@@ -1132,6 +1710,8 @@ function clearCashInForm() {
 
 
 function clearCashOutForm() {
+
+    document.getElementById("cashOutNetwork").value = "";
 
     document.getElementById("cashOutAmount").value = "";
 
@@ -1159,9 +1739,75 @@ function isToday(dateString) {
         new Date();
 
     return (
-        transactionDate.getFullYear() === today.getFullYear() &&
-        transactionDate.getMonth() === today.getMonth() &&
-        transactionDate.getDate() === today.getDate()
+        transactionDate.getFullYear() ===
+            today.getFullYear() &&
+
+        transactionDate.getMonth() ===
+            today.getMonth() &&
+
+        transactionDate.getDate() ===
+            today.getDate()
+    );
+
+}
+
+
+/* =========================
+   BALANCE STORAGE
+========================= */
+
+function loadBalanceSettings() {
+
+    const saved =
+        JSON.parse(
+            localStorage.getItem(
+                "fameDailyBalance"
+            )
+        ) || {};
+
+
+    document.getElementById(
+        "openingBalance"
+    ).value =
+        saved.openingBalance || "";
+
+
+    document.getElementById(
+        "actualClosingBalance"
+    ).value =
+        saved.actualClosingBalance || "";
+
+}
+
+
+function saveBalanceSettings() {
+
+    const opening =
+        parseFloat(
+            document.getElementById(
+                "openingBalance"
+            ).value
+        ) || 0;
+
+
+    const actualClosing =
+        parseFloat(
+            document.getElementById(
+                "actualClosingBalance"
+            ).value
+        ) || 0;
+
+
+    localStorage.setItem(
+        "fameDailyBalance",
+        JSON.stringify({
+
+            openingBalance: opening,
+
+            actualClosingBalance:
+                actualClosing
+
+        })
     );
 
 }
@@ -1176,9 +1822,11 @@ function updateDashboard() {
     const transactions =
         getTransactions();
 
+
     const todayTransactions =
-        transactions.filter(transaction =>
-            isToday(transaction.date)
+        transactions.filter(
+            transaction =>
+                isToday(transaction.date)
         );
 
 
@@ -1186,73 +1834,306 @@ function updateDashboard() {
 
     let cashOut = 0;
 
-    let commission = 0;
+    let totalCommission = 0;
 
 
-    todayTransactions.forEach(transaction => {
+    const networks = {
 
-        if (transaction.type === "Cash In") {
+        MTN: {
+            cashIn: 0,
+            cashOut: 0,
+            commission: 0
+        },
 
-            cashIn += transaction.amount;
+        Telecel: {
+            cashIn: 0,
+            cashOut: 0,
+            commission: 0
+        },
 
+        Tigo: {
+            cashIn: 0,
+            cashOut: 0,
+            commission: 0
         }
 
-        if (transaction.type === "Cash Out") {
+    };
 
-            cashOut += transaction.amount;
+
+    todayTransactions.forEach(
+        transaction => {
+
+            const amount =
+                Number(transaction.amount) || 0;
+
+            const commission =
+                Number(transaction.commission) || 0;
+
+
+            cashIn +=
+                transaction.type === "Cash In"
+                    ? amount
+                    : 0;
+
+
+            cashOut +=
+                transaction.type === "Cash Out"
+                    ? amount
+                    : 0;
+
+
+            totalCommission +=
+                commission;
+
+
+            /*
+               Older transactions may not have
+               a network because they were created
+               before the network field was added.
+            */
+
+            const network =
+                transaction.network;
+
+
+            if (network && networks[network]) {
+
+                if (
+                    transaction.type === "Cash In"
+                ) {
+
+                    networks[network].cashIn +=
+                        amount;
+
+                }
+
+
+                if (
+                    transaction.type === "Cash Out"
+                ) {
+
+                    networks[network].cashOut +=
+                        amount;
+
+                }
+
+
+                networks[network].commission +=
+                    commission;
+
+            }
 
         }
-
-        commission +=
-            Number(transaction.commission) || 0;
-
-    });
+    );
 
 
-    const electricity =
-        0;
+    const electricity = 0;
 
-    const expenses =
-        0;
+    const expenses = 0;
 
 
-    const net =
-        commission - expenses;
+    const totalMomoCash =
+        cashIn + cashOut;
 
 
-    document.getElementById("momoTransactions").textContent =
+    const netEarnings =
+        totalCommission - expenses;
+
+
+    /* MAIN DASHBOARD */
+
+    document.getElementById(
+        "momoTransactions"
+    ).textContent =
         todayTransactions.length;
 
 
-    document.getElementById("cashInTotal").textContent =
+    document.getElementById(
+        "cashInTotal"
+    ).textContent =
         formatMoney(cashIn);
 
 
-    document.getElementById("cashOutTotal").textContent =
+    document.getElementById(
+        "cashOutTotal"
+    ).textContent =
         formatMoney(cashOut);
 
 
-    document.getElementById("electricityTotal").textContent =
+    document.getElementById(
+        "totalMomoCash"
+    ).textContent =
+        formatMoney(totalMomoCash);
+
+
+    document.getElementById(
+        "commissionTotal"
+    ).textContent =
+        formatMoney(totalCommission);
+
+
+    document.getElementById(
+        "electricityTotal"
+    ).textContent =
         formatMoney(electricity);
 
 
-    document.getElementById("totalTransactions").textContent =
-        todayTransactions.length;
-
-
-    document.getElementById("commissionTotal").textContent =
-        formatMoney(commission);
-
-
-    document.getElementById("expensesTotal").textContent =
+    document.getElementById(
+        "expensesTotal"
+    ).textContent =
         formatMoney(expenses);
 
 
-    document.getElementById("netEarnings").textContent =
+    document.getElementById(
+        "netEarnings"
+    ).textContent =
+        formatMoney(netEarnings);
+
+
+    /* NETWORKS */
+
+    updateNetwork(
+        "mtn",
+        networks.MTN
+    );
+
+    updateNetwork(
+        "telecel",
+        networks.Telecel
+    );
+
+    updateNetwork(
+        "tigo",
+        networks.Tigo
+    );
+
+
+    /* BALANCE */
+
+    updateBalance(
+        cashIn,
+        cashOut,
+        totalCommission
+    );
+
+
+    /* TABLE */
+
+    renderTransactions(
+        todayTransactions
+    );
+
+}
+
+
+function updateNetwork(
+    prefix,
+    data
+) {
+
+    const net =
+        data.cashIn -
+        data.cashOut;
+
+
+    document.getElementById(
+        prefix + "CashIn"
+    ).textContent =
+        formatMoney(data.cashIn);
+
+
+    document.getElementById(
+        prefix + "CashOut"
+    ).textContent =
+        formatMoney(data.cashOut);
+
+
+    document.getElementById(
+        prefix + "Commission"
+    ).textContent =
+        formatMoney(data.commission);
+
+
+    document.getElementById(
+        prefix + "Net"
+    ).textContent =
         formatMoney(net);
 
+}
 
-    renderTransactions(todayTransactions);
+
+/* =========================
+   BALANCE CALCULATION
+========================= */
+
+function updateBalance(
+    cashIn,
+    cashOut,
+    commission
+) {
+
+    const opening =
+        parseFloat(
+            document.getElementById(
+                "openingBalance"
+            ).value
+        ) || 0;
+
+
+    const actualClosing =
+        parseFloat(
+            document.getElementById(
+                "actualClosingBalance"
+            ).value
+        ) || 0;
+
+
+    /*
+       Expected closing balance:
+
+       Opening
+       + Cash In
+       - Cash Out
+       + Commission
+    */
+
+    const expectedClosing =
+        opening +
+        cashIn -
+        cashOut +
+        commission;
+
+
+    const difference =
+        actualClosing -
+        expectedClosing;
+
+
+    document.getElementById(
+        "displayOpeningBalance"
+    ).textContent =
+        formatMoney(opening);
+
+
+    document.getElementById(
+        "expectedClosingBalance"
+    ).textContent =
+        formatMoney(expectedClosing);
+
+
+    document.getElementById(
+        "displayActualClosing"
+    ).textContent =
+        formatMoney(actualClosing);
+
+
+    document.getElementById(
+        "balanceDifference"
+    ).textContent =
+        formatMoney(difference);
+
+
+    saveBalanceSettings();
 
 }
 
@@ -1279,10 +2160,14 @@ function formatMoney(amount) {
    TRANSACTION TABLE
 ========================= */
 
-function renderTransactions(transactions) {
+function renderTransactions(
+    transactions
+) {
 
     const table =
-        document.getElementById("transactionTable");
+        document.getElementById(
+            "transactionTable"
+        );
 
 
     table.innerHTML = "";
@@ -1292,7 +2177,10 @@ function renderTransactions(transactions) {
 
         table.innerHTML = `
             <tr>
-                <td colspan="6" style="text-align:center;">
+                <td
+                    colspan="7"
+                    style="text-align:center;"
+                >
                     No transactions recorded today.
                 </td>
             </tr>
@@ -1306,60 +2194,77 @@ function renderTransactions(transactions) {
     transactions
         .slice()
         .reverse()
-        .forEach(transaction => {
+        .forEach(
+            transaction => {
 
-            const row =
-                document.createElement("tr");
-
-
-            const time =
-                new Date(transaction.date)
-                .toLocaleTimeString(
-                    "en-GH",
-                    {
-                        hour: "2-digit",
-                        minute: "2-digit"
-                    }
-                );
+                const row =
+                    document.createElement(
+                        "tr"
+                    );
 
 
-            row.innerHTML = `
-
-                <td>${time}</td>
-
-                <td>
-                    ${transaction.type}
-                </td>
-
-                <td>
-                    ${formatMoney(transaction.amount)}
-                </td>
-
-                <td>
-                    ${formatMoney(transaction.commission)}
-                </td>
-
-                <td>
-                    ${transaction.reference || "-"}
-                </td>
-
-                <td>
-
-                    <button
-                        class="delete-btn"
-                        onclick="deleteTransaction(${transaction.id})"
-                    >
-                        Delete
-                    </button>
-
-                </td>
-
-            `;
+                const time =
+                    new Date(
+                        transaction.date
+                    ).toLocaleTimeString(
+                        "en-GH",
+                        {
+                            hour: "2-digit",
+                            minute: "2-digit"
+                        }
+                    );
 
 
-            table.appendChild(row);
+                row.innerHTML = `
 
-        });
+                    <td>
+                        ${time}
+                    </td>
+
+                    <td>
+                        ${transaction.network || "-"}
+                    </td>
+
+                    <td>
+                        ${transaction.type}
+                    </td>
+
+                    <td>
+                        ${formatMoney(
+                            transaction.amount
+                        )}
+                    </td>
+
+                    <td>
+                        ${formatMoney(
+                            transaction.commission
+                        )}
+                    </td>
+
+                    <td>
+                        ${transaction.reference || "-"}
+                    </td>
+
+                    <td>
+
+                        <button
+                            class="delete-btn"
+                            onclick="deleteTransaction(
+                                ${transaction.id}
+                            )"
+                        >
+                            Delete
+                        </button>
+
+                    </td>
+
+                `;
+
+
+                table.appendChild(row);
+
+            }
+        );
 
 }
 
@@ -1394,7 +2299,10 @@ function deleteTransaction(id) {
         );
 
 
-    saveTransactions(transactions);
+    saveTransactions(
+        transactions
+    );
+
 
     updateDashboard();
 
