@@ -373,8 +373,8 @@ tr:nth-child(even){
                 </div>
 
                 <div class="card">
-                    <div class="card-title">Actual Closing</div>
-                    <div class="card-value" id="adminActualClosing">-</div>
+                    <div class="card-title">Closing Balance</div>
+                    <div class="card-value" id="adminClosingBalance">GH₵0.00</div>
                 </div>
 
                 <div class="card">
@@ -400,16 +400,6 @@ tr:nth-child(even){
                 <div class="card">
                     <div class="card-title">Expenses</div>
                     <div class="card-value" id="adminExpenses">GH₵0.00</div>
-                </div>
-
-                <div class="card">
-                    <div class="card-title">Expected Closing</div>
-                    <div class="card-value" id="adminExpectedClosing">GH₵0.00</div>
-                </div>
-
-                <div class="card">
-                    <div class="card-title">Difference</div>
-                    <div class="card-value" id="adminDifference">-</div>
                 </div>
 
             </div>
@@ -511,7 +501,7 @@ tr:nth-child(even){
 
         <div class="section">
 
-            <h2>Daily Reconciliation</h2>
+            <h2>Daily Balance Summary</h2>
 
             <div id="adminReconciliation" class="reconciliation"></div>
 
@@ -572,8 +562,8 @@ tr:nth-child(even){
                     </div>
 
                     <div class="card">
-                        <div class="card-title">Actual Closing</div>
-                        <div class="card-value" id="historyActualClosing">-</div>
+                        <div class="card-title">Closing Balance</div>
+                        <div class="card-value" id="historyClosingBalance">GH₵0.00</div>
                     </div>
 
                     <div class="card">
@@ -599,16 +589,6 @@ tr:nth-child(even){
                     <div class="card">
                         <div class="card-title">Expenses</div>
                         <div class="card-value" id="historyExpenses">GH₵0.00</div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-title">Expected Closing</div>
-                        <div class="card-value" id="historyExpectedClosing">GH₵0.00</div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-title">Difference</div>
-                        <div class="card-value" id="historyDifference">-</div>
                     </div>
 
                 </div>
@@ -702,7 +682,7 @@ tr:nth-child(even){
 
             <div class="section">
 
-                <h2>Daily Reconciliation</h2>
+                <h2>Daily Balance Summary</h2>
 
                 <div id="historyReconciliation" class="reconciliation"></div>
 
@@ -798,9 +778,7 @@ tr:nth-child(even){
                             <th>Electricity</th>
                             <th>Commission</th>
                             <th>Expenses</th>
-                            <th>Expected</th>
-                            <th>Actual</th>
-                            <th>Difference</th>
+                            <th>Closing Balance</th>
                         </tr>
 
                     </thead>
@@ -1082,7 +1060,7 @@ tr:nth-child(even){
                 </div>
 
                 <div class="card">
-                    <div class="card-title">Expected Closing</div>
+                    <div class="card-title">Closing Balance</div>
                     <div class="card-value" id="workerExpectedClosing">GH₵0.00</div>
                 </div>
 
@@ -1104,6 +1082,10 @@ tr:nth-child(even){
                             step="0.01"
                             class="money-input"
                         >
+
+                        <div class="small-note">
+                            Enter the actual cash available when starting today's shift.
+                        </div>
 
                     </div>
 
@@ -1128,22 +1110,9 @@ tr:nth-child(even){
                 class="hidden"
             >
 
-                <div class="form-grid">
-
-                    <div class="form-group">
-
-                        <label>Closing Balance</label>
-
-                        <input
-                            type="number"
-                            id="closingBalance"
-                            min="0"
-                            step="0.01"
-                            class="money-input"
-                        >
-
-                    </div>
-
+                <div class="message">
+                    <strong>Closing Balance is calculated automatically.</strong>
+                    The balance is based on the opening balance and all transactions recorded during today's shift.
                 </div>
 
                 <div class="action-row">
@@ -1153,6 +1122,29 @@ tr:nth-child(even){
                         onclick="closeWorkerShift()"
                     >
                         Close Shift
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="closedShiftArea"
+                class="hidden"
+            >
+
+                <div class="message success">
+                    Today's shift has been closed. The Closing Balance was calculated automatically.
+                </div>
+
+                <div class="action-row">
+
+                    <button
+                        class="primary-btn"
+                        onclick="reopenWorkerShift()"
+                    >
+                        Reopen Shift
                     </button>
 
                 </div>
@@ -1956,37 +1948,13 @@ function getTodayShift(){
 }
 
 
-function getPreviousClosingBalance(){
+/*
+   The old getPreviousClosingBalance() function is no
+   longer used to start a new shift.
 
-    const shifts=
-        getShifts()
-        .filter(
-            shift=>
-                shift.date<todayKey() &&
-                shift.closingBalance!==null &&
-                shift.closingBalance!==undefined
-        )
-        .sort(
-            (a,b)=>
-                a.date.localeCompare(b.date)
-        );
-
-
-    if(shifts.length){
-
-        return Number(
-            shifts[shifts.length-1].closingBalance
-        )||0;
-    }
-
-
-    const legacy=
-        localStorage.getItem("fameDailyBalance");
-
-    return legacy!==null
-        ? Number(legacy)||0
-        : 0;
-}
+   Every new day requires the worker to enter the
+   opening balance manually.
+*/
 
 
 function loadWorkerShift(){
@@ -1996,22 +1964,17 @@ function loadWorkerShift(){
 
     if(!shift){
 
-        const previousBalance=
-            getPreviousClosingBalance();
-
         document.getElementById(
             "workerShiftStatus"
         ).textContent="Not Started";
 
         document.getElementById(
             "workerOpeningBalance"
-        ).textContent=
-            formatMoney(previousBalance);
+        ).textContent="GH₵0.00";
 
         document.getElementById(
             "openingBalance"
-        ).value=
-            previousBalance;
+        ).value="";
 
         document.getElementById(
             "startShiftArea"
@@ -2022,13 +1985,17 @@ function loadWorkerShift(){
         ).classList.add("hidden");
 
         document.getElementById(
+            "closedShiftArea"
+        ).classList.add("hidden");
+
+        document.getElementById(
             "workerShiftMessage"
         ).className="message warning";
 
         document.getElementById(
             "workerShiftMessage"
         ).textContent=
-            "No shift has been started today.";
+            "Enter today's opening balance to start your shift.";
 
         updateWorkerDashboard();
 
@@ -2051,6 +2018,10 @@ function loadWorkerShift(){
 
         document.getElementById(
             "activeShiftArea"
+        ).classList.add("hidden");
+
+        document.getElementById(
+            "closedShiftArea"
         ).classList.add("hidden");
 
         document.getElementById(
@@ -2095,10 +2066,23 @@ function startShift(){
     }
 
 
-    const opening=
-        Number(
-            document.getElementById("openingBalance").value
+    const openingInput=
+        document.getElementById(
+            "openingBalance"
+        ).value.trim();
+
+
+    if(openingInput===""){
+
+        alert(
+            "Please enter today's opening balance."
         );
+
+        return;
+    }
+
+
+    const opening=Number(openingInput);
 
 
     if(
@@ -2130,7 +2114,7 @@ function startShift(){
 
         expectedClosing:opening,
 
-        difference:0,
+        difference:null,
 
         status:"open",
 
@@ -2149,6 +2133,8 @@ function startShift(){
     loadWorkerShift();
 
     updateAdminPortal();
+
+    renderPerformance();
 }
 
 
@@ -2167,13 +2153,17 @@ function showActiveShift(){
     ).classList.remove("hidden");
 
     document.getElementById(
+        "closedShiftArea"
+    ).classList.add("hidden");
+
+    document.getElementById(
         "workerShiftMessage"
     ).className="message success";
 
     document.getElementById(
         "workerShiftMessage"
     ).textContent=
-        "Your shift is active. Record all transactions before closing the shift.";
+        "Your shift is active. Closing Balance is being calculated automatically.";
 }
 
 
@@ -2192,13 +2182,18 @@ function showClosedShift(){
     ).classList.add("hidden");
 
     document.getElementById(
+        "closedShiftArea"
+    ).classList.remove("hidden");
+
+    document.getElementById(
         "workerShiftMessage"
     ).className="message success";
 
     document.getElementById(
         "workerShiftMessage"
     ).textContent=
-        "Your shift for today has been closed.";
+        "Your shift for today has been closed. Closing Balance: "+
+        formatMoney(calculateWorkerTotals().expectedClosing);
 }
 
 
@@ -2342,6 +2337,7 @@ function saveMomoTransaction(){
 
     updateWorkerDashboard();
     updateAdminPortal();
+    renderPerformance();
 }
 
 
@@ -2426,6 +2422,7 @@ function saveElectricityTransaction(){
 
     updateWorkerDashboard();
     updateAdminPortal();
+    renderPerformance();
 }
 
 
@@ -2509,6 +2506,7 @@ function saveExpense(){
 
     updateWorkerDashboard();
     updateAdminPortal();
+    renderPerformance();
 }
 
 
@@ -2522,11 +2520,6 @@ function calculateTotalsFor(
     electricity,
     expenses
 ){
-
-    /*
-       OPENING BALANCE IS THE STARTING CASH
-       FOR THE SHIFT.
-    */
 
     const openingBalance=
         shift &&
@@ -2579,7 +2572,7 @@ function calculateTotalsFor(
 
 
     /*
-       EXPECTED CLOSING:
+       AUTOMATIC CLOSING BALANCE
 
        Opening Balance
        + Cash In
@@ -2589,27 +2582,13 @@ function calculateTotalsFor(
        - Expenses
     */
 
-    const expectedClosing=
+    const closingBalance=
         openingBalance+
         cashIn-
         cashOut+
         electricitySales+
         commission-
         totalExpenses;
-
-
-    const actualClosing=
-        shift &&
-        shift.closingBalance!==null &&
-        shift.closingBalance!==undefined
-            ? Number(shift.closingBalance)
-            : null;
-
-
-    const difference=
-        actualClosing===null
-            ? null
-            : actualClosing-expectedClosing;
 
 
     return{
@@ -2628,11 +2607,17 @@ function calculateTotalsFor(
 
         expenses:totalExpenses,
 
-        expectedClosing:expectedClosing,
+        expectedClosing:closingBalance,
 
-        actualClosing:actualClosing,
+        actualClosing:
+            shift && shift.status==="closed"
+                ? closingBalance
+                : null,
 
-        difference:difference
+        difference:
+            shift && shift.status==="closed"
+                ? 0
+                : null
     };
 }
 
@@ -2908,32 +2893,25 @@ function closeWorkerShift(){
     }
 
 
-    const closing=
-        Number(
-            document.getElementById("closingBalance").value
-        );
-
-
-    if(
-        isNaN(closing) ||
-        closing<0
-    ){
-
-        alert(
-            "Please enter a valid closing balance."
-        );
-
-        return;
-    }
-
-
     const totals=
         calculateWorkerTotals();
 
 
-    const difference=
-        closing-
+    const closing=
         totals.expectedClosing;
+
+
+    const confirmed=
+        confirm(
+            "Close today's shift with a calculated Closing Balance of "+
+            formatMoney(closing)+
+            "?"
+        );
+
+
+    if(!confirmed){
+        return;
+    }
 
 
     const shifts=getShifts();
@@ -2955,13 +2933,13 @@ function closeWorkerShift(){
     }
 
 
-    shifts[index].closingBalance=closing;
+    shifts[index].closingBalance=
+        closing;
 
     shifts[index].expectedClosing=
-        totals.expectedClosing;
+        closing;
 
-    shifts[index].difference=
-        difference;
+    shifts[index].difference=0;
 
     shifts[index].status="closed";
 
@@ -2986,7 +2964,86 @@ function closeWorkerShift(){
 
 
     alert(
-        "Shift closed successfully."
+        "Shift closed successfully. Closing Balance: "+
+        formatMoney(closing)
+    );
+}
+
+
+/* =====================================================
+   REOPEN SHIFT
+===================================================== */
+
+function reopenWorkerShift(){
+
+    const shift=getTodayShift();
+
+
+    if(
+        !shift ||
+        shift.workerUsername!==currentUser.username ||
+        shift.status!=="closed"
+    ){
+
+        alert(
+            "There is no closed shift available to reopen."
+        );
+
+        return;
+    }
+
+
+    const confirmed=
+        confirm(
+            "Reopen today's shift? The original opening balance and all recorded transactions will be kept."
+        );
+
+
+    if(!confirmed){
+        return;
+    }
+
+
+    const shifts=getShifts();
+
+
+    const index=
+        shifts.findIndex(
+            item=>item.id===shift.id
+        );
+
+
+    if(index===-1){
+
+        alert(
+            "Shift could not be found."
+        );
+
+        return;
+    }
+
+
+    shifts[index].status="open";
+
+    shifts[index].closingBalance=null;
+
+    shifts[index].difference=null;
+
+    shifts[index].endTime=null;
+
+
+    saveShifts(shifts);
+
+
+    loadWorkerShift();
+
+    updateAdminPortal();
+
+    renderPerformance();
+
+
+    alert(
+        "Shift reopened successfully. Your original opening balance and transactions have been preserved."
     );
 }
 
@@ -3071,11 +3128,9 @@ function updateAdminPortal(){
 
 
     document.getElementById(
-        "adminActualClosing"
+        "adminClosingBalance"
     ).textContent=
-        totals.actualClosing===null
-            ? "-"
-            : formatMoney(totals.actualClosing);
+        formatMoney(totals.expectedClosing);
 
 
     document.getElementById(
@@ -3106,20 +3161,6 @@ function updateAdminPortal(){
         "adminExpenses"
     ).textContent=
         formatMoney(totals.expenses);
-
-
-    document.getElementById(
-        "adminExpectedClosing"
-    ).textContent=
-        formatMoney(totals.expectedClosing);
-
-
-    document.getElementById(
-        "adminDifference"
-    ).textContent=
-        totals.difference===null
-            ? "-"
-            : formatMoney(totals.difference);
 
 
     renderAdminMomo();
@@ -3319,7 +3360,7 @@ function renderAdminExpenses(){
 
 
 /* =====================================================
-   ADMIN RECONCILIATION
+   ADMIN BALANCE SUMMARY
 ===================================================== */
 
 function renderAdminReconciliation(){
@@ -3363,30 +3404,8 @@ function renderAdminReconciliation(){
         </div>
 
         <div class="reconciliation-row">
-            <strong>Expected Closing</strong>
+            <strong>Closing Balance</strong>
             <span>${formatMoney(totals.expectedClosing)}</span>
-        </div>
-
-        <div class="reconciliation-row">
-            <strong>Actual Closing</strong>
-            <span>
-                ${
-                    totals.actualClosing===null
-                    ? "-"
-                    : formatMoney(totals.actualClosing)
-                }
-            </span>
-        </div>
-
-        <div class="reconciliation-row">
-            <strong>Difference</strong>
-            <span>
-                ${
-                    totals.difference===null
-                    ? "-"
-                    : formatMoney(totals.difference)
-                }
-            </span>
         </div>
 
     `;
@@ -3579,11 +3598,9 @@ function viewPreviousDay(){
 
 
     document.getElementById(
-        "historyActualClosing"
+        "historyClosingBalance"
     ).textContent=
-        totals.actualClosing===null
-            ? "-"
-            : formatMoney(totals.actualClosing);
+        formatMoney(totals.expectedClosing);
 
 
     document.getElementById(
@@ -3614,20 +3631,6 @@ function viewPreviousDay(){
         "historyExpenses"
     ).textContent=
         formatMoney(totals.expenses);
-
-
-    document.getElementById(
-        "historyExpectedClosing"
-    ).textContent=
-        formatMoney(totals.expectedClosing);
-
-
-    document.getElementById(
-        "historyDifference"
-    ).textContent=
-        totals.difference===null
-            ? "-"
-            : formatMoney(totals.difference);
 
 
     renderHistoryMomo(momo);
@@ -3838,30 +3841,8 @@ function renderHistoryReconciliation(totals){
         </div>
 
         <div class="reconciliation-row">
-            <strong>Expected Closing</strong>
+            <strong>Closing Balance</strong>
             <span>${formatMoney(totals.expectedClosing)}</span>
-        </div>
-
-        <div class="reconciliation-row">
-            <strong>Actual Closing</strong>
-            <span>
-                ${
-                    totals.actualClosing===null
-                    ? "-"
-                    : formatMoney(totals.actualClosing)
-                }
-            </span>
-        </div>
-
-        <div class="reconciliation-row">
-            <strong>Difference</strong>
-            <span>
-                ${
-                    totals.difference===null
-                    ? "-"
-                    : formatMoney(totals.difference)
-                }
-            </span>
         </div>
 
     `;
@@ -4052,17 +4033,7 @@ function generateReport(){
 
             expenses:totals.expenses,
 
-            expected:totals.expectedClosing,
-
-            actual:
-                totals.actualClosing===null
-                    ? ""
-                    : totals.actualClosing,
-
-            difference:
-                totals.difference===null
-                    ? ""
-                    : totals.difference
+            closing:totals.expectedClosing
 
         });
 
@@ -4116,7 +4087,7 @@ function generateReport(){
     });
 
 
-    const totalExpected=
+    const totalClosing=
         totalOpening+
         totalCashIn-
         totalCashOut+
@@ -4175,9 +4146,9 @@ function generateReport(){
             </div>
 
             <div class="card">
-                <div class="card-title">Expected Closing</div>
+                <div class="card-title">Closing Balance</div>
                 <div class="card-value">
-                    ${formatMoney(totalExpected)}
+                    ${formatMoney(totalClosing)}
                 </div>
             </div>
 
@@ -4200,9 +4171,7 @@ function generateReport(){
                         <th>Electricity</th>
                         <th>Commission</th>
                         <th>Expenses</th>
-                        <th>Expected</th>
-                        <th>Actual</th>
-                        <th>Difference</th>
+                        <th>Closing Balance</th>
                     </tr>
 
                 </thead>
@@ -4231,23 +4200,7 @@ function generateReport(){
 
                             <td>${formatMoney(row.expenses)}</td>
 
-                            <td>${formatMoney(row.expected)}</td>
-
-                            <td>
-                                ${
-                                    row.actual===""
-                                    ? "-"
-                                    : formatMoney(row.actual)
-                                }
-                            </td>
-
-                            <td>
-                                ${
-                                    row.difference===""
-                                    ? "-"
-                                    : formatMoney(row.difference)
-                                }
-                            </td>
+                            <td>${formatMoney(row.closing)}</td>
 
                         </tr>
 
@@ -4305,9 +4258,7 @@ function exportCSV(){
         "Electricity Sales",
         "Commission",
         "Expenses",
-        "Expected Closing",
-        "Actual Closing",
-        "Difference"
+        "Closing Balance"
 
     ];
 
@@ -4325,9 +4276,7 @@ function exportCSV(){
                 row.electricity,
                 row.commission,
                 row.expenses,
-                row.expected,
-                row.actual,
-                row.difference
+                row.closing
             ]
         )
     ];
@@ -4405,7 +4354,7 @@ function renderPerformance(){
 
         tbody.innerHTML=
             `<tr>
-                <td colspan="12">
+                <td colspan="10">
                     No worker history available.
                 </td>
             </tr>`;
@@ -4474,22 +4423,6 @@ function renderPerformance(){
             <td>${formatMoney(totals.expenses)}</td>
 
             <td>${formatMoney(totals.expectedClosing)}</td>
-
-            <td>
-                ${
-                    totals.actualClosing===null
-                    ? "-"
-                    : formatMoney(totals.actualClosing)
-                }
-            </td>
-
-            <td>
-                ${
-                    totals.difference===null
-                    ? "-"
-                    : formatMoney(totals.difference)
-                }
-            </td>
 
         `;
 
@@ -4833,69 +4766,6 @@ function saveBusinessSettings(){
     ).textContent=
         "Business settings saved successfully.";
 }
-
-
-/* =====================================================
-   LIVE CLOSING BALANCE
-===================================================== */
-
-document
-.getElementById("closingBalance")
-.addEventListener(
-    "input",
-    function(){
-
-        if(!currentUser){
-            return;
-        }
-
-
-        const shift=getTodayShift();
-
-
-        if(
-            !shift ||
-            shift.workerUsername!==currentUser.username ||
-            shift.status!=="open"
-        ){
-            return;
-        }
-
-
-        const value=Number(this.value);
-
-
-        if(isNaN(value)){
-            return;
-        }
-
-
-        const totals=
-            calculateWorkerTotals();
-
-
-        const difference=
-            value-
-            totals.expectedClosing;
-
-
-        document.getElementById(
-            "workerShiftMessage"
-        ).className="message";
-
-
-        document.getElementById(
-            "workerShiftMessage"
-        ).textContent=
-            "Opening balance: "+
-            formatMoney(totals.opening)+
-            " | Current expected closing: "+
-            formatMoney(totals.expectedClosing)+
-            " | Difference at entered closing: "+
-            formatMoney(difference);
-
-    }
-);
 
 
 /* =====================================================
