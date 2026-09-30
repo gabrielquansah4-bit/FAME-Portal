@@ -169,6 +169,12 @@ button{cursor:pointer}
     font-size:14px;
 }
 
+.form-group input:disabled,
+.form-group select:disabled{
+    background:#f1f1f1;
+    cursor:not-allowed;
+}
+
 .primary-btn,
 .success-btn,
 .danger-btn,
@@ -246,6 +252,7 @@ tr:nth-child(even){
 
 .money-input{
     font-weight:bold;
+    font-size:16px!important;
 }
 
 .history-controls{
@@ -287,10 +294,22 @@ tr:nth-child(even){
 .stat-negative{color:#c62828}
 
 @media(max-width:600px){
-    .header{padding:15px}
-    .header h1{font-size:20px}
-    .container{padding:10px}
-    .section{padding:15px}
+
+    .header{
+        padding:15px;
+    }
+
+    .header h1{
+        font-size:20px;
+    }
+
+    .container{
+        padding:10px;
+    }
+
+    .section{
+        padding:15px;
+    }
 }
 </style>
 </head>
@@ -1081,6 +1100,8 @@ tr:nth-child(even){
                             min="0"
                             step="0.01"
                             class="money-input"
+                            autocomplete="off"
+                            inputmode="decimal"
                         >
 
                         <div class="small-note">
@@ -1474,12 +1495,14 @@ let lastReportData=[];
 ===================================================== */
 
 function getTransactions(){
+
     return JSON.parse(
         localStorage.getItem("fameTransactions")
     ) || [];
 }
 
 function saveTransactions(data){
+
     localStorage.setItem(
         "fameTransactions",
         JSON.stringify(data)
@@ -1487,12 +1510,14 @@ function saveTransactions(data){
 }
 
 function getElectricityTransactions(){
+
     return JSON.parse(
         localStorage.getItem("fameElectricityTransactions")
     ) || [];
 }
 
 function saveElectricityTransactions(data){
+
     localStorage.setItem(
         "fameElectricityTransactions",
         JSON.stringify(data)
@@ -1500,12 +1525,14 @@ function saveElectricityTransactions(data){
 }
 
 function getExpenses(){
+
     return JSON.parse(
         localStorage.getItem("fameExpenses")
     ) || [];
 }
 
 function saveExpenses(data){
+
     localStorage.setItem(
         "fameExpenses",
         JSON.stringify(data)
@@ -1513,12 +1540,14 @@ function saveExpenses(data){
 }
 
 function getShifts(){
+
     return JSON.parse(
         localStorage.getItem("fameShifts")
     ) || [];
 }
 
 function saveShifts(data){
+
     localStorage.setItem(
         "fameShifts",
         JSON.stringify(data)
@@ -1538,24 +1567,28 @@ function getWorkers(){
     if(saved){
 
         try{
+
             return JSON.parse(saved);
-        }
-        catch(error){}
+
+        }catch(error){}
     }
 
     const workers=[
+
         {
             name:"Abi Fame",
             username:"abi",
             password:"abi123",
             active:true
         },
+
         {
             name:"Bab Fame",
             username:"bab",
             password:"bab123",
             active:true
         }
+
     ];
 
     saveWorkers(workers);
@@ -1563,13 +1596,13 @@ function getWorkers(){
     return workers;
 }
 
+
 function saveWorkers(workers){
 
     localStorage.setItem(
         "fameWorkers",
         JSON.stringify(workers)
     );
-
 }
 
 
@@ -1593,11 +1626,11 @@ function getNetworks(){
                 Array.isArray(networks) &&
                 networks.length
             ){
+
                 return networks;
             }
 
-        }
-        catch(error){}
+        }catch(error){}
     }
 
     const networks=[
@@ -1614,13 +1647,13 @@ function getNetworks(){
     return networks;
 }
 
+
 function saveNetworks(networks){
 
     localStorage.setItem(
         "fameNetworks",
         JSON.stringify(networks)
     );
-
 }
 
 
@@ -1643,6 +1676,7 @@ function getBusinessSettings(){
 
     };
 }
+
 
 function saveBusinessSettingsData(data){
 
@@ -1670,30 +1704,36 @@ function todayKey(){
     );
 }
 
+
 function getLocalDateTime(){
 
-    return new Date().toISOString();
+    return new Date().toString();
 }
+
 
 function isToday(value){
 
     return dateKeyFromValue(value)===todayKey();
 }
 
+
 function isSameDate(value,date){
 
     return dateKeyFromValue(value)===date;
 }
 
+
 function dateKeyFromValue(value){
 
     if(!value){
+
         return "";
     }
 
     const d=new Date(value);
 
     if(isNaN(d.getTime())){
+
         return "";
     }
 
@@ -1706,15 +1746,18 @@ function dateKeyFromValue(value){
     );
 }
 
+
 function formatTime(value){
 
     if(!value){
+
         return "-";
     }
 
     const d=new Date(value);
 
     if(isNaN(d.getTime())){
+
         return "-";
     }
 
@@ -1727,9 +1770,11 @@ function formatTime(value){
     );
 }
 
+
 function formatDateDisplay(date){
 
     if(!date){
+
         return "-";
     }
 
@@ -1744,6 +1789,7 @@ function formatDateDisplay(date){
         }
     );
 }
+
 
 function formatMoney(value){
 
@@ -1842,7 +1888,9 @@ function login(){
 function showAdmin(){
 
     document.getElementById("loginPage").style.display="none";
+
     document.getElementById("workerPortal").style.display="none";
+
     document.getElementById("portal").style.display="block";
 
     setDefaultHistoryDate();
@@ -1872,10 +1920,13 @@ function logout(){
     localStorage.removeItem("fameLoggedInUser");
 
     document.getElementById("portal").style.display="none";
+
     document.getElementById("workerPortal").style.display="none";
+
     document.getElementById("loginPage").style.display="flex";
 
     document.getElementById("username").value="";
+
     document.getElementById("password").value="";
 }
 
@@ -1890,6 +1941,7 @@ function restoreLogin(){
         localStorage.getItem("fameLoggedInUser");
 
     if(!saved){
+
         return;
     }
 
@@ -1898,17 +1950,21 @@ function restoreLogin(){
         currentUser=JSON.parse(saved);
 
         if(currentUser.role==="admin"){
+
             showAdmin();
+
             return;
         }
 
         if(currentUser.role==="worker"){
+
             openWorkerPortal();
+
             return;
         }
 
-    }
-    catch(error){
+    }catch(error){
+
         console.error(error);
     }
 
@@ -1923,7 +1979,9 @@ function restoreLogin(){
 function openWorkerPortal(){
 
     document.getElementById("loginPage").style.display="none";
+
     document.getElementById("portal").style.display="none";
+
     document.getElementById("workerPortal").style.display="block";
 
     document.getElementById("loggedWorkerName").textContent=
@@ -1949,17 +2007,26 @@ function getTodayShift(){
 
 
 /*
-   The old getPreviousClosingBalance() function is no
-   longer used to start a new shift.
-
-   Every new day requires the worker to enter the
-   opening balance manually.
+   Every new day requires the worker
+   to enter the opening balance manually.
 */
 
 
 function loadWorkerShift(){
 
     const shift=getTodayShift();
+
+    const openingInput=
+        document.getElementById("openingBalance");
+
+    const startArea=
+        document.getElementById("startShiftArea");
+
+    const activeArea=
+        document.getElementById("activeShiftArea");
+
+    const closedArea=
+        document.getElementById("closedShiftArea");
 
 
     if(!shift){
@@ -1968,36 +2035,46 @@ function loadWorkerShift(){
             "workerShiftStatus"
         ).textContent="Not Started";
 
+
         document.getElementById(
             "workerOpeningBalance"
         ).textContent="GH₵0.00";
 
-        document.getElementById(
-            "openingBalance"
-        ).value="";
 
-        document.getElementById(
-            "startShiftArea"
-        ).classList.remove("hidden");
+        openingInput.disabled=false;
 
-        document.getElementById(
-            "activeShiftArea"
-        ).classList.add("hidden");
+        openingInput.readOnly=false;
 
-        document.getElementById(
-            "closedShiftArea"
-        ).classList.add("hidden");
+        openingInput.value="";
+
+
+        startArea.classList.remove("hidden");
+
+        activeArea.classList.add("hidden");
+
+        closedArea.classList.add("hidden");
+
 
         document.getElementById(
             "workerShiftMessage"
         ).className="message warning";
+
 
         document.getElementById(
             "workerShiftMessage"
         ).textContent=
             "Enter today's opening balance to start your shift.";
 
+
         updateWorkerDashboard();
+
+
+        setTimeout(function(){
+
+            openingInput.focus();
+
+        },100);
+
 
         return;
     }
@@ -2012,21 +2089,23 @@ function loadWorkerShift(){
             "workerShiftStatus"
         ).textContent="Another Worker";
 
-        document.getElementById(
-            "startShiftArea"
-        ).classList.add("hidden");
 
-        document.getElementById(
-            "activeShiftArea"
-        ).classList.add("hidden");
+        startArea.classList.add("hidden");
 
-        document.getElementById(
-            "closedShiftArea"
-        ).classList.add("hidden");
+        activeArea.classList.add("hidden");
+
+        closedArea.classList.add("hidden");
+
+
+        openingInput.disabled=true;
+
+        openingInput.readOnly=true;
+
 
         document.getElementById(
             "workerShiftMessage"
         ).className="message warning";
+
 
         document.getElementById(
             "workerShiftMessage"
@@ -2034,18 +2113,28 @@ function loadWorkerShift(){
             shift.workerName+
             " is the worker on duty today. You cannot operate this shift.";
 
+
         updateWorkerDashboard();
 
         return;
     }
 
 
+    openingInput.disabled=true;
+
+    openingInput.readOnly=true;
+
+
     if(shift.status==="open"){
+
         showActiveShift();
-    }
-    else{
+
+    }else{
+
         showClosedShift();
+
     }
+
 
     updateWorkerDashboard();
 }
@@ -2054,6 +2143,7 @@ function loadWorkerShift(){
 function startShift(){
 
     const existing=getTodayShift();
+
 
     if(existing){
 
@@ -2066,10 +2156,12 @@ function startShift(){
     }
 
 
+    const input=
+        document.getElementById("openingBalance");
+
+
     const openingInput=
-        document.getElementById(
-            "openingBalance"
-        ).value.trim();
+        input.value.trim();
 
 
     if(openingInput===""){
@@ -2078,21 +2170,26 @@ function startShift(){
             "Please enter today's opening balance."
         );
 
+        input.focus();
+
         return;
     }
 
 
-    const opening=Number(openingInput);
+    const opening=
+        Number(openingInput);
 
 
     if(
-        isNaN(opening) ||
+        !Number.isFinite(opening) ||
         opening<0
     ){
 
         alert(
             "Please enter a valid opening balance."
         );
+
+        input.focus();
 
         return;
     }
@@ -2130,6 +2227,12 @@ function startShift(){
 
     saveShifts(shifts);
 
+
+    input.disabled=true;
+
+    input.readOnly=true;
+
+
     loadWorkerShift();
 
     updateAdminPortal();
@@ -2144,21 +2247,26 @@ function showActiveShift(){
         "workerShiftStatus"
     ).textContent="Open";
 
+
     document.getElementById(
         "startShiftArea"
     ).classList.add("hidden");
+
 
     document.getElementById(
         "activeShiftArea"
     ).classList.remove("hidden");
 
+
     document.getElementById(
         "closedShiftArea"
     ).classList.add("hidden");
 
+
     document.getElementById(
         "workerShiftMessage"
     ).className="message success";
+
 
     document.getElementById(
         "workerShiftMessage"
@@ -2173,21 +2281,26 @@ function showClosedShift(){
         "workerShiftStatus"
     ).textContent="Closed";
 
+
     document.getElementById(
         "startShiftArea"
     ).classList.add("hidden");
+
 
     document.getElementById(
         "activeShiftArea"
     ).classList.add("hidden");
 
+
     document.getElementById(
         "closedShiftArea"
     ).classList.remove("hidden");
 
+
     document.getElementById(
         "workerShiftMessage"
     ).className="message success";
+
 
     document.getElementById(
         "workerShiftMessage"
@@ -2248,6 +2361,7 @@ function populateWorkerNetworks(){
 
     select.innerHTML="";
 
+
     getNetworks().forEach(
         network=>{
 
@@ -2255,6 +2369,7 @@ function populateWorkerNetworks(){
                 document.createElement("option");
 
             option.value=network;
+
             option.textContent=network;
 
             select.appendChild(option);
@@ -2266,6 +2381,7 @@ function populateWorkerNetworks(){
 function saveMomoTransaction(){
 
     const shift=getTodayShift();
+
 
     if(
         !shift ||
@@ -2289,7 +2405,9 @@ function saveMomoTransaction(){
 
     if(!amount || amount<=0){
 
-        alert("Please enter a valid amount.");
+        alert(
+            "Please enter a valid amount."
+        );
 
         return;
     }
@@ -2331,12 +2449,18 @@ function saveMomoTransaction(){
 
     saveTransactions(data);
 
+
     document.getElementById("momoAmount").value="";
+
     document.getElementById("momoCustomer").value="";
+
     document.getElementById("momoReference").value="";
 
+
     updateWorkerDashboard();
+
     updateAdminPortal();
+
     renderPerformance();
 }
 
@@ -2348,6 +2472,7 @@ function saveMomoTransaction(){
 function saveElectricityTransaction(){
 
     const shift=getTodayShift();
+
 
     if(
         !shift ||
@@ -2415,13 +2540,20 @@ function saveElectricityTransaction(){
 
     saveElectricityTransactions(data);
 
+
     document.getElementById("electricityAmount").value="";
+
     document.getElementById("electricityMeter").value="";
+
     document.getElementById("electricityReference").value="";
+
     document.getElementById("electricityCommission").value="";
 
+
     updateWorkerDashboard();
+
     updateAdminPortal();
+
     renderPerformance();
 }
 
@@ -2433,6 +2565,7 @@ function saveElectricityTransaction(){
 function saveExpense(){
 
     const shift=getTodayShift();
+
 
     if(
         !shift ||
@@ -2452,6 +2585,7 @@ function saveExpense(){
         Number(
             document.getElementById("expenseAmount").value
         );
+
 
     const description=
         document.getElementById("expenseDescription")
@@ -2500,12 +2634,18 @@ function saveExpense(){
 
     saveExpenses(data);
 
+
     document.getElementById("expenseAmount").value="";
+
     document.getElementById("expenseDescription").value="";
+
     document.getElementById("expenseReference").value="";
 
+
     updateWorkerDashboard();
+
     updateAdminPortal();
+
     renderPerformance();
 }
 
@@ -2530,9 +2670,13 @@ function calculateTotalsFor(
 
 
     let cashIn=0;
+
     let cashOut=0;
+
     let electricitySales=0;
+
     let commission=0;
+
     let totalExpenses=0;
 
 
@@ -2541,11 +2685,15 @@ function calculateTotalsFor(
         const amount=
             Number(item.amount)||0;
 
+
         if(item.type==="Cash In"){
+
             cashIn+=amount;
         }
 
+
         if(item.type==="Cash Out"){
+
             cashOut+=amount;
         }
 
@@ -2610,12 +2758,14 @@ function calculateTotalsFor(
         expectedClosing:closingBalance,
 
         actualClosing:
-            shift && shift.status==="closed"
+            shift &&
+            shift.status==="closed"
                 ? closingBalance
                 : null,
 
         difference:
-            shift && shift.status==="closed"
+            shift &&
+            shift.status==="closed"
                 ? 0
                 : null
     };
@@ -2625,6 +2775,7 @@ function calculateTotalsFor(
 function calculateWorkerTotals(){
 
     const shift=getTodayShift();
+
 
     return calculateTotalsFor(
         shift,
@@ -2642,6 +2793,7 @@ function calculateWorkerTotals(){
 function updateWorkerDashboard(){
 
     if(!currentUser){
+
         return;
     }
 
@@ -2693,7 +2845,9 @@ function updateWorkerDashboard(){
 
 
     renderWorkerMomo();
+
     renderWorkerElectricity();
+
     renderWorkerExpenses();
 }
 
@@ -2708,6 +2862,7 @@ function renderWorkerMomo(){
         document.getElementById(
             "workerMomoTableBody"
         );
+
 
     tbody.innerHTML="";
 
@@ -2739,6 +2894,7 @@ function renderWorkerMomo(){
         const row=
             document.createElement("tr");
 
+
         row.innerHTML=`
 
             <td>${formatTime(item.date)}</td>
@@ -2755,6 +2911,7 @@ function renderWorkerMomo(){
 
         `;
 
+
         tbody.appendChild(row);
     });
 }
@@ -2766,6 +2923,7 @@ function renderWorkerElectricity(){
         document.getElementById(
             "workerElectricityTableBody"
         );
+
 
     tbody.innerHTML="";
 
@@ -2797,6 +2955,7 @@ function renderWorkerElectricity(){
         const row=
             document.createElement("tr");
 
+
         row.innerHTML=`
 
             <td>${formatTime(item.date)}</td>
@@ -2811,6 +2970,7 @@ function renderWorkerElectricity(){
 
         `;
 
+
         tbody.appendChild(row);
     });
 }
@@ -2822,6 +2982,7 @@ function renderWorkerExpenses(){
         document.getElementById(
             "workerExpenseTableBody"
         );
+
 
     tbody.innerHTML="";
 
@@ -2853,6 +3014,7 @@ function renderWorkerExpenses(){
         const row=
             document.createElement("tr");
 
+
         row.innerHTML=`
 
             <td>${formatTime(item.date)}</td>
@@ -2864,6 +3026,7 @@ function renderWorkerExpenses(){
             <td>${item.reference||"-"}</td>
 
         `;
+
 
         tbody.appendChild(row);
     });
@@ -2910,6 +3073,7 @@ function closeWorkerShift(){
 
 
     if(!confirmed){
+
         return;
     }
 
@@ -3000,6 +3164,7 @@ function reopenWorkerShift(){
 
 
     if(!confirmed){
+
         return;
     }
 
@@ -3059,17 +3224,23 @@ function calculateAdminTotals(){
 
     const momo=
         getTransactions()
-        .filter(item=>isToday(item.date));
+        .filter(
+            item=>isToday(item.date)
+        );
 
 
     const electricity=
         getElectricityTransactions()
-        .filter(item=>isToday(item.date));
+        .filter(
+            item=>isToday(item.date)
+        );
 
 
     const expenses=
         getExpenses()
-        .filter(item=>isToday(item.date));
+        .filter(
+            item=>isToday(item.date)
+        );
 
 
     return calculateTotalsFor(
@@ -3091,6 +3262,7 @@ function updateAdminPortal(){
         !currentUser ||
         currentUser.role!=="admin"
     ){
+
         return;
     }
 
@@ -3164,8 +3336,11 @@ function updateAdminPortal(){
 
 
     renderAdminMomo();
+
     renderAdminElectricity();
+
     renderAdminExpenses();
+
     renderAdminReconciliation();
 }
 
@@ -3181,12 +3356,15 @@ function renderAdminMomo(){
             "adminMomoTableBody"
         );
 
+
     tbody.innerHTML="";
 
 
     const data=
         getTransactions()
-        .filter(item=>isToday(item.date))
+        .filter(
+            item=>isToday(item.date)
+        )
         .sort(
             (a,b)=>
                 new Date(b.date)-
@@ -3212,6 +3390,7 @@ function renderAdminMomo(){
         const row=
             document.createElement("tr");
 
+
         row.innerHTML=`
 
             <td>${formatTime(item.date)}</td>
@@ -3230,6 +3409,7 @@ function renderAdminMomo(){
 
         `;
 
+
         tbody.appendChild(row);
     });
 }
@@ -3246,12 +3426,15 @@ function renderAdminElectricity(){
             "adminElectricityTableBody"
         );
 
+
     tbody.innerHTML="";
 
 
     const data=
         getElectricityTransactions()
-        .filter(item=>isToday(item.date))
+        .filter(
+            item=>isToday(item.date)
+        )
         .sort(
             (a,b)=>
                 new Date(b.date)-
@@ -3277,6 +3460,7 @@ function renderAdminElectricity(){
         const row=
             document.createElement("tr");
 
+
         row.innerHTML=`
 
             <td>${formatTime(item.date)}</td>
@@ -3292,6 +3476,7 @@ function renderAdminElectricity(){
             <td>${formatMoney(item.commission)}</td>
 
         `;
+
 
         tbody.appendChild(row);
     });
@@ -3309,12 +3494,15 @@ function renderAdminExpenses(){
             "adminExpenseTableBody"
         );
 
+
     tbody.innerHTML="";
 
 
     const data=
         getExpenses()
-        .filter(item=>isToday(item.date))
+        .filter(
+            item=>isToday(item.date)
+        )
         .sort(
             (a,b)=>
                 new Date(b.date)-
@@ -3340,6 +3528,7 @@ function renderAdminExpenses(){
         const row=
             document.createElement("tr");
 
+
         row.innerHTML=`
 
             <td>${formatTime(item.date)}</td>
@@ -3353,6 +3542,7 @@ function renderAdminExpenses(){
             <td>${item.reference||"-"}</td>
 
         `;
+
 
         tbody.appendChild(row);
     });
@@ -3481,6 +3671,7 @@ function viewPreviousDay(){
         message.textContent=
             "Today is already shown above.";
 
+
         document.getElementById(
             "previousDayResults"
         ).classList.add("hidden");
@@ -3555,6 +3746,7 @@ function viewPreviousDay(){
 
         message.textContent=
             "No work or transactions were recorded for this date.";
+
 
         document.getElementById(
             "previousDayResults"
@@ -3650,6 +3842,7 @@ function viewPreviousDay(){
     message.className=
         "message success";
 
+
     message.textContent=
         "Showing work for "+
         formatDateDisplay(selectedDate)+
@@ -3663,6 +3856,7 @@ function renderHistoryMomo(data){
         document.getElementById(
             "historyMomoTableBody"
         );
+
 
     tbody.innerHTML="";
 
@@ -3685,6 +3879,7 @@ function renderHistoryMomo(data){
         const row=
             document.createElement("tr");
 
+
         row.innerHTML=`
 
             <td>${formatTime(item.date)}</td>
@@ -3703,6 +3898,7 @@ function renderHistoryMomo(data){
 
         `;
 
+
         tbody.appendChild(row);
     });
 }
@@ -3714,6 +3910,7 @@ function renderHistoryElectricity(data){
         document.getElementById(
             "historyElectricityTableBody"
         );
+
 
     tbody.innerHTML="";
 
@@ -3736,6 +3933,7 @@ function renderHistoryElectricity(data){
         const row=
             document.createElement("tr");
 
+
         row.innerHTML=`
 
             <td>${formatTime(item.date)}</td>
@@ -3752,6 +3950,7 @@ function renderHistoryElectricity(data){
 
         `;
 
+
         tbody.appendChild(row);
     });
 }
@@ -3763,6 +3962,7 @@ function renderHistoryExpenses(data){
         document.getElementById(
             "historyExpenseTableBody"
         );
+
 
     tbody.innerHTML="";
 
@@ -3785,6 +3985,7 @@ function renderHistoryExpenses(data){
         const row=
             document.createElement("tr");
 
+
         row.innerHTML=`
 
             <td>${formatTime(item.date)}</td>
@@ -3798,6 +3999,7 @@ function renderHistoryExpenses(data){
             <td>${item.reference||"-"}</td>
 
         `;
+
 
         tbody.appendChild(row);
     });
@@ -4058,6 +4260,7 @@ function generateReport(){
                 No shifts were recorded for this report period.
             </div>`;
 
+
         document.getElementById(
             "reportMessage"
         ).textContent=
@@ -4068,20 +4271,30 @@ function generateReport(){
 
 
     let totalOpening=0;
+
     let totalCashIn=0;
+
     let totalCashOut=0;
+
     let totalElectricity=0;
+
     let totalCommission=0;
+
     let totalExpenses=0;
 
 
     reportRows.forEach(row=>{
 
         totalOpening+=row.opening;
+
         totalCashIn+=row.cashIn;
+
         totalCashOut+=row.cashOut;
+
         totalElectricity+=row.electricity;
+
         totalCommission+=row.commission;
+
         totalExpenses+=row.expenses;
 
     });
@@ -4339,6 +4552,7 @@ function renderPerformance(){
             "performanceTableBody"
         );
 
+
     tbody.innerHTML="";
 
 
@@ -4494,6 +4708,7 @@ function loadSelectedWorker(){
 
 
     if(!worker){
+
         return;
     }
 
@@ -4538,6 +4753,7 @@ function saveWorkerManagement(){
 
 
     if(!worker){
+
         return;
     }
 
@@ -4603,6 +4819,7 @@ function saveWorkerManagement(){
 
 
     if(password){
+
         worker.password=password;
     }
 
@@ -4779,6 +4996,7 @@ document
     function(event){
 
         if(event.key==="Enter"){
+
             login();
         }
 
